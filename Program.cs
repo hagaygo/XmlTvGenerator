@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XmlTvGenerator.Core;
 
 namespace XmlTvGenerator
 {
@@ -10,7 +12,15 @@ namespace XmlTvGenerator
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("test"); // ? aa
+            List<Show> shows = GetShows();
+            var xmltv = new XmlTv();
+            using (var f = new FileStream(@"c:\temp\t.xml", FileMode.OpenOrCreate))
+                xmltv.Save(shows, f);
         }
+
+        private static List<Show> GetShows()
+        {
+            return new List<Show>();
+        }        
     }
 }
