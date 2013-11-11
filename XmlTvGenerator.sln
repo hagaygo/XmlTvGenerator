@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmlTvGenerator", "XmlTvGenerator.csproj", "{7F5ED080-76FA-4E34-A4B6-53D812480C20}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmlTvGenerator.Core", "XmlTvGenerator.Core\XmlTvGenerator.Core.csproj", "{83C5B00D-89E6-45E5-AF42-F1ED79FBD8E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{7F5ED080-76FA-4E34-A4B6-53D812480C20}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F5ED080-76FA-4E34-A4B6-53D812480C20}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F5ED080-76FA-4E34-A4B6-53D812480C20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83C5B00D-89E6-45E5-AF42-F1ED79FBD8E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83C5B00D-89E6-45E5-AF42-F1ED79FBD8E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83C5B00D-89E6-45E5-AF42-F1ED79FBD8E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83C5B00D-89E6-45E5-AF42-F1ED79FBD8E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
