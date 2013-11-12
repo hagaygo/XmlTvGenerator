@@ -14,7 +14,7 @@ namespace XmlTvGenerator
         {
             List<Show> shows = GetShows();
             var xmltv = new XmlTv();
-            using (var f = new FileStream(@"c:\temp\t.xml", FileMode.OpenOrCreate))
+            using (var f = new FileStream(@"e:\temp\t.xml", FileMode.OpenOrCreate))
                 xmltv.Save(shows, f);
         }
 
