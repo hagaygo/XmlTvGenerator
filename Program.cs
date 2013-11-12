@@ -20,7 +20,9 @@ namespace XmlTvGenerator
 
         private static List<Show> GetShows()
         {
-            return new List<Show>();
+            var lst = new List<Show>();
+            
+            return lst;
         }        
     }
 }
