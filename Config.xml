@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Config>
+  <Output>
+    <Path>e:\temp\t.xml</Path>
+  </Output>  
+  <Grabbers>
+    <Grabber path="Israel.Rashut2.Org.il.dll" channelPrefix="Rashut2">
+      <Parameters>        
+        <StartDate>-1</StartDate>
+        <EndDate>14</EndDate>
+        <Channels>
+          <Channel>Channel2</Channel>
+          <Channel>Channel10</Channel>
+        </Channels>
+      </Parameters>  
+    </Grabber>
+  </Grabbers>
+</Config>

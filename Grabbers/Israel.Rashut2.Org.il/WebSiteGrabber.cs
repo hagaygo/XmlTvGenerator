@@ -5,6 +5,8 @@ using System.Text;
 using System.Net;
 using System.Web;
 using XmlTvGenerator.Core;
+using System.Xml.Linq;
+using System.IO;
 
 namespace Israel.Rashut2.Org.il
 {
@@ -15,7 +17,30 @@ namespace Israel.Rashut2.Org.il
  
         const string DateFormat = "dd/MM/yyyy";
 
-        public override List<Show> Grab(GrabParametersBase p)
+        public override List<Show> Grab(string xmlParameters)
+        {
+            var lst = new List<Show>();
+            var doc = XDocument.Load(new StringReader(xmlParameters), LoadOptions.None);
+            var channels = new List<Channel>();
+            foreach (var c in doc.Descendants("Channel"))
+            {
+                channels.Add((Channel)Enum.Parse(typeof(Channel), c.Value));
+            }
+            var sdElement = doc.Descendants("StartDate").FirstOrDefault();
+            var startDate = sdElement != null && sdElement.Value != null ? DateTime.Now.Date.AddDays(Convert.ToInt32(sdElement.Value)) : DateTime.Now.Date.AddDays(-1);
+            var edElement = doc.Descendants("EndDate").FirstOrDefault();
+            var endDateDays = edElement != null && edElement.Value != null ? Convert.ToInt32(edElement.Value) : 3;
+
+            foreach (var c in channels)
+                for (int i = 0; i < endDateDays; i++)
+                {
+                    var d = startDate.AddDays(i);
+                    lst.AddRange(Grab(new GrabParameters() { Date = d, Channel = c }));
+                }
+            return lst;
+        }
+
+        List<Show> Grab(GrabParametersBase p)
         {
             var pp = (GrabParameters)p;
 
@@ -38,7 +63,7 @@ namespace Israel.Rashut2.Org.il
 
             int cellDelta = 0;            
             var tbl = doc.GetElementbyId("table5");
-            if (pp.Channel == Channel.Rashut2Channel10)
+            if (pp.Channel == Channel.Channel10)
             {
                 tbl = doc.GetElementbyId("table1");
                 cellDelta = 1;
@@ -51,7 +76,7 @@ namespace Israel.Rashut2.Org.il
                 var show = new Show();
                 var d = Convert.ToDateTime(Tools.CleanupText(tbl.ChildNodes[i].ChildNodes[1].InnerText));
                 show.StartTime = pp.Date.AddHours(d.Hour).AddMinutes(d.Minute);
-                if (d.Hour < 6)
+                if (d.Hour < 6) // data is shown from 6 (AM) till next day 6 (AM) so after midnight we need to increase the date
                     show.StartTime = show.StartTime.AddDays(1);
                 show.StartTime = TimeZoneInfo.ConvertTimeToUtc(show.StartTime, TimeZoneInfo.Local);
                 show.Title = Tools.CleanupText(tbl.ChildNodes[i].ChildNodes[3 + cellDelta].InnerText);
@@ -76,6 +101,8 @@ namespace Israel.Rashut2.Org.il
             for (int i = shows.Count - 1; i >= 0; i--)
             {
                 var show = shows[i];
+                if (show.Description != null)
+                    show.Description = show.Description.Trim();
                 show.Channel = pp.Channel.ToString();
                 if (i == shows.Count - 1)
                     show.EndTime = show.StartTime.AddHours(1);
@@ -91,8 +118,8 @@ namespace Israel.Rashut2.Org.il
         {
             switch (pp.Channel)
             {
-                case Channel.Rashut2Channel2: return Channel2Url;
-                case Channel.Rashut2Channel10: return Channel10Url;
+                case Channel.Channel2: return Channel2Url;
+                case Channel.Channel10: return Channel10Url;
                 default: throw new ApplicationException("unknown rashut2 channel");
             }
         }

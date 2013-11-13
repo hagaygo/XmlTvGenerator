@@ -8,8 +8,8 @@ namespace Israel.Rashut2.Org.il
 {
     public enum Channel
     {
-        Rashut2Channel2,
-        Rashut2Channel10,        
+        Channel2,
+        Channel10,
     }
 
     public class GrabParameters : GrabParametersBase

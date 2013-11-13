@@ -7,6 +7,6 @@ namespace XmlTvGenerator.Core
 {
     public abstract class GrabberBase
     {
-        public abstract List<Show> Grab(GrabParametersBase p);
+        public abstract List<Show> Grab(string xmlParameters);
     }
 }
