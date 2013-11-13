@@ -16,29 +16,36 @@ namespace XmlTvGenerator
             var config = Config.GetInstance();
 
             List<Show> shows = GetShows();
-            var xmltv = new XmlTv();
-            using (var f = new FileStream(config.OutputPath, FileMode.OpenOrCreate))
-                xmltv.Save(shows, f);
+            if (shows.Count == 0)
+                Console.WriteLine("No shows found.");
+            else
+            {
+                var xmltv = new XmlTv();
+                using (var f = new FileStream(config.OutputPath, FileMode.OpenOrCreate))
+                    xmltv.Save(shows, f);
+            }
         }
 
         private static List<Show> GetShows()
         {
             var config = Config.GetInstance();
             var lst = new List<Show>();
-
-            foreach (var grabber in config.Grabbers)
-            {
-                var a = Assembly.LoadFrom(grabber.Path);
-                foreach (var t in a.GetTypes())
-                    if (t.IsSubclassOf(typeof(GrabberBase)))
-                    {
-                        var gb = (GrabberBase)Activator.CreateInstance(t);
-                        var shows = gb.Grab(grabber.Parameters);
-                        if (!string.IsNullOrEmpty(grabber.ChannelPrefix))
-                            shows.ForEach(x => x.Channel = grabber.ChannelPrefix + x.Channel);
-                        lst.AddRange(shows);
-                    }
-            }
+            if (config.Grabbers.Count == 0)
+                Console.WriteLine("No grabbers defined in config");
+            else
+                foreach (var grabber in config.Grabbers)
+                {
+                    var a = Assembly.LoadFrom(grabber.Path);
+                    foreach (var t in a.GetTypes())
+                        if (t.IsSubclassOf(typeof(GrabberBase)))
+                        {
+                            var gb = (GrabberBase)Activator.CreateInstance(t);
+                            var shows = gb.Grab(grabber.Parameters);
+                            if (!string.IsNullOrEmpty(grabber.ChannelPrefix))
+                                shows.ForEach(x => x.Channel = grabber.ChannelPrefix + x.Channel);
+                            lst.AddRange(shows);
+                        }
+                }
 
             return lst;
         }        

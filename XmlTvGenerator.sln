@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmlTvGenerator.Core", "XmlT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Israel.Rashut2.Org.il", "Grabbers\Israel.Rashut2.Org.il\Israel.Rashut2.Org.il.csproj", "{C8E59E2C-6392-4E40-8B5C-CAC45816E0E0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlJazeera.Sports", "Grabbers\AlJazeera.Sports\AlJazeera.Sports.csproj", "{C5BD5E85-1306-4C73-B2F6-D10CA89DBFA9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{C8E59E2C-6392-4E40-8B5C-CAC45816E0E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8E59E2C-6392-4E40-8B5C-CAC45816E0E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8E59E2C-6392-4E40-8B5C-CAC45816E0E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5BD5E85-1306-4C73-B2F6-D10CA89DBFA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5BD5E85-1306-4C73-B2F6-D10CA89DBFA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5BD5E85-1306-4C73-B2F6-D10CA89DBFA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5BD5E85-1306-4C73-B2F6-D10CA89DBFA9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
