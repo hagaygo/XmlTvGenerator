@@ -37,7 +37,7 @@ namespace XmlTvGenerator
                         g.Path = grabber.Attribute("path").Value;
                         if (string.IsNullOrEmpty(g.Path))
                             continue; // no path , nothing to do here
-                        g.ChannelPrefix = grabber.Attribute("channelPrefix").Value;
+                        g.ChannelPrefix = grabber.Attribute("channelPrefix") != null ? grabber.Attribute("channelPrefix").Value : string.Empty;
                         var paramElement = grabber.Descendants("Parameters").FirstOrDefault();
                         if (paramElement != null)
                             g.Parameters = paramElement.ToString();

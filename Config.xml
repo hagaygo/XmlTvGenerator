@@ -9,7 +9,7 @@
     <Path>e:\temp\t.xml</Path>
   </Output>  
   <Grabbers>
-    <Grabber path="Israel.Rashut2.Org.il.dll" channelPrefix="Rashut2">
+    <!--<Grabber path="Israel.Rashut2.Org.il.dll" channelPrefix="Rashut2">
       <Parameters>        
         <StartDate>-1</StartDate>
         <EndDate>14</EndDate>
@@ -18,7 +18,13 @@
           <Channel>Channel10</Channel>
         </Channels>
       </Parameters>  
+    </Grabber>-->
+    <Grabber path="BBC.World.News.dll">
+      <Parameters>        
+        <!--<StartDate>-1</StartDate>
+        <EndDate>7</EndDate>        -->
+      </Parameters>  
     </Grabber>
-    <Grabber path="AlJazeera.Sports.dll" channelPrefix="AJS_"/>  
+    <!--<Grabber path="AlJazeera.Sports.dll" channelPrefix="AJS_"/>-->  
   </Grabbers>
 </Config>

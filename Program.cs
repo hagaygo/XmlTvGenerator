@@ -20,14 +20,23 @@ namespace XmlTvGenerator
                 Logger = GetLogger(config);
             else
                 Logger = new XmlTvGenerator.Logger.DummyLogger();
-            List<Show> shows = GetShows();
-            if (shows.Count == 0)
-                Console.WriteLine("No shows found.");
-            else
+            Logger.WriteEntry("Grabbing started", LogType.Info);
+            try
             {
-                var xmltv = new XmlTv();
-                using (var f = new FileStream(config.OutputPath, FileMode.OpenOrCreate))
-                    xmltv.Save(shows, f);
+                List<Show> shows = GetShows();
+                if (shows.Count == 0)
+                    Console.WriteLine("No shows found.");
+                else
+                {
+                    var xmltv = new XmlTv();
+                    using (var f = new FileStream(config.OutputPath, FileMode.Truncate))
+                        xmltv.Save(shows, f);
+                }
+                Logger.WriteEntry("Grabbing finished", LogType.Info);
+            }
+            catch (Exception e)
+            {
+                Logger.WriteEntry(e.Message, LogType.Error);
             }
         }
 
