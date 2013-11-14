@@ -11,10 +11,15 @@ namespace XmlTvGenerator
 {
     class Program
     {
+        static ILogger Logger;
+
         static void Main(string[] args)
         {
             var config = Config.GetInstance();
-
+            if (config.LoggerType != null)
+                Logger = GetLogger(config);
+            else
+                Logger = new XmlTvGenerator.Logger.DummyLogger();
             List<Show> shows = GetShows();
             if (shows.Count == 0)
                 Console.WriteLine("No shows found.");
@@ -24,6 +29,13 @@ namespace XmlTvGenerator
                 using (var f = new FileStream(config.OutputPath, FileMode.OpenOrCreate))
                     xmltv.Save(shows, f);
             }
+        }
+
+        private static ILogger GetLogger(Config config)
+        {
+            var log = (ILogger)Activator.CreateInstance(Type.GetType("XmlTvGenerator.Logger." + config.LoggerType + "Logger"));
+            log.InitLog(config.LoggerParameters);
+            return log;
         }
 
         private static List<Show> GetShows()
@@ -40,7 +52,7 @@ namespace XmlTvGenerator
                         if (t.IsSubclassOf(typeof(GrabberBase)))
                         {
                             var gb = (GrabberBase)Activator.CreateInstance(t);
-                            var shows = gb.Grab(grabber.Parameters);
+                            var shows = gb.Grab(grabber.Parameters, Logger);
                             if (!string.IsNullOrEmpty(grabber.ChannelPrefix))
                                 shows.ForEach(x => x.Channel = grabber.ChannelPrefix + x.Channel);
                             lst.AddRange(shows);
@@ -48,6 +60,6 @@ namespace XmlTvGenerator
                 }
 
             return lst;
-        }        
+        }
     }
 }

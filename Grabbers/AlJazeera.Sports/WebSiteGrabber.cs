@@ -22,7 +22,7 @@ namespace AlJazeera.Sports
             {
                 var param = (GrabParameters)p;
                 var wr = WebRequest.Create(string.Format(urlFormat, (int)param.ChannelId));
-                Console.WriteLine("Grabbing Channel {0} ...", param.ChannelId);
+                _logger.WriteEntry(string.Format("Grabbing Channel {0} ...", param.ChannelId), LogType.Info);
                 var res = (HttpWebResponse)wr.GetResponse();
                 var doc = new HtmlAgilityPack.HtmlDocument();
                 doc.Load(res.GetResponseStream());
@@ -44,9 +44,9 @@ namespace AlJazeera.Sports
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.WriteEntry(ex.Message, LogType.Error);
             }
-            Console.WriteLine("Found {0} Shows", shows.Count);
+            _logger.WriteEntry(string.Format("Found {0} Shows", shows.Count), LogType.Info);
             return shows;
         }
 
@@ -74,9 +74,12 @@ namespace AlJazeera.Sports
             }
         }
 
-        public override List<Show> Grab(string xmlParameters)
+        ILogger _logger;
+
+        public override List<Show> Grab(string xmlParameters, ILogger logger)
         {
             // no xml parameter support for now
+            _logger = logger;
             var shows = new List<Show>();            
             foreach (ChannelEnum jscChannel in Enum.GetValues(typeof(ChannelEnum)))
             {

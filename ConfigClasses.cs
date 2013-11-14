@@ -15,7 +15,9 @@ namespace XmlTvGenerator
         }
 
         public List<GrabberSettings> Grabbers { get; set; }
-        public string OutputPath { get; set; }        
+        public string OutputPath { get; set; }
+        public string LoggerType { get; set; }
+        public string LoggerParameters { get; set; }
 
         static Config _config;
 
@@ -47,6 +49,14 @@ namespace XmlTvGenerator
                         var pathElement = outputElement.Descendants("Path").FirstOrDefault();
                         if (pathElement != null)
                             _config.OutputPath = pathElement.Value;
+                    }
+                    var loggerElement = doc.Descendants("Logger").FirstOrDefault();
+                    if (loggerElement != null && loggerElement.Attribute("Type") != null)
+                    {
+                        _config.LoggerType = loggerElement.Attribute("Type").Value;
+                        var loggerParameters = loggerElement.Descendants("Parameters").FirstOrDefault();
+                        if (loggerParameters != null)
+                            _config.LoggerParameters = loggerParameters.ToString();
                     }
                 }
             }

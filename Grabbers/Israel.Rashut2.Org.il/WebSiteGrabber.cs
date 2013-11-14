@@ -17,8 +17,11 @@ namespace Israel.Rashut2.Org.il
  
         const string DateFormat = "dd/MM/yyyy";
 
-        public override List<Show> Grab(string xmlParameters)
+        ILogger _logger;
+
+        public override List<Show> Grab(string xmlParameters, ILogger logger)
         {
+            _logger = logger;
             var lst = new List<Show>();
             var doc = XDocument.Load(new StringReader(xmlParameters), LoadOptions.None);
             var channels = new List<Channel>();
@@ -45,7 +48,7 @@ namespace Israel.Rashut2.Org.il
             var pp = (GrabParameters)p;
 
             var url = GetUrl(pp);
-            Console.WriteLine("Grabbing rashut2 {0} for date {1}", pp.Channel, pp.Date.ToString("d"));
+            _logger.WriteEntry(string.Format("Grabbing rashut2 {0} for date {1}", pp.Channel, pp.Date.ToString("d")), LogType.Info);
             var wr = WebRequest.Create(string.Format(url, pp.Date.ToString(DateFormat)));            
             var res = (HttpWebResponse)wr.GetResponse();
             var doc = new HtmlAgilityPack.HtmlDocument();            

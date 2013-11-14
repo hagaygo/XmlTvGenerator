@@ -58,6 +58,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigClasses.cs" />
+    <Compile Include="Logger\DummyLogger.cs" />
+    <Compile Include="Logger\FileLogger.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XmlTv.cs" />

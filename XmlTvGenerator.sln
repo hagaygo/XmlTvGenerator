@@ -11,6 +11,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Israel.Rashut2.Org.il", "Gr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlJazeera.Sports", "Grabbers\AlJazeera.Sports\AlJazeera.Sports.csproj", "{C5BD5E85-1306-4C73-B2F6-D10CA89DBFA9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Grabbers", "Grabbers", "{91759C7E-1E12-4A1D-BFA5-0D2179FE2068}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{B47EF749-18F2-4FF0-A1A6-118E0CF326BE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App", "App", "{09B4D3C1-097B-483B-8C5E-E6F72998F56D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +42,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C5BD5E85-1306-4C73-B2F6-D10CA89DBFA9} = {91759C7E-1E12-4A1D-BFA5-0D2179FE2068}
+		{C8E59E2C-6392-4E40-8B5C-CAC45816E0E0} = {91759C7E-1E12-4A1D-BFA5-0D2179FE2068}
+		{83C5B00D-89E6-45E5-AF42-F1ED79FBD8E7} = {B47EF749-18F2-4FF0-A1A6-118E0CF326BE}
+		{7F5ED080-76FA-4E34-A4B6-53D812480C20} = {09B4D3C1-097B-483B-8C5E-E6F72998F56D}
 	EndGlobalSection
 EndGlobal
