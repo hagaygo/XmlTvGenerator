@@ -8,6 +8,7 @@ This project/software purpose is to build a platform for generating xmltv file(s
 The software consists of two parts :
 
 1.The main program.
+
 2.Grabber extensions dll (assemblies).
 
 By settings up the config.xml you can choose which grabbers will be used and define a parameters for each if them (if needed or relevant).
