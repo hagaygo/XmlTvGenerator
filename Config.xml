@@ -21,16 +21,17 @@
         </Channels>
       </Parameters>  
     </Grabber>-->
-    <Grabber path="CyfrowyPolsat.pl.dll" channelPrefix="CyfrowyPolsat_">
+    <!--<Grabber path="CyfrowyPolsat.pl.dll" channelPrefix="CyfrowyPolsat_">
       <Translate From="Polish" To="English"/>      
-      <Parameters>                
+      <Parameters>                -->
         <!--<Channels>
           <Channel>arte_hd</Channel>
           <Channel>tve</Channel>
         </Channels>-->
-      </Parameters>  
-    </Grabber>
+      <!--</Parameters>  
+    </Grabber>-->
     <!--<Grabber path="BBC.World.News.dll"/>-->
+    <Grabber path="jn1.dll"/>
     <!--<Grabber path="AlJazeera.Sports.dll" channelPrefix="AJS_"/>-->  
   </Grabbers>
 </Config>

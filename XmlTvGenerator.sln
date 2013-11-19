@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BBC.World.News", "Grabbers\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CyfrowyPolsat.pl", "Grabbers\CyfrowyPolsat.pl\CyfrowyPolsat.pl.csproj", "{3F885DEC-F68D-4F81-8D37-D67AFBB4C4EA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jn1", "Grabbers\Jn1\Jn1.csproj", "{AB0E6D81-2B34-42B6-82D4-6CE75F4684C4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{3F885DEC-F68D-4F81-8D37-D67AFBB4C4EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F885DEC-F68D-4F81-8D37-D67AFBB4C4EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F885DEC-F68D-4F81-8D37-D67AFBB4C4EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB0E6D81-2B34-42B6-82D4-6CE75F4684C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB0E6D81-2B34-42B6-82D4-6CE75F4684C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB0E6D81-2B34-42B6-82D4-6CE75F4684C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB0E6D81-2B34-42B6-82D4-6CE75F4684C4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,5 +68,6 @@ Global
 		{C8E59E2C-6392-4E40-8B5C-CAC45816E0E0} = {91759C7E-1E12-4A1D-BFA5-0D2179FE2068}
 		{56B55FAC-EC57-434C-8AC1-C88FB87DECFE} = {91759C7E-1E12-4A1D-BFA5-0D2179FE2068}
 		{3F885DEC-F68D-4F81-8D37-D67AFBB4C4EA} = {91759C7E-1E12-4A1D-BFA5-0D2179FE2068}
+		{AB0E6D81-2B34-42B6-82D4-6CE75F4684C4} = {91759C7E-1E12-4A1D-BFA5-0D2179FE2068}
 	EndGlobalSection
 EndGlobal

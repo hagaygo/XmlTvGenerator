@@ -75,10 +75,10 @@ namespace XmlTvGenerator
                                     shows.ForEach(x => x.Channel = grabber.ChannelPrefix + x.Channel);
                                 if (grabber.Translation != null)
                                 {
-                                    Logger.WriteEntry("Starting translation of " + t.Name, LogType.Info);
+                                    Logger.WriteEntry("Starting translation of " + t.FullName, LogType.Info);
                                     var g = new GoogleTranslator(fileCache);
                                     g.TranslateShows(shows, grabber.Translation.From, grabber.Translation.To);
-                                    Logger.WriteEntry("Finished translation of " + t.Name, LogType.Info);
+                                    Logger.WriteEntry("Finished translation of " + t.FullName, LogType.Info);
                                 }
                                 lst.AddRange(shows);
                             }
