@@ -29,7 +29,7 @@ namespace BBC.World.News
                 while (!sr.EndOfStream)
                 {
                     var line = sr.ReadLine();
-                    if (!string.IsNullOrEmpty(line))
+                    if (!string.IsNullOrEmpty(line) && line.Length > 10)
                     {
                         var show = new Show();
                         show.Channel = "BBC World News";

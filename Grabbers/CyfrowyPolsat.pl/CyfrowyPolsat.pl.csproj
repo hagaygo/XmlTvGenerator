@@ -4,20 +4,19 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{83C5B00D-89E6-45E5-AF42-F1ED79FBD8E7}</ProjectGuid>
+    <ProjectGuid>{3F885DEC-F68D-4F81-8D37-D67AFBB4C4EA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>XmlTvGenerator.Core</RootNamespace>
-    <AssemblyName>XmlTvGenerator.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <RootNamespace>CyfrowyPolsat.pl</RootNamespace>
+    <AssemblyName>CyfrowyPolsat.pl</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\bin\debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -32,7 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="HtmlAgilityPack">
-      <HintPath>..\3rd Party\HtmlAgilityPack.dll</HintPath>
+      <HintPath>..\..\3rd Party\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -44,18 +43,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Grabber\GrabberBase.cs" />
-    <Compile Include="Grabber\GrabParametersBase.cs" />
-    <Compile Include="ILogger.cs" />
+    <Compile Include="GrabParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Show.cs" />
-    <Compile Include="Tools.cs" />
-    <Compile Include="Translator\Cache\CacheManagerBase.cs" />
-    <Compile Include="Translator\Cache\DummyCacheManager.cs" />
-    <Compile Include="Translator\Cache\FileCacheManager.cs" />
-    <Compile Include="Translator\GoogleTranslator.cs" />
-    <Compile Include="Translator\Language.cs" />
-    <Compile Include="Translator\TranslatorBase.cs" />
+    <Compile Include="WebSiteGrabber.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\XmlTvGenerator.Core\XmlTvGenerator.Core.csproj">
+      <Project>{83c5b00d-89e6-45e5-af42-f1ed79fbd8e7}</Project>
+      <Name>XmlTvGenerator.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

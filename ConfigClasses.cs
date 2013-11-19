@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
+using XmlTvGenerator.Core.Translator;
 
 namespace XmlTvGenerator
 {
@@ -18,6 +19,8 @@ namespace XmlTvGenerator
         public string OutputPath { get; set; }
         public string LoggerType { get; set; }
         public string LoggerParameters { get; set; }
+        public TranslatorCacheSettings TranslatorCacheSettings { get; set; }
+        public bool HaltOnGrabberError { get; set; }
 
         static Config _config;
 
@@ -38,6 +41,13 @@ namespace XmlTvGenerator
                         if (string.IsNullOrEmpty(g.Path))
                             continue; // no path , nothing to do here
                         g.ChannelPrefix = grabber.Attribute("channelPrefix") != null ? grabber.Attribute("channelPrefix").Value : string.Empty;
+                        var translationElement = grabber.Descendants("Translate").FirstOrDefault();
+                        if (translationElement != null)
+                        {
+                            g.Translation = new GrabberTranslationSettings();
+                            g.Translation.From = (Language)Enum.Parse(typeof(Language), translationElement.Attribute("From").Value);
+                            g.Translation.To = (Language)Enum.Parse(typeof(Language), translationElement.Attribute("To").Value);
+                        }
                         var paramElement = grabber.Descendants("Parameters").FirstOrDefault();
                         if (paramElement != null)
                             g.Parameters = paramElement.ToString();
@@ -58,6 +68,16 @@ namespace XmlTvGenerator
                         if (loggerParameters != null)
                             _config.LoggerParameters = loggerParameters.ToString();
                     }
+                    var translatorCache = doc.Descendants("TranslatorCache").FirstOrDefault();
+                    if (translatorCache != null && translatorCache.Attribute("Type") != null)
+                    {
+                        _config.TranslatorCacheSettings = new TranslatorCacheSettings();
+                        _config.TranslatorCacheSettings.Type = TranslatorCacheSettingsType.File;
+                        _config.TranslatorCacheSettings.OutputFile = translatorCache.Attribute("OutputFile").Value;
+                    }
+                    var HaltOnGrabberErrorElement = doc.Descendants("HaltOnGrabberError").FirstOrDefault();
+                    if (HaltOnGrabberErrorElement != null && !string.IsNullOrEmpty(HaltOnGrabberErrorElement.Value))
+                        _config.HaltOnGrabberError = Convert.ToBoolean(HaltOnGrabberErrorElement.Value);
                 }
             }
             return _config;
@@ -69,5 +89,12 @@ namespace XmlTvGenerator
         public string Path { get; set; }
         public string Parameters { get; set; }
         public string ChannelPrefix { get; set; }
+        public GrabberTranslationSettings Translation { get; set; }
+    }
+
+    public class GrabberTranslationSettings
+    {
+        public Language From { get; set; }
+        public Language To { get; set;  }
     }
 }

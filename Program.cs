@@ -6,6 +6,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using XmlTvGenerator.Core;
+using XmlTvGenerator.Core.Translator;
+using XmlTvGenerator.Core.Translator.Cache;
 
 namespace XmlTvGenerator
 {
@@ -48,24 +50,45 @@ namespace XmlTvGenerator
         }
 
         private static List<Show> GetShows()
-        {
+        {            
             var config = Config.GetInstance();
+            CacheManagerBase fileCache;
+            if (config.TranslatorCacheSettings != null)
+                fileCache = new FileCacheManager(config.TranslatorCacheSettings.OutputFile);
+            else
+                fileCache = new DummyCacheManager();
             var lst = new List<Show>();
             if (config.Grabbers.Count == 0)
                 Console.WriteLine("No grabbers defined in config");
             else
                 foreach (var grabber in config.Grabbers)
                 {
-                    var a = Assembly.LoadFrom(grabber.Path);
-                    foreach (var t in a.GetTypes())
-                        if (t.IsSubclassOf(typeof(GrabberBase)))
-                        {
-                            var gb = (GrabberBase)Activator.CreateInstance(t);
-                            var shows = gb.Grab(grabber.Parameters, Logger);
-                            if (!string.IsNullOrEmpty(grabber.ChannelPrefix))
-                                shows.ForEach(x => x.Channel = grabber.ChannelPrefix + x.Channel);
-                            lst.AddRange(shows);
-                        }
+                    try
+                    {
+                        var a = Assembly.LoadFrom(grabber.Path);                        
+                        foreach (var t in a.GetTypes())
+                            if (t.IsSubclassOf(typeof(GrabberBase)))
+                            {
+                                var gb = (GrabberBase)Activator.CreateInstance(t);
+                                var shows = gb.Grab(grabber.Parameters, Logger);
+                                if (!string.IsNullOrEmpty(grabber.ChannelPrefix))
+                                    shows.ForEach(x => x.Channel = grabber.ChannelPrefix + x.Channel);
+                                if (grabber.Translation != null)
+                                {
+                                    Logger.WriteEntry("Starting translation of " + t.Name, LogType.Info);
+                                    var g = new GoogleTranslator(fileCache);
+                                    g.TranslateShows(shows, grabber.Translation.From, grabber.Translation.To);
+                                    Logger.WriteEntry("Finished translation of " + t.Name, LogType.Info);
+                                }
+                                lst.AddRange(shows);
+                            }
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.WriteEntry("error on grabber " + grabber.Path + " " + ex.Message, LogType.Error);
+                        if (config.HaltOnGrabberError)
+                            throw ex;
+                    }
                 }
 
             return lst;
