@@ -22,13 +22,13 @@
         </Channels>
       </Parameters>  
     </Grabber>-->
-    <Grabber path="CyfraPlus.dll" channelPrefix="cyfra+">
+    <!--<Grabber path="CyfraPlus.dll" channelPrefix="cyfra+">
       <Translate From="Polish" To="English"/>      
       <Parameters>        
         <StartDate>-1</StartDate>
         <EndDate>3</EndDate>        
       </Parameters>  
-    </Grabber>
+    </Grabber>-->
     <!--<Grabber path="CyfrowyPolsat.pl.dll" channelPrefix="CyfrowyPolsat_">
       <Translate From="Polish" To="English"/>      
       <Parameters>                -->        
@@ -47,7 +47,10 @@
         </Channels>
       </Parameters>
     </Grabber>-->
-    <!--<Grabber path="BBC.World.News.dll"/>-->
+    <Grabber path="BBC.World.News.dll">
+      <Parameters>                           
+      </Parameters>
+    </Grabber>
     <!--<Grabber path="jn1.dll"/>-->
     <!--<Grabber path="AlJazeera.Sports.dll" channelPrefix="AJS_"/>-->  
   </Grabbers>

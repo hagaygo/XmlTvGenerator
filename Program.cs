@@ -31,7 +31,9 @@ namespace XmlTvGenerator
                 else
                 {
                     var xmltv = new XmlTv();
-                    using (var f = new FileStream(config.OutputPath, FileMode.Truncate))
+                    if (File.Exists(config.OutputPath))
+                        File.Delete(config.OutputPath);
+                    using (var f = new FileStream(config.OutputPath, FileMode.CreateNew))
                         xmltv.Save(shows, f);
                 }
                 Logger.WriteEntry("Grabbing finished", LogType.Info);
