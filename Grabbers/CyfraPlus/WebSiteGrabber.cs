@@ -42,7 +42,7 @@ namespace CyfraPlus
                         logger.WriteEntry(string.Format("Downloaded {0:#,##0} bytes so far", data.Length), LogType.Info);
                     }
                 }
-                Console.WriteLine("Got Data, Starting to parse...");
+                
                 var r = new Newtonsoft.Json.JsonTextReader(new StringReader(data.ToString()));
 
                 while (r.Read())
