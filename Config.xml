@@ -30,8 +30,17 @@
         </Channels>-->
       <!--</Parameters>  
     </Grabber>-->
+    <Grabber path="sky.it.dll" channelPrefix="sky.it_">
+      <Translate From="Italian" To="English"/>      
+      <!--<Parameters>             
+        <Channels>
+          <Channel>bloomberg_</Channel>
+          <Channel>cnbc</Channel>
+        </Channels>
+      </Parameters>-->  
+    </Grabber>
     <!--<Grabber path="BBC.World.News.dll"/>-->
-    <Grabber path="jn1.dll"/>
+    <!--<Grabber path="jn1.dll"/>-->
     <!--<Grabber path="AlJazeera.Sports.dll" channelPrefix="AJS_"/>-->  
   </Grabbers>
 </Config>

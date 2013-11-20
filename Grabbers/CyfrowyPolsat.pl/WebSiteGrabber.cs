@@ -17,7 +17,7 @@ namespace CyfrowyPolsat.pl
         DateTime currentNow;
 
         public List<Show> Grab(GrabParametersBase p, ILogger logger)
-        {            
+        {
             currentNow = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.Local, TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time"));
 
             var pp = (GrabParameters)p;
@@ -55,11 +55,14 @@ namespace CyfrowyPolsat.pl
         {
             logger.WriteEntry("Started CyfrowyPolsat.pl grab", LogType.Info);
 
-            var doc = XDocument.Parse(xmlParameters);
-            var shows = new List<Show>();
             var selectedChannels = new List<Channel>();
-            foreach (var c in doc.Descendants("Channel"))            
-                selectedChannels.Add((Channel)Enum.Parse(typeof(Channel), c.Value));
+            var shows = new List<Show>();
+            if (!string.IsNullOrEmpty(xmlParameters))
+            {
+                var doc = XDocument.Parse(xmlParameters);
+                foreach (var c in doc.Descendants("Channel"))
+                    selectedChannels.Add((Channel)Enum.Parse(typeof(Channel), c.Value));
+            }
             if (selectedChannels.Count == 0) // no channel specified , lets take all available channels
                 foreach (Channel c in Enum.GetValues(typeof(Channel)))
                     selectedChannels.Add(c);
@@ -72,8 +75,6 @@ namespace CyfrowyPolsat.pl
                 FixShowsEndTimeByStartTime(channelShows);
                 shows.AddRange(channelShows);
             }
-
-            //EpgGrabber.Translation.CacheManager.TranslateShows(lst, "Polish", "English");
 
             logger.WriteEntry("Finshed CyfrowyPolsat.pl grab", LogType.Info);
             return shows;
