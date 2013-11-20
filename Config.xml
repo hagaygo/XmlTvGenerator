@@ -11,6 +11,7 @@
     <Path>e:\temp\t.xml</Path>
   </Output>  
   <Grabbers>
+    <!-- on grabbers with channels paramters , dont supply channel list to grab all available channels-->
     <!--<Grabber path="Israel.Rashut2.Org.il.dll" channelPrefix="Rashut2">
       <Parameters>        
         <StartDate>-1</StartDate>
@@ -21,24 +22,31 @@
         </Channels>
       </Parameters>  
     </Grabber>-->
+    <Grabber path="CyfraPlus.dll" channelPrefix="cyfra+">
+      <Translate From="Polish" To="English"/>      
+      <Parameters>        
+        <StartDate>-1</StartDate>
+        <EndDate>3</EndDate>        
+      </Parameters>  
+    </Grabber>
     <!--<Grabber path="CyfrowyPolsat.pl.dll" channelPrefix="CyfrowyPolsat_">
       <Translate From="Polish" To="English"/>      
-      <Parameters>                -->
+      <Parameters>                -->        
         <!--<Channels>
           <Channel>arte_hd</Channel>
           <Channel>tve</Channel>
         </Channels>-->
       <!--</Parameters>  
     </Grabber>-->
-    <Grabber path="sky.it.dll" channelPrefix="sky.it_">
+    <!--<Grabber path="sky.it.dll" channelPrefix="sky.it_">
       <Translate From="Italian" To="English"/>      
-      <!--<Parameters>             
+      <Parameters>                   
         <Channels>
           <Channel>bloomberg_</Channel>
           <Channel>cnbc</Channel>
         </Channels>
-      </Parameters>-->  
-    </Grabber>
+      </Parameters>
+    </Grabber>-->
     <!--<Grabber path="BBC.World.News.dll"/>-->
     <!--<Grabber path="jn1.dll"/>-->
     <!--<Grabber path="AlJazeera.Sports.dll" channelPrefix="AJS_"/>-->  
