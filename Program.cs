@@ -25,7 +25,7 @@ namespace XmlTvGenerator
             Logger.WriteEntry("Grabbing started", LogType.Info);
             try
             {
-                List<Show> shows = GetShows();
+                List<Show> shows = GetShows(Logger);
                 if (shows.Count == 0)
                     Console.WriteLine("No shows found.");
                 else
@@ -51,7 +51,7 @@ namespace XmlTvGenerator
             return log;
         }
 
-        private static List<Show> GetShows()
+        private static List<Show> GetShows(ILogger logger)
         {            
             var config = Config.GetInstance();
             CacheManagerBase fileCache;
@@ -79,7 +79,7 @@ namespace XmlTvGenerator
                                 {
                                     Logger.WriteEntry("Starting translation of " + t.FullName, LogType.Info);
                                     var g = new GoogleTranslator(fileCache);
-                                    g.TranslateShows(shows, grabber.Translation.From, grabber.Translation.To);
+                                    g.TranslateShows(shows, grabber.Translation.From, grabber.Translation.To, logger);
                                     Logger.WriteEntry("Finished translation of " + t.FullName, LogType.Info);
                                 }
                                 lst.AddRange(shows);

@@ -89,7 +89,7 @@ namespace Sky.it
             {
                 var p = new GrabParameters();
                 p.Channel = c;
-                var channelShows = Grab(p, logger);
+                var channelShows = Grab(p, logger).OrderBy(x => x.StartTime).ToList() ;
                 FixShowsEndTimeByStartTime(channelShows);
                 shows.AddRange(channelShows);
             }

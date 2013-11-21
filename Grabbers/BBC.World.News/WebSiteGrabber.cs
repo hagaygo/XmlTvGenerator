@@ -62,6 +62,7 @@ namespace BBC.World.News
             p.ToDate = DateTime.Now.Date.AddDays(endDayDiff);
             var shows = new List<Show>();
             shows.AddRange(Grab(p));
+            FixShowsEndTimeByStartTime(shows);
             return shows;
         }
     }

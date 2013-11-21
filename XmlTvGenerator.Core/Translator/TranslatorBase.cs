@@ -20,7 +20,7 @@ namespace XmlTvGenerator.Core.Translator
 
         public abstract string Translate(Language from, Language to, string text);
 
-        public void TranslateShows(List<Show> shows, Language sourceLang, Language targetLang)
+        public void TranslateShows(List<Show> shows, Language sourceLang, Language targetLang, ILogger logger)
         {
             Debug.WriteLine("Found {0} Shows", shows.Count);
             Debug.WriteLine("Started Translating...");
@@ -37,10 +37,13 @@ namespace XmlTvGenerator.Core.Translator
                 {
                     counter++;
                 }
-                if (DateTime.Now - lastTime > TimeSpan.FromSeconds(3))
+                if (DateTime.Now - lastTime > TimeSpan.FromSeconds(30))
                 {
                     lastTime = DateTime.Now;
-                    Debug.WriteLine("Finished {0}/{1} {2:0.00}%", counter, shows.Count, counter * 100.0 / shows.Count);
+                    var text = string.Format("Translator Finished {0}/{1} {2:0.00}%", counter, shows.Count, counter * 100.0 / shows.Count);
+                    Debug.WriteLine(text);
+                    lock (lockObject)
+                        logger.WriteEntry(text, LogType.Info);
                 }
             }
             );
