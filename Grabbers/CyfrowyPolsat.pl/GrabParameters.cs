@@ -20,7 +20,11 @@ namespace CyfrowyPolsat.pl
         arte_hd,
         tve,
         russia_today,
-        bbc_hd
+        bbc_hd,
+        universal_channel,
+        scifi_universal,
+        sundance_channel_hd,
+        al_jazeera,
     }
 
     public class GrabParameters : GrabParametersBase
