@@ -47,11 +47,15 @@
         </Channels>
       </Parameters>
     </Grabber>-->
-    <Grabber path="BBC.World.News.dll">
+    <!--<Grabber path="BBC.World.News.dll">
       <Parameters>                           
       </Parameters>
+    </Grabber>-->
+    <Grabber path="dmi.ae.dll" channelPrefix="DubaiSports_">
+      <Translate From="Arabic" To="English"/>
     </Grabber>
     <!--<Grabber path="jn1.dll"/>-->
     <!--<Grabber path="AlJazeera.Sports.dll" channelPrefix="AJS_"/>-->  
   </Grabbers>
 </Config>
+

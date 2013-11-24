@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sky.it", "Grabbers\Sky.it\S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CyfraPlus", "Grabbers\CyfraPlus\CyfraPlus.csproj", "{121D2560-D1C2-4A4B-912D-304850A9BD40}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dmi.ae", "Grabbers\dmi.ae\dmi.ae.csproj", "{39787615-F97A-427F-A145-0E5C0B7FC61F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{121D2560-D1C2-4A4B-912D-304850A9BD40}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{121D2560-D1C2-4A4B-912D-304850A9BD40}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{121D2560-D1C2-4A4B-912D-304850A9BD40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39787615-F97A-427F-A145-0E5C0B7FC61F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39787615-F97A-427F-A145-0E5C0B7FC61F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39787615-F97A-427F-A145-0E5C0B7FC61F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39787615-F97A-427F-A145-0E5C0B7FC61F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,5 +89,6 @@ Global
 		{AB0E6D81-2B34-42B6-82D4-6CE75F4684C4} = {91759C7E-1E12-4A1D-BFA5-0D2179FE2068}
 		{8B0D17AB-82FC-4903-93D9-24D1AB134CC2} = {91759C7E-1E12-4A1D-BFA5-0D2179FE2068}
 		{121D2560-D1C2-4A4B-912D-304850A9BD40} = {91759C7E-1E12-4A1D-BFA5-0D2179FE2068}
+		{39787615-F97A-427F-A145-0E5C0B7FC61F} = {91759C7E-1E12-4A1D-BFA5-0D2179FE2068}
 	EndGlobalSection
 EndGlobal
