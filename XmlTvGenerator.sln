@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CyfraPlus", "Grabbers\Cyfra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dmi.ae", "Grabbers\dmi.ae\dmi.ae.csproj", "{39787615-F97A-427F-A145-0E5C0B7FC61F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rtd.rt.com", "Grabbers\rtd.rt.com\rtd.rt.com.csproj", "{BEBA3814-58F1-4152-AA1C-54F3AC05A6B6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{39787615-F97A-427F-A145-0E5C0B7FC61F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39787615-F97A-427F-A145-0E5C0B7FC61F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39787615-F97A-427F-A145-0E5C0B7FC61F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEBA3814-58F1-4152-AA1C-54F3AC05A6B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEBA3814-58F1-4152-AA1C-54F3AC05A6B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEBA3814-58F1-4152-AA1C-54F3AC05A6B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEBA3814-58F1-4152-AA1C-54F3AC05A6B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,5 +96,6 @@ Global
 		{8B0D17AB-82FC-4903-93D9-24D1AB134CC2} = {91759C7E-1E12-4A1D-BFA5-0D2179FE2068}
 		{121D2560-D1C2-4A4B-912D-304850A9BD40} = {91759C7E-1E12-4A1D-BFA5-0D2179FE2068}
 		{39787615-F97A-427F-A145-0E5C0B7FC61F} = {91759C7E-1E12-4A1D-BFA5-0D2179FE2068}
+		{BEBA3814-58F1-4152-AA1C-54F3AC05A6B6} = {91759C7E-1E12-4A1D-BFA5-0D2179FE2068}
 	EndGlobalSection
 EndGlobal

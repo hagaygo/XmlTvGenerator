@@ -51,8 +51,14 @@
       <Parameters>                           
       </Parameters>
     </Grabber>-->
-    <Grabber path="dmi.ae.dll" channelPrefix="DubaiSports_">
+    <!--<Grabber path="dmi.ae.dll" channelPrefix="DubaiSports_">
       <Translate From="Arabic" To="English"/>
+    </Grabber>-->
+    <Grabber path="rtd.rt.com.dll">      
+      <Parameters>        
+        <StartDate>0</StartDate>
+        <EndDate>2</EndDate>        
+      </Parameters>  
     </Grabber>
     <!--<Grabber path="jn1.dll"/>-->
     <!--<Grabber path="AlJazeera.Sports.dll" channelPrefix="AJS_"/>-->  
