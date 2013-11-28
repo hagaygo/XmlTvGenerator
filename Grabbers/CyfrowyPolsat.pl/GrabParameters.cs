@@ -15,6 +15,7 @@ namespace CyfrowyPolsat.pl
         cbs_drama,
         cbs_europa,
         cbs_reality,
+        cbs_action,
         tcm,
         travel_channel,
         arte_hd,
@@ -25,6 +26,8 @@ namespace CyfrowyPolsat.pl
         scifi_universal,
         sundance_channel_hd,
         al_jazeera,
+        polsat_sport_extra_hd,
+        polsat_sport_hd,
     }
 
     public class GrabParameters : GrabParametersBase

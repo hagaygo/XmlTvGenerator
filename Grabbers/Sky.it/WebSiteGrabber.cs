@@ -26,7 +26,7 @@ namespace Sky.it
         List<Show> Grab(GrabParametersBase p, ILogger logger)
         {
             var pp = (GrabParameters)p;
-            var url = string.Format(URL, pp.Channel.ToString().Replace("_", "-").Replace("AANNDD", "%26"));
+            var url = string.Format(URL, pp.Channel.ToString().Replace("_", "-").Replace("AANNDD", "%26").Replace("PPLLUUSS", "%2B"));
             var wr = WebRequest.Create(url);
             var res = (HttpWebResponse)wr.GetResponse();
             var doc = new HtmlAgilityPack.HtmlDocument();

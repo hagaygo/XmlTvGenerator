@@ -74,6 +74,7 @@ namespace Sky.it
         cnbc = 542,
         russia_today = 543,
         bloomberg_ = 544,
+        sky_cinema_PPLLUUSS_24_hd = 545,
     }
 
     public class GrabParameters : GrabParametersBase
