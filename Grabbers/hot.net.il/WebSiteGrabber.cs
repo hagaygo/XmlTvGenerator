@@ -33,6 +33,7 @@ namespace hot.net.il
             foreach (Channel c in Enum.GetValues(typeof(Channel)))
             {
                 var wr = WebRequest.Create(string.Format(url, (int)c, DateTime.Now.Date.AddDays(startDateDiff).ToString(DateFormat), DateTime.Now.Date.AddDays(endDateDays).ToString(DateFormat)));
+                wr.Timeout = 30000;
                 logger.WriteEntry(string.Format("Grabbing hot.net.il channel {0} ", c.ToString()), LogType.Info);
                 var res = (HttpWebResponse)wr.GetResponse();
 
