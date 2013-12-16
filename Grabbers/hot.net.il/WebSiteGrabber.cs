@@ -11,6 +11,9 @@ namespace hot.net.il
 {
     public enum Channel
     {
+        Channel1 = 424,
+        Channel10 = 425,
+        Channel2 = 426,
         EuroSport = 461,
         FoxSports = 466,
         Eurosport2 = 673,
