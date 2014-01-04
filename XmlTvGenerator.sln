@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rtd.rt.com", "Grabbers\rtd.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hot.net.il", "Grabbers\hot.net.il\hot.net.il.csproj", "{C732B6A2-C976-4DC9-8697-B2A29F61D454}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "beinsports.net", "Grabbers\beinsports.net\beinsports.net.csproj", "{AFDDBC7F-61A1-40EB-BAA8-2DF95BB38599}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{C732B6A2-C976-4DC9-8697-B2A29F61D454}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C732B6A2-C976-4DC9-8697-B2A29F61D454}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C732B6A2-C976-4DC9-8697-B2A29F61D454}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFDDBC7F-61A1-40EB-BAA8-2DF95BB38599}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFDDBC7F-61A1-40EB-BAA8-2DF95BB38599}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFDDBC7F-61A1-40EB-BAA8-2DF95BB38599}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFDDBC7F-61A1-40EB-BAA8-2DF95BB38599}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -104,5 +110,6 @@ Global
 		{39787615-F97A-427F-A145-0E5C0B7FC61F} = {91759C7E-1E12-4A1D-BFA5-0D2179FE2068}
 		{BEBA3814-58F1-4152-AA1C-54F3AC05A6B6} = {91759C7E-1E12-4A1D-BFA5-0D2179FE2068}
 		{C732B6A2-C976-4DC9-8697-B2A29F61D454} = {91759C7E-1E12-4A1D-BFA5-0D2179FE2068}
+		{AFDDBC7F-61A1-40EB-BAA8-2DF95BB38599} = {91759C7E-1E12-4A1D-BFA5-0D2179FE2068}
 	EndGlobalSection
 EndGlobal
