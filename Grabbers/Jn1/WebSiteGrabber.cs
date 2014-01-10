@@ -31,11 +31,13 @@ namespace Jn1
                 show.Title = show.Title.First().ToString().ToUpper() + String.Join("", show.Title.Skip(1));
                 show.Description = li.Descendants("span").ToList()[2].InnerText.Trim();
 
-                lst.Add(show);
-
-                show = show.Clone(); // has same daily schedule every day , so just duplicate entries with tommorow date
-                show.StartTime = show.StartTime.AddDays(1);
-                lst.Add(show);
+                lst.Add(show);                
+            }
+            foreach (var show in lst)
+            {
+                var s = show.Clone(); // has same daily schedule every day , so just duplicate entries with tommorow date
+                s.StartTime = show.StartTime.AddDays(1);
+                lst.Add(s);
             }
             FixShowsEndTimeByStartTime(lst);
             return lst;
