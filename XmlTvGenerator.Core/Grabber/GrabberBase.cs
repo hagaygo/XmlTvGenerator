@@ -11,9 +11,15 @@ namespace XmlTvGenerator.Core
 
         protected void FixShowsEndTimeByStartTime(List<Show> shows)
         {
-            for (int i = shows.Count - 2; i >= 0; i--)
+            if (shows.Count > 1)
             {
-                shows[i].EndTime = shows[i + 1].StartTime;
+                for (int i = shows.Count - 2; i >= 0; i--)
+                {
+                    shows[i].EndTime = shows[i + 1].StartTime;
+                }
+                var s = shows[shows.Count - 1];
+                if (s.StartTime > s.EndTime)
+                    s.EndTime = s.StartTime;
             }
         }
     }
