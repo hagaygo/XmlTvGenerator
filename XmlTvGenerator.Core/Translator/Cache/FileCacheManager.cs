@@ -35,17 +35,23 @@ namespace XmlTvGenerator.Core.Translator.Cache
                 item.Add(new XAttribute("key", key));
                 items.Add(item);
             }
-            xml.Save(CachePath);
+            using (var wr = System.Xml.XmlWriter.Create(CachePath, new System.Xml.XmlWriterSettings() { CheckCharacters = false }))
+            {
+                xml.Save(wr);
+            }
         }
 
         private void LoadCache()
         {
-            var xml = XDocument.Load(CachePath);
-            var items = xml.Element("items");
-            _cache = new Dictionary<string, string>();
-            foreach (var item in items.Elements("item"))
+            using (var xr = System.Xml.XmlReader.Create(CachePath, new System.Xml.XmlReaderSettings() { CheckCharacters = false }))
             {
-                _cache[item.Attribute("key").Value] = item.Value;
+                var xml = XDocument.Load(xr);
+                var items = xml.Element("items");
+                _cache = new Dictionary<string, string>();
+                foreach (var item in items.Elements("item"))
+                {
+                    _cache[item.Attribute("key").Value] = item.Value;
+                }
             }
         }
 
