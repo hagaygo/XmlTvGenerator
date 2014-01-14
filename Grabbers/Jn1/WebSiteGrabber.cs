@@ -33,12 +33,14 @@ namespace Jn1
 
                 lst.Add(show);                
             }
+            var secondList = new List<Show>();
             foreach (var show in lst)
             {
                 var s = show.Clone(); // has same daily schedule every day , so just duplicate entries with tommorow date
                 s.StartTime = show.StartTime.AddDays(1);
-                lst.Add(s);
+                secondList.Add(s);
             }
+            lst.AddRange(secondList);
             FixShowsEndTimeByStartTime(lst);
             return lst;
         }
