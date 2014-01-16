@@ -54,8 +54,12 @@ namespace beinsports.net
                         show.EndTime = Convert.ToDateTime(time.Attributes["data-endtime"].Value);
                         show.EndTime = DateTime.SpecifyKind(show.EndTime, DateTimeKind.Unspecified);
                         show.EndTime = TimeZoneInfo.ConvertTime(show.EndTime, TimeZoneInfo.FindSystemTimeZoneById("Arabic Standard Time"), TimeZoneInfo.Utc);
-                        show.Title = time.ChildNodes[0].InnerText;
-                        var spans = time.Descendants("span").ToList();
+                        var anc = time.NextSibling.NextSibling;
+                        var dvText = anc.Descendants("div").First();
+                        if (anc.Descendants("div").Count() > 1)
+                            dvText = anc.Descendants("div").ToList()[1];
+                        show.Title = dvText.ChildNodes[0].InnerText;
+                        var spans = dvText.Descendants("span").ToList();
                         if (spans.Count > 0)
                             show.Description = spans[0].InnerText;
                         shows.Add(show);
