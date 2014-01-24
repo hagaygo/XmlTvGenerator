@@ -50,10 +50,7 @@ namespace beinsports.net
                         show.Channel = channel;
                         show.StartTime = Convert.ToDateTime(time.Attributes["datetime"].Value);
                         show.StartTime = DateTime.SpecifyKind(show.StartTime, DateTimeKind.Unspecified);
-                        show.StartTime = TimeZoneInfo.ConvertTime(show.StartTime, TimeZoneInfo.FindSystemTimeZoneById("Arabic Standard Time"), TimeZoneInfo.Utc);
-                        show.EndTime = Convert.ToDateTime(time.Attributes["data-endtime"].Value);
-                        show.EndTime = DateTime.SpecifyKind(show.EndTime, DateTimeKind.Unspecified);
-                        show.EndTime = TimeZoneInfo.ConvertTime(show.EndTime, TimeZoneInfo.FindSystemTimeZoneById("Arabic Standard Time"), TimeZoneInfo.Utc);
+                        show.StartTime = TimeZoneInfo.ConvertTime(show.StartTime, TimeZoneInfo.FindSystemTimeZoneById("Arabic Standard Time"), TimeZoneInfo.Utc);                        
                         var anc = time.NextSibling.NextSibling;
                         var dvText = anc.Descendants("div").First();
                         if (anc.Descendants("div").Count() > 1)
@@ -67,8 +64,14 @@ namespace beinsports.net
                     divCounter++;
                 }
             }
-
-            return shows;
+            var lst = new List<Show>();
+            foreach (var chan in shows.Select(x => x.Channel).Distinct())
+            {
+                var channelShows = shows.Where(x => x.Channel == chan).OrderBy(x => x.StartTime).ToList();
+                FixShowsEndTimeByStartTime(channelShows);
+                lst.AddRange(channelShows);
+            }            
+            return lst;
         }
     }
 }
