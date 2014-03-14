@@ -1,6 +1,7 @@
 ﻿using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -21,24 +22,38 @@ namespace XmlTvGenerator.Core.Translator
 
         public override string Translate(Language from, Language to, string text)
         {
-            var cacheText = Cache.Get(from, to, text);
+            var cacheText = Cache == null ? null : Cache.Get(from, to, text);
             if (cacheText != null)
-                return cacheText;
-            Uri address = new Uri("http://translate.google.com/translate_t");
-            var web = new WebClient();
-            web.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
-
-            var postData = string.Format("hl=en&ie=UTF8&oe=UTF8submit=Translate&langpair={0}|{1}&text={2}", _languageDict[from], _languageDict[to], HttpUtility.UrlEncode(text));
-
-            var res = web.UploadString(address, postData);
-
-            var doc = new HtmlDocument();
-            doc.LoadHtml(res);            
-            var span = doc.DocumentNode.Descendants("span").Where(x => x.Attributes["id"] != null && x.Attributes["id"].Value == "result_box").FirstOrDefault();
-            var val = span != null ? span.InnerText : null;
-            if (val != null)
-                Cache.Add(from, to, text, val);
-            return val;
+                return cacheText;            
+            var web = WebRequest.Create(string.Format("http://translate.google.com/translate_a/t?client=t&sl=pl&tl=en&hl=en&sc=2&ie=UTF-8&oe=UTF-8&q={0}",HttpUtility.UrlEncode(text)));
+            try
+            {
+                var res = (HttpWebResponse)web.GetResponse();
+                using (var sr = new StreamReader(res.GetResponseStream()))
+                {
+                    var resultText = new StringBuilder(sr.ReadToEnd());
+                    while (resultText.Length > 0 && resultText[0] == '[')
+                        resultText.Remove(0, 1);
+                    while (resultText.Length > 0 && resultText[0] == '"')
+                        resultText.Remove(0, 1);
+                    if (resultText.Length > 2)
+                    {
+                        var idx = resultText.ToString().IndexOf("\"");
+                        string val;
+                        if (idx >= 0)
+                            val =  resultText.ToString().Substring(0,idx).Trim();
+                        else
+                            val = resultText.ToString().Trim();
+                        if (val != null && Cache != null)
+                            Cache.Add(from, to, text, val);
+                    }                    
+                }
+            }
+            catch
+            {                
+                
+            }
+            return null;
         }
 
         Dictionary<Language, string> GetGoogleLanguageDict()
