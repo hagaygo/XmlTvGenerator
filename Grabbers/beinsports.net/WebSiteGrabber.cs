@@ -40,8 +40,8 @@ namespace beinsports.net
                 foreach (var div in html.DocumentNode.Descendants("div").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.StartsWith("gr-0_5 cell-channel channels")))
                 {
                     var classes = div.Attributes["class"].Value.Split(' ');
-                    var channel = classes[classes.Length-1];                    
-                    foreach (var li in  dataDivs[divCounter].Descendants("li"))
+                    var channel = classes[classes.Length - 1];
+                    foreach (var li in dataDivs[divCounter].Descendants("li"))
                     {
                         var time = li.Descendants("time").FirstOrDefault();
                         if (time == null)
@@ -50,15 +50,12 @@ namespace beinsports.net
                         show.Channel = channel;
                         show.StartTime = Convert.ToDateTime(time.Attributes["datetime"].Value);
                         show.StartTime = DateTime.SpecifyKind(show.StartTime, DateTimeKind.Unspecified);
-                        show.StartTime = TimeZoneInfo.ConvertTime(show.StartTime, TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time"), TimeZoneInfo.Utc);                        
-                        var anc = time.NextSibling.NextSibling;
-                        var dvText = anc.Descendants("div").First();
-                        if (anc.Descendants("div").Count() > 1)
-                            dvText = anc.Descendants("div").ToList()[1];
-                        show.Title = dvText.ChildNodes[0].InnerText;
+                        show.StartTime = TimeZoneInfo.ConvertTime(show.StartTime, TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time"), TimeZoneInfo.Utc);
+                        var dvText = li.Descendants("div").First();
+                        show.Title = dvText.ChildNodes[0].InnerText.Trim();
                         var spans = dvText.Descendants("span").ToList();
                         if (spans.Count > 0)
-                            show.Description = spans[0].InnerText;
+                            show.Description = spans[0].InnerText.Trim();
                         shows.Add(show);
                     }
                     divCounter++;
@@ -70,7 +67,7 @@ namespace beinsports.net
                 var channelShows = shows.Where(x => x.Channel == chan).OrderBy(x => x.StartTime).ToList();
                 FixShowsEndTimeByStartTime(channelShows);
                 lst.AddRange(channelShows);
-            }            
+            }
             return lst;
         }
     }
