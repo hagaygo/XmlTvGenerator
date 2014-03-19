@@ -30,7 +30,8 @@ namespace Israel.Rashut2.Org.il
                 channels.Add((Channel)Enum.Parse(typeof(Channel), c.Value));
             }
             var sdElement = doc.Descendants("StartDate").FirstOrDefault();
-            var startDate = sdElement != null && sdElement.Value != null ? DateTime.Now.Date.AddDays(Convert.ToInt32(sdElement.Value)) : DateTime.Now.Date.AddDays(-1);
+            var now = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Unspecified);
+            var startDate = sdElement != null && sdElement.Value != null ? now.Date.AddDays(Convert.ToInt32(sdElement.Value)) : now.Date.AddDays(-1);            
             var edElement = doc.Descendants("EndDate").FirstOrDefault();
             var endDateDays = edElement != null && edElement.Value != null ? Convert.ToInt32(edElement.Value) : 3;
 
@@ -74,20 +75,29 @@ namespace Israel.Rashut2.Org.il
 
             const int childStart = 9;
             var shows = new List<Show>();
-            for ( int i = childStart; i < tbl.ChildNodes.Count; i+=2)
+            for (int i = childStart; i < tbl.ChildNodes.Count; i += 2)
             {
                 var show = new Show();
                 var d = Convert.ToDateTime(Tools.CleanupText(tbl.ChildNodes[i].ChildNodes[1].InnerText));
                 show.StartTime = pp.Date.AddHours(d.Hour).AddMinutes(d.Minute);
                 if (d.Hour < 6) // data is shown from 6 (AM) till next day 6 (AM) so after midnight we need to increase the date
                     show.StartTime = show.StartTime.AddDays(1);
-                show.StartTime = TimeZoneInfo.ConvertTimeToUtc(show.StartTime, TimeZoneInfo.Local);
+                try
+                {
+                    show.StartTime = TimeZoneInfo.ConvertTimeToUtc(show.StartTime, TimeZoneInfo.Local);
+                }
+                catch (Exception ex) // error on the verge of daylight saving start
+                {
+                    _logger.WriteEntry(ex.Message, LogType.Error);
+                    continue; 
+                }
+
                 show.Title = Tools.CleanupText(tbl.ChildNodes[i].ChildNodes[3 + cellDelta].InnerText);
                 var episodeName = Tools.CleanupText(tbl.ChildNodes[i].ChildNodes[5 + cellDelta].InnerText);
                 var episodeNumber = Tools.CleanupText(tbl.ChildNodes[i].ChildNodes[7 + cellDelta].InnerText);
                 var genere = Tools.CleanupText(tbl.ChildNodes[i].ChildNodes[9 + cellDelta].InnerText);
                 show.Description = string.Empty;
-                if (!string.IsNullOrEmpty(episodeName))                
+                if (!string.IsNullOrEmpty(episodeName))
                     show.Description += string.Format("שם הפרק : {0}\n", episodeName);
                 if (!string.IsNullOrEmpty(episodeNumber))
                 {
@@ -97,7 +107,7 @@ namespace Israel.Rashut2.Org.il
                         show.Episode = num;
                 }
                 if (!string.IsNullOrEmpty(genere))
-                    show.Description += string.Format("סוג תכנית : {0}\n", genere);                
+                    show.Description += string.Format("סוג תכנית : {0}\n", genere);
                 shows.Add(show);
             }
 
