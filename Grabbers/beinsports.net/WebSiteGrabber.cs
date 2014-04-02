@@ -35,28 +35,30 @@ namespace beinsports.net
                 var html = new HtmlAgilityPack.HtmlDocument();
                 html.LoadHtml(data.Descendants("body").First().Value);
 
-                var dataDivs = html.DocumentNode.Descendants("div").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.Equals("gr-10_5 carousel")).ToList();
+                var dataDivs = html.DocumentNode.Descendants("div").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.StartsWith("gr-10_5 carousel")).ToList();
                 int divCounter = 0;
                 foreach (var div in html.DocumentNode.Descendants("div").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.StartsWith("gr-0_5 cell-channel channels")))
                 {
                     var classes = div.Attributes["class"].Value.Split(' ');
                     var channel = classes[classes.Length - 1];
-                    foreach (var li in dataDivs[divCounter].Descendants("li"))
+                    if (dataDivs.Count > 0)
                     {
-                        var time = li.Descendants("time").FirstOrDefault();
-                        if (time == null)
-                            continue;
-                        var show = new Show();
-                        show.Channel = channel;
-                        show.StartTime = Convert.ToDateTime(time.Attributes["datetime"].Value);
-                        show.StartTime = DateTime.SpecifyKind(show.StartTime, DateTimeKind.Unspecified);
-                        show.StartTime = TimeZoneInfo.ConvertTime(show.StartTime, TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time"), TimeZoneInfo.Utc);
-                        var dvText = li.Descendants("div").First();
-                        show.Title = dvText.ChildNodes[0].InnerText.Trim();
-                        var spans = dvText.Descendants("span").ToList();
-                        if (spans.Count > 0)
-                            show.Description = spans[0].InnerText.Trim();
-                        shows.Add(show);
+                        foreach (var li in dataDivs[divCounter].Descendants("li"))
+                        {
+                            var time = li.Descendants("time").FirstOrDefault();
+                            if (time == null)
+                                continue;
+                            var show = new Show();
+                            show.Channel = channel;
+                            show.StartTime = Convert.ToDateTime(time.Attributes["datetime"].Value);
+                            show.StartTime = DateTime.SpecifyKind(show.StartTime, DateTimeKind.Utc);                            
+                            var dvText = li.Descendants("div").First();
+                            show.Title = dvText.ChildNodes[0].InnerText.Trim();
+                            var spans = dvText.Descendants("span").ToList();
+                            if (spans.Count > 0)
+                                show.Description = spans[0].InnerText.Trim();
+                            shows.Add(show);
+                        }
                     }
                     divCounter++;
                 }
