@@ -2,13 +2,13 @@
 <Config>
   <Logger Type="File">    
     <Parameters>
-      <Filename>e:\temp\t.log</Filename>
+      <Filename>c:\temp\t.log</Filename>
     </Parameters>
   </Logger>
   <HaltOnGrabberError>false</HaltOnGrabberError>
   <TranslatorCache Type="File" OutputFile="TranslationCache.txt"/>
   <Output>
-    <Path>e:\temp\t.xml</Path>
+    <Path>c:\temp\t.xml</Path>
   </Output>  
   <Grabbers>
     <!-- on grabbers with channels paramters , dont supply channel list to grab all available channels-->
@@ -54,12 +54,12 @@
     <!--<Grabber path="dmi.ae.dll" channelPrefix="DubaiSports_">
       <Translate From="Arabic" To="English"/>
     </Grabber>-->
-    <!--<Grabber path="beinsports.net.dll"  channelPrefix="BEIN_">
+    <Grabber path="beinsports.net.dll"  channelPrefix="BEIN_">
       <Parameters>
         <StartDate>0</StartDate>
         <EndDate>7</EndDate>
       </Parameters>
-    </Grabber>-->
+    </Grabber>
     <!--<Grabber path="rtd.rt.com.dll">      
       <Parameters>        
         <StartDate>0</StartDate>
@@ -72,12 +72,12 @@
         <EndDate>7</EndDate>
       </Parameters>
     </Grabber>-->
-    <Grabber path="reshet.tv.dll" channelPrefix="channel2org">
+    <!--<Grabber path="reshet.tv.dll" channelPrefix="channel2org">
       <Parameters>
         <StartDate>0</StartDate>
         <EndDate>7</EndDate>
       </Parameters>
-    </Grabber>
+    </Grabber>-->
     <!--<Grabber path="jn1.dll"/>-->
     <!--<Grabber path="AlJazeera.Sports.dll" channelPrefix="AJS_"/>-->  
   </Grabbers>

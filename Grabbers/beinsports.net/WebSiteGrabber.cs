@@ -35,21 +35,22 @@ namespace beinsports.net
                 var html = new HtmlAgilityPack.HtmlDocument();
                 html.LoadHtml(data.Descendants("body").First().Value);
 
-                var dataDivs = html.DocumentNode.Descendants("div").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.StartsWith("gr-10_5 carousel")).ToList();
+                var sections = html.DocumentNode.Descendants("section").ToList();
                 int divCounter = 0;
-                foreach (var div in html.DocumentNode.Descendants("div").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value.StartsWith("gr-0_5 cell-channel channels")))
-                {
-                    var classes = div.Attributes["class"].Value.Split(' ');
-                    var channel = classes[classes.Length - 1];
-                    if (dataDivs.Count > 0)
+                foreach (var section in sections)
+                {                    
+                    if (sections.Count > 0)
                     {
-                        foreach (var li in dataDivs[divCounter].Descendants("li"))
+                        foreach (var li in sections[divCounter].Descendants("li"))
                         {
                             var time = li.Descendants("time").FirstOrDefault();
                             if (time == null)
                                 continue;
                             var show = new Show();
-                            show.Channel = channel;
+                            var a = li.Descendants("a").FirstOrDefault();
+                            if (a == null)
+                                continue;
+                            show.Channel = "ch-" + a.Attributes["href"].Value.Split('/')[2];
                             show.StartTime = Convert.ToDateTime(time.Attributes["datetime"].Value);
                             show.StartTime = DateTime.SpecifyKind(show.StartTime, DateTimeKind.Utc);                            
                             var dvText = li.Descendants("div").First();
