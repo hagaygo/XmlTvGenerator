@@ -15,6 +15,7 @@ namespace XmlTvGenerator.Core
             sb.Replace("\r", string.Empty);
             sb.Replace("\n", string.Empty);
             return HttpUtility.HtmlDecode(sb.ToString().Trim()).Trim();
+
         }
     }
 }
