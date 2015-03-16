@@ -65,7 +65,8 @@ namespace CyfraPlus
                         shows.Add(show);
                         r.Read();
                         r.Read();
-                        r.Read();                        
+                        r.Read();
+                        r.Read();
                     }
                 }
 
