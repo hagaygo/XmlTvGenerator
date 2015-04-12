@@ -24,35 +24,29 @@ namespace XmlTvGenerator.Core.Translator
         {
             var cacheText = Cache == null ? null : Cache.Get(from, to, text);
             if (cacheText != null)
-                return cacheText;
-            var web = WebRequest.Create(string.Format("http://translate.google.com/translate_a/t?client=t&sl={1}&tl={2}&hl=en&sc=2&ie=UTF-8&oe=UTF-8&q={0}", HttpUtility.UrlEncode(text), _languageDict[from], _languageDict[to]));
-            try
+                return cacheText;            
+            var web = WebRequest.Create(string.Format("https://translate.google.com/translate_a/single?client=t&sl={1}&tl={2}&hl=en&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t&dt=at&ie=UTF-8&oe=UTF-8&source=btn&q={0}", HttpUtility.UrlEncode(text), _languageDict[from], _languageDict[to]));
+            var res = (HttpWebResponse)web.GetResponse();
+            using (var sr = new StreamReader(res.GetResponseStream()))
             {
-                var res = (HttpWebResponse)web.GetResponse();
-                using (var sr = new StreamReader(res.GetResponseStream()))
+                var resultText = new StringBuilder(sr.ReadToEnd());
+                while (resultText.Length > 0 && resultText[0] == '[')
+                    resultText.Remove(0, 1);
+                while (resultText.Length > 0 && resultText[0] == '"')
+                    resultText.Remove(0, 1);
+                if (resultText.Length > 2)
                 {
-                    var resultText = new StringBuilder(sr.ReadToEnd());
-                    while (resultText.Length > 0 && resultText[0] == '[')
-                        resultText.Remove(0, 1);
-                    while (resultText.Length > 0 && resultText[0] == '"')
-                        resultText.Remove(0, 1);
-                    if (resultText.Length > 2)
-                    {
-                        var idx = resultText.ToString().IndexOf("\"");
-                        string val;
-                        if (idx >= 0)
-                            val =  resultText.ToString().Substring(0,idx).Trim();
-                        else
-                            val = resultText.ToString().Trim();
-                        if (val != null && Cache != null)
-                            Cache.Add(from, to, text, val);
-                    }                    
+                    var idx = resultText.ToString().IndexOf("\"");
+                    string val;
+                    if (idx >= 0)
+                        val = resultText.ToString().Substring(0, idx).Trim();
+                    else
+                        val = resultText.ToString().Trim();
+                    if (val != null && Cache != null)
+                        Cache.Add(from, to, text, val);
                 }
             }
-            catch
-            {                
-                
-            }
+
             return null;
         }
 
