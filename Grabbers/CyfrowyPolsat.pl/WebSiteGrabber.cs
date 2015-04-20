@@ -23,7 +23,7 @@ namespace CyfrowyPolsat.pl
             var pp = (GrabParameters)p;
             logger.WriteEntry("grabbing CyfrowyPolsat.pl channel : " + pp.Channel, LogType.Info);
             var wr = WebRequest.Create(string.Format(URL, pp.Channel.ToString().Replace("_", "-")));
-            wr.Timeout = 30000;
+            wr.Timeout = 5000;
             var res = (HttpWebResponse)wr.GetResponse();
             var doc = new HtmlAgilityPack.HtmlDocument();
             doc.Load(res.GetResponseStream());
@@ -72,9 +72,16 @@ namespace CyfrowyPolsat.pl
             {
                 var p = new GrabParameters();
                 p.Channel = c;
-                var channelShows = Grab(p, logger);
-                FixShowsEndTimeByStartTime(channelShows);
-                shows.AddRange(channelShows);
+                try
+                {
+                    var channelShows = Grab(p, logger);
+                    FixShowsEndTimeByStartTime(channelShows);
+                    shows.AddRange(channelShows);
+                }
+                catch (Exception ex)
+                {
+                    logger.WriteEntry("Error on grabber " + ex.Message, LogType.Error);
+                }                
             }
 
             logger.WriteEntry("Finshed CyfrowyPolsat.pl grab", LogType.Info);
