@@ -15,7 +15,7 @@ namespace CyfrowyPolsat.pl
         cbs_drama,
         cbs_europa,
         cbs_reality,
-        cbs_action,        
+        cbs_action,
         travel_channel,
         arte_hd,
         tve,
@@ -30,7 +30,7 @@ namespace CyfrowyPolsat.pl
         tvp_sport,
         jim_jam_polsat,
         bbc_cbeebies,
-        nsport_hd,        
+        nsport_hd,
         canal_plus_family_hd,
         canal_plus_sport_hd
     }

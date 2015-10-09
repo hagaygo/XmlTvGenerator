@@ -24,8 +24,8 @@ namespace XmlTvGenerator.Core.Translator
         {
             var cacheText = Cache == null ? null : Cache.Get(from, to, text);
             if (cacheText != null)
-                return cacheText;            
-            var web = WebRequest.Create(string.Format("https://translate.google.com/translate_a/single?client=t&sl={1}&tl={2}&hl=en&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t&dt=at&ie=UTF-8&oe=UTF-8&source=btn&q={0}", HttpUtility.UrlEncode(text), _languageDict[from], _languageDict[to]));
+                return cacheText;
+            var web = WebRequest.Create(string.Format("https://translate.google.com/translate_a/single?client=t&sl={1}&tl={2}&hl=en&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t&dt=at&ie=UTF-8&oe=UTF-8&source=btn&tk=tk=587569|977009&q={0}", HttpUtility.UrlEncode(text), _languageDict[from], _languageDict[to]));
             var res = (HttpWebResponse)web.GetResponse();
             using (var sr = new StreamReader(res.GetResponseStream()))
             {
