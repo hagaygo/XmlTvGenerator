@@ -26,7 +26,7 @@ namespace Sky.it
         sky_sport_2_hd = 102,
         sky_sport_3_hd = 103,
         fox_sports_hd = 301,
-        fox_sports_plus_hd = 302,
+        sky_sport_plus_hd = 302,
         supertennis_hd = 401,
 
         comedy_central = 500,
