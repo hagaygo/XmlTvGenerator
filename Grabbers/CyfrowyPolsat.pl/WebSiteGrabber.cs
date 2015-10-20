@@ -40,7 +40,7 @@ namespace CyfrowyPolsat.pl
                 var startTime = Convert.ToDateTime(times[i].InnerText);
                 s.StartTime = DateTime.SpecifyKind(currentNow.Date + Convert.ToDateTime(startTime).TimeOfDay, DateTimeKind.Unspecified);
                 s.StartTime = TimeZoneInfo.ConvertTime(s.StartTime, TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time"), TimeZoneInfo.Utc);
-                if (lst.Count > 0 && s.StartTime < lst[lst.Count - 1].StartTime)
+                if (lst.Count > 0 && s.StartTime <= lst[lst.Count - 1].StartTime)
                 {
                     s.StartTime = s.StartTime.AddDays(1);
                     currentNow = currentNow.AddDays(1);
