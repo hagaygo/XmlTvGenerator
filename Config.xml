@@ -29,8 +29,8 @@
         <EndDate>3</EndDate>        
       </Parameters>  
     </Grabber>-->
-    <Grabber path="CyfrowyPolsat.pl.dll" channelPrefix="CyfrowyPolsat_">
-      <Translate From="Polish" To="English"/>            
+    <Grabber path="CyfrowyPolsat.pl.dll" channelPrefix="CyfrowyPolsat_">      
+      <!--<Translate From="Polish" To="English"/>-->            
     </Grabber>
     <!--<Grabber path="sky.it.dll" channelPrefix="sky.it_">
       <Translate From="Italian" To="English"/>      

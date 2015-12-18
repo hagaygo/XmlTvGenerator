@@ -21,6 +21,9 @@ namespace XmlTvGenerator.Core
                 if (s.StartTime > s.EndTime)
                     s.EndTime = s.StartTime;
             }
+            if (shows.Count >= 1)
+                if (shows[shows.Count -1].EndTime == shows[shows.Count - 1].StartTime)
+                    shows[shows.Count -1].EndTime = shows[shows.Count-1].StartTime.AddHours(2);
         }
     }
 }
