@@ -63,9 +63,9 @@ namespace CyfraPlus
                         show.EndTime = show.StartTime.Add(TimeSpan.FromSeconds(Convert.ToDouble(r.ReadAsInt32())));
                         var num = r.ReadAsInt32();
                         shows.Add(show);
-                        r.Read();
-                        r.Read();
-                        r.Read();
+                        var depth = r.Depth;
+                        while (r.Depth == depth)
+                            r.Read();
                         r.Read();
                     }
                 }
