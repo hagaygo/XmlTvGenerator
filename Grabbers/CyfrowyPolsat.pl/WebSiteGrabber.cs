@@ -22,7 +22,8 @@ namespace CyfrowyPolsat.pl
 
             var pp = (GrabParameters)p;
             logger.WriteEntry("grabbing CyfrowyPolsat.pl channel : " + pp.Channel, LogType.Info);
-            var wr = WebRequest.Create(string.Format(URL, pp.Channel.ToString().Replace("_", "-")));
+            var wr = (HttpWebRequest)WebRequest.Create(string.Format(URL, pp.Channel.ToString().Replace("_", "-")));
+            wr.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0";
             wr.Timeout = 5000;
             var res = (HttpWebResponse)wr.GetResponse();
             var doc = new HtmlAgilityPack.HtmlDocument();
