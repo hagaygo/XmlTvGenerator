@@ -34,12 +34,18 @@ namespace BBC.World.News
                         var show = new Show();
                         show.Channel = "BBC World News";
                         var tokens = line.Split('\t');
-                        show.StartTime = DateTime.SpecifyKind(Convert.ToDateTime(tokens[0]) + Convert.ToDateTime(tokens[1]).TimeOfDay, DateTimeKind.Unspecified);
-                        show.StartTime = TimeZoneInfo.ConvertTime(show.StartTime, TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time"), TimeZoneInfo.Utc);
-                        show.Title = tokens[2];
-                        //show.Episode = string.IsNullOrEmpty(tokens[3]) ? null : (int?)Convert.ToInt32(tokens[3]); // not number
-                        show.Description = tokens[4];
-                        lst.Add(show);
+                        if (tokens.Length >= 5)
+                        {
+                            show.StartTime = DateTime.SpecifyKind(Convert.ToDateTime(tokens[0]) + Convert.ToDateTime(tokens[1]).TimeOfDay, DateTimeKind.Unspecified);
+                            show.StartTime = TimeZoneInfo.ConvertTime(show.StartTime, TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time"), TimeZoneInfo.Utc);
+                            show.Title = tokens[2];                            
+                            show.Description = tokens[4];
+                            lst.Add(show);
+                        }
+                        else
+                        {
+                            _logger.WriteEntry("invalid line in bbcw grabber  : " + line, LogType.Warning);
+                        }
                     }
                 }
                 return lst;
