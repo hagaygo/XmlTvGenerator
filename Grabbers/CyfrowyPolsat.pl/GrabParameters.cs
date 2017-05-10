@@ -9,6 +9,8 @@ namespace CyfrowyPolsat.pl
 {
     public enum Channel
     {
+        // case sensitive !!!
+        rt_documentary,
         boomerang,
         ci_polsat,
         disney_junior,        
@@ -29,7 +31,7 @@ namespace CyfrowyPolsat.pl
         bbc_cbeebies,
         nsport_hd,
         canal_plus_family_hd,
-        canal_plus_sport_hd
+        canal_plus_sport_hd        
     }
 
     public class GrabParameters : GrabParametersBase
