@@ -29,9 +29,9 @@
         <EndDate>3</EndDate>        
       </Parameters>  
     </Grabber>-->
-    <Grabber path="CyfrowyPolsat.pl.dll" channelPrefix="CyfrowyPolsat_">      
+    <!--<Grabber path="CyfrowyPolsat.pl.dll" channelPrefix="CyfrowyPolsat_">-->      
       <!--<Translate From="Polish" To="English"/>-->            
-    </Grabber>
+    <!--</Grabber>-->
     <!--<Grabber path="sky.it.dll" channelPrefix="sky.it_">
       <Translate From="Italian" To="English"/>      
       <Parameters>                   
@@ -60,12 +60,12 @@
         <EndDate>2</EndDate>        
       </Parameters>  
     </Grabber>-->
-    <!--<Grabber path="hot.net.il.dll" channelPrefix="hot.net.il_">
+    <Grabber path="hot.net.il.dll" channelPrefix="hot.net.il_">
       <Parameters>
         <StartDate>-1</StartDate>
         <EndDate>7</EndDate>
       </Parameters>
-    </Grabber>-->
+    </Grabber>
     <!--<Grabber path="reshet.tv.dll" channelPrefix="channel2org">
       <Parameters>
         <StartDate>0</StartDate>

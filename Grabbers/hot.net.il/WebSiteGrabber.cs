@@ -14,9 +14,11 @@ namespace hot.net.il
         Channel1 = 424,
         Channel10 = 425,
         Channel2 = 426,
-        EuroSport = 461,
-        FoxSports = 466,
-        Eurosport2 = 673,
+        //EuroSport = 461,
+        //FoxSports = 466,
+        //Eurosport2 = 673,
+        Channel20 = 766,
+        Channel24 = 578,
     }
 
     public class WebSiteGrabber : GrabberBase
