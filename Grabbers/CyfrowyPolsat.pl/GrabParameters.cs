@@ -31,7 +31,9 @@ namespace CyfrowyPolsat.pl
         bbc_cbeebies,
         nsport_hd,
         canal_plus_family_hd,
-        canal_plus_sport_hd        
+        canal_plus_sport_hd,
+        discovery_life,
+        euronews
     }
 
     public class GrabParameters : GrabParametersBase
