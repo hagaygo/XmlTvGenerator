@@ -11,12 +11,10 @@ namespace hot.net.il
 {
     public enum Channel
     {
-        Channel1 = 424,
-        Channel10 = 425,
-        Channel2 = 426,
-        //EuroSport = 461,
-        //FoxSports = 466,
-        //Eurosport2 = 673,
+        Kan11 = 869,
+        Eser14 = 859,
+        Keshet12 = 861,
+        Reshet13 = 863,        
         Channel20 = 766,
         Channel24 = 578,
     }
