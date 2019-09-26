@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Xml.Linq;
+using TimeZoneConverter;
 using XmlTvGenerator.Core;
 
 namespace Sky.it
@@ -49,8 +50,8 @@ namespace Sky.it
                             var show = new Show();
                             show.Channel = pp.Channel.ToString();
                             show.Title = a.InnerText.Trim();
-                            show.StartTime = DateTime.SpecifyKind(date + Convert.ToDateTime(par.InnerText.Trim()).TimeOfDay, DateTimeKind.Unspecified);
-                            show.StartTime = TimeZoneInfo.ConvertTime(show.StartTime, TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time"), TimeZoneInfo.Utc);
+                            show.StartTime = DateTime.SpecifyKind(date + Convert.ToDateTime(par.InnerText.Trim()).TimeOfDay, DateTimeKind.Unspecified);                            
+                            show.StartTime = TimeZoneInfo.ConvertTime(show.StartTime, TZConvert.GetTimeZoneInfo("Central European Standard Time"), TimeZoneInfo.Utc);
                             shows.Add(show);
                         }
                     }

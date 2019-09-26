@@ -10,18 +10,18 @@ using XmlTvGenerator.Core;
 namespace hot.net.il
 {
     public enum Channel
-    {
-        Kan11 = 869,        
-        Keshet12 = 861,
-        Reshet13 = 863,        
+    {           
         Channel20 = 766,
+        Kan11 = 839,
+        Keshet12 = 861,
+        Reshet13 = 863,
         Channel24 = 578,
         Makan33 = 841,
         I24English = 907,
         France24 = 468,
         BBCWorldNews = 441,
         Cnn = 451,
-        Bloomberg = 443,        
+        Bloomberg = 443,
         DwNews = 771,
         Euronews = 335,
     }

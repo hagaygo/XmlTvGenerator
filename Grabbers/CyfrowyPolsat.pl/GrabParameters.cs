@@ -19,10 +19,7 @@ namespace CyfrowyPolsat.pl
         cbs_action,
         travel_channel,
         arte_hd,
-        tve,        
-        bbc_hd,
-        universal_channel,
-        scifi_universal,        
+        tve,                
         al_jazeera,
         polsat_sport_extra_hd,
         polsat_sport_hd,
@@ -33,7 +30,8 @@ namespace CyfrowyPolsat.pl
         canal_plus_family_hd,
         canal_plus_sport_hd,
         discovery_life,
-        euronews
+        euronews,
+        press_tv
     }
 
     public class GrabParameters : GrabParametersBase

@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BBC.World.News", "Grabbers\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CyfrowyPolsat.pl", "Grabbers\CyfrowyPolsat.pl\CyfrowyPolsat.pl.csproj", "{3F885DEC-F68D-4F81-8D37-D67AFBB4C4EA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sky.it", "Grabbers\Sky.it\Sky.it.csproj", "{8B0D17AB-82FC-4903-93D9-24D1AB134CC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sky.it", "Grabbers\Sky.it\sky.it.csproj", "{8B0D17AB-82FC-4903-93D9-24D1AB134CC2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CyfraPlus", "Grabbers\CyfraPlus\CyfraPlus.csproj", "{121D2560-D1C2-4A4B-912D-304850A9BD40}"
 EndProject

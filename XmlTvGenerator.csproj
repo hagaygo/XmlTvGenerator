@@ -31,7 +31,7 @@
     <ProjectReference Include="Grabbers\Israel.Rashut2.Org.il\Israel.Rashut2.Org.il.csproj" />
     <ProjectReference Include="Grabbers\Reshet.tv\Reshet.tv.csproj" />
     <ProjectReference Include="Grabbers\rtd.rt.com\rtd.rt.com.csproj" />
-    <ProjectReference Include="Grabbers\Sky.it\Sky.it.csproj" />
+    <ProjectReference Include="Grabbers\Sky.it\sky.it.csproj" />
     <ProjectReference Include="XmlTvGenerator.Core\XmlTvGenerator.Core.csproj" />
   </ItemGroup>
 

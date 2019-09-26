@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Xml.Linq;
+using TimeZoneConverter;
 using XmlTvGenerator.Core;
 
 namespace CyfrowyPolsat.pl
@@ -18,7 +19,7 @@ namespace CyfrowyPolsat.pl
 
         public List<Show> Grab(GrabParametersBase p, ILogger logger)
         {
-            currentNow = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.Local, TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time"));
+            currentNow = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.Local, TZConvert.GetTimeZoneInfo("Central European Standard Time"));
 
             var pp = (GrabParameters)p;
             logger.WriteEntry("grabbing CyfrowyPolsat.pl channel : " + pp.Channel, LogType.Info);
@@ -40,7 +41,7 @@ namespace CyfrowyPolsat.pl
                 s.Channel = pp.Channel.ToString();
                 var startTime = Convert.ToDateTime(times[i].InnerText);
                 s.StartTime = DateTime.SpecifyKind(currentNow.Date + Convert.ToDateTime(startTime).TimeOfDay, DateTimeKind.Unspecified);
-                s.StartTime = TimeZoneInfo.ConvertTime(s.StartTime, TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time"), TimeZoneInfo.Utc);
+                s.StartTime = TimeZoneInfo.ConvertTime(s.StartTime, TZConvert.GetTimeZoneInfo("Central European Standard Time"), TimeZoneInfo.Utc);
                 if (lst.Count > 0 && s.StartTime <= lst[lst.Count - 1].StartTime)
                 {
                     s.StartTime = s.StartTime.AddDays(1);

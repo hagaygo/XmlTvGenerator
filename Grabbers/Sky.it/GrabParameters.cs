@@ -75,6 +75,8 @@ namespace Sky.it
         russia_today = 543,
         bloomberg_ = 544,
         sky_cinema_PPLLUUSS_24_hd = 545,
+        al_jazeera_international_ = 546,
+        rt_doc_hd = 547
     }
 
     public class GrabParameters : GrabParametersBase

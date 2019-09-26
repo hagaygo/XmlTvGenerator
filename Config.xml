@@ -22,19 +22,19 @@
         </Channels>
       </Parameters>  
     </Grabber>-->
-    <Grabber path="CyfraPlus.dll" channelPrefix="cyfra+">
+    <!--<Grabber path="CyfraPlus.dll" channelPrefix="cyfra+">
       <Translate From="Polish" To="English"/>      
       <Parameters>        
         <StartDate>-1</StartDate>
         <EndDate>3</EndDate>        
       </Parameters>  
-    </Grabber>
-    <!--<Grabber path="CyfrowyPolsat.pl.dll" channelPrefix="CyfrowyPolsat_">-->      
+    </Grabber>-->
+    <Grabber path="CyfrowyPolsat.pl.dll" channelPrefix="CyfrowyPolsat_">
       <!--<Translate From="Polish" To="English"/>-->            
-    <!--</Grabber>-->
-    <!--<Grabber path="sky.it.dll" channelPrefix="sky.it_">
-      <Translate From="Italian" To="English"/>      
-      <Parameters>                   
+    </Grabber>
+    <!--<Grabber path="sky.it.dll" channelPrefix="sky.it_">-->
+      <!--<Translate From="Italian" To="English"/>-->      
+      <!--<Parameters>                   
         <Channels>
           <Channel>bloomberg_</Channel>
           <Channel>cnbc</Channel>
@@ -43,6 +43,8 @@
 		      <Channel>russia_today</Channel>
 		      <Channel>supertennis_hd</Channel>
 		      <Channel>i24news</Channel>
+          <Channel>al_jazeera_international_</Channel>
+          <Channel>rt_doc_hd</Channel>          
         </Channels>
       </Parameters>
     </Grabber>-->
