@@ -15,7 +15,7 @@ namespace XmlTvGenerator.Core.Translator.Cache
         public FileCacheManager(string filename)
         {
             if (Path.GetFileName(filename) == filename)
-                CachePath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\" + filename;
+                CachePath = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + Path.DirectorySeparatorChar , filename);
             else
                 CachePath = filename;
             if (File.Exists(CachePath))

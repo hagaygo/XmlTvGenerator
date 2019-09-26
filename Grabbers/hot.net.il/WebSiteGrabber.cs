@@ -11,12 +11,19 @@ namespace hot.net.il
 {
     public enum Channel
     {
-        Kan11 = 869,
-        Eser14 = 859,
+        Kan11 = 869,        
         Keshet12 = 861,
         Reshet13 = 863,        
         Channel20 = 766,
         Channel24 = 578,
+        Makan33 = 841,
+        I24English = 907,
+        France24 = 468,
+        BBCWorldNews = 441,
+        Cnn = 451,
+        Bloomberg = 443,        
+        DwNews = 771,
+        Euronews = 335,
     }
 
     public class WebSiteGrabber : GrabberBase
@@ -48,7 +55,10 @@ namespace hot.net.il
                     var tds = tr.Descendants("td").ToList();
                     var show = new Show();
                     show.Title = tds[2].InnerText;
-                    show.StartTime = DateTime.SpecifyKind(Convert.ToDateTime(tds[4].InnerText),DateTimeKind.Unspecified);
+                    var dateText = tds[4].InnerText;
+                    if (dateText.Contains(","))
+                        dateText = dateText.Substring(dateText.IndexOf(",") + 1).Trim();
+                    show.StartTime = DateTime.SpecifyKind(Convert.ToDateTime(dateText),DateTimeKind.Unspecified);
                     show.StartTime = TimeZoneInfo.ConvertTime(show.StartTime, TimeZoneInfo.Local, TimeZoneInfo.Utc);
                     show.EndTime = show.StartTime.Add(Convert.ToDateTime(tds[5].InnerText).TimeOfDay);
                     show.Channel = c.ToString();

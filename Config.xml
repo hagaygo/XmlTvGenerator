@@ -22,13 +22,13 @@
         </Channels>
       </Parameters>  
     </Grabber>-->
-    <!--<Grabber path="CyfraPlus.dll" channelPrefix="cyfra+">
+    <Grabber path="CyfraPlus.dll" channelPrefix="cyfra+">
       <Translate From="Polish" To="English"/>      
       <Parameters>        
         <StartDate>-1</StartDate>
         <EndDate>3</EndDate>        
       </Parameters>  
-    </Grabber>-->
+    </Grabber>
     <!--<Grabber path="CyfrowyPolsat.pl.dll" channelPrefix="CyfrowyPolsat_">-->      
       <!--<Translate From="Polish" To="English"/>-->            
     <!--</Grabber>-->
@@ -38,6 +38,11 @@
         <Channels>
           <Channel>bloomberg_</Channel>
           <Channel>cnbc</Channel>
+          <Channel>france_24_english__</Channel>
+          <Channel>cnn_intl</Channel>
+		      <Channel>russia_today</Channel>
+		      <Channel>supertennis_hd</Channel>
+		      <Channel>i24news</Channel>
         </Channels>
       </Parameters>
     </Grabber>-->
@@ -60,12 +65,12 @@
         <EndDate>2</EndDate>        
       </Parameters>  
     </Grabber>-->
-    <Grabber path="hot.net.il.dll" channelPrefix="hot.net.il_">
+    <!--<Grabber path="hot.net.il.dll" channelPrefix="hot.net.il_">
       <Parameters>
         <StartDate>-1</StartDate>
         <EndDate>7</EndDate>
       </Parameters>
-    </Grabber>
+    </Grabber>-->
     <!--<Grabber path="reshet.tv.dll" channelPrefix="channel2org">
       <Parameters>
         <StartDate>0</StartDate>

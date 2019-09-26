@@ -30,7 +30,7 @@ namespace XmlTvGenerator
             {
                 _config = new Config();
 
-                var configPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\config.xml";
+                var configPath = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + Path.DirectorySeparatorChar, "config.xml");
                 if (File.Exists(configPath))
                 {
                     var doc = XDocument.Load(configPath);
@@ -79,6 +79,8 @@ namespace XmlTvGenerator
                     if (HaltOnGrabberErrorElement != null && !string.IsNullOrEmpty(HaltOnGrabberErrorElement.Value))
                         _config.HaltOnGrabberError = Convert.ToBoolean(HaltOnGrabberErrorElement.Value);
                 }
+                else
+                    Console.WriteLine("config file not found");
             }
             return _config;
         }
