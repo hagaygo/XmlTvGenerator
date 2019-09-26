@@ -28,7 +28,7 @@ namespace XmlTvGenerator.Core.Translator
             
             var lockObject = new object();
             var lastTime = DateTime.Now;
-            Parallel.ForEach(shows, new ParallelOptions() { MaxDegreeOfParallelism = 1 }, show =>
+            Parallel.ForEach(shows, new ParallelOptions() { MaxDegreeOfParallelism = 8 }, show =>
             {
                 show.Title = Tools.CleanupText(Translate(sourceLang, targetLang, show.Title));
                 if (!string.IsNullOrEmpty(show.Description))

@@ -40,32 +40,40 @@ namespace XmlTvGenerator.Core.Translator
         {
             var cacheText = Cache == null ? null : Cache.Get(from, to, text);
             if (cacheText != null)
-                return cacheText;            
+                return cacheText;
 
-            var web = (HttpWebRequest)WebRequest.Create(string.Format("https://translate.googleapis.com/translate_a/single?client=gtx&sl={1}&tl={2}&dt=t&q={0}", HttpUtility.UrlEncode(text), _languageDict[from], _languageDict[to]));
+            var web = (HttpWebRequest)WebRequest.Create(string.Format("https://translate.googleapis.com/translate_a/single?client={3}&sl={1}&tl={2}&dt=t&q={0}", HttpUtility.UrlEncode(text), _languageDict[from], _languageDict[to], Guid.NewGuid().ToString()));
+            //var web = (HttpWebRequest)WebRequest.Create(string.Format("https://translate.googleapis.com/translate_a/single?client=gtx&sl={1}&tl={2}&dt=t&q={0}", HttpUtility.UrlEncode(text), _languageDict[from], _languageDict[to]));
             //var web = (HttpWebRequest)WebRequest.Create(string.Format("https://translate.google.com/translate_a/single?client=webapp&sl={1}&tl=iw&hl={2}&dt=at&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t&pc=1&otf=1&ssel=4&tsel=4&kc=1&tk=200673.370917&q={0}", HttpUtility.UrlEncode(text), _languageDict[from], _languageDict[to]));
             //var web = (HttpWebRequest)WebRequest.Create(string.Format("https://translate.google.com/translate_a/single?client=webapp&sl={1}&tl={2}&dt=t&q={0}", HttpUtility.UrlEncode(text), _languageDict[from], _languageDict[to]));
-            
+
             web.UserAgent = GetRandomUserAgent();
-            var res = (HttpWebResponse)web.GetResponse();
-            using (var sr = new StreamReader(res.GetResponseStream()))
+            try
             {
-                var resultText = new StringBuilder(sr.ReadToEnd());
-                while (resultText.Length > 0 && resultText[0] == '[')
-                    resultText.Remove(0, 1);
-                while (resultText.Length > 0 && resultText[0] == '"')
-                    resultText.Remove(0, 1);
-                if (resultText.Length > 2)
+                var res = (HttpWebResponse)web.GetResponse();
+                using (var sr = new StreamReader(res.GetResponseStream()))
                 {
-                    var idx = resultText.ToString().IndexOf("\"");
-                    string val;
-                    if (idx >= 0)
-                        val = resultText.ToString().Substring(0, idx).Trim();
-                    else
-                        val = resultText.ToString().Trim();
-                    if (val != null && Cache != null)
-                        Cache.Add(from, to, text, val);
+                    var resultText = new StringBuilder(sr.ReadToEnd());
+                    while (resultText.Length > 0 && resultText[0] == '[')
+                        resultText.Remove(0, 1);
+                    while (resultText.Length > 0 && resultText[0] == '"')
+                        resultText.Remove(0, 1);
+                    if (resultText.Length > 2)
+                    {
+                        var idx = resultText.ToString().IndexOf("\"");
+                        string val;
+                        if (idx >= 0)
+                            val = resultText.ToString().Substring(0, idx).Trim();
+                        else
+                            val = resultText.ToString().Trim();
+                        if (val != null && Cache != null)
+                            Cache.Add(from, to, text, val);
+                    }
                 }
+            }
+            catch
+            {
+                return null;
             }
 
             return null;
