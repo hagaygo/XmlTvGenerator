@@ -78,7 +78,11 @@ namespace XmlTvGenerator
                                 if (grabber.Translation != null)
                                 {
                                     Logger.WriteEntry("Starting translation of " + t.FullName, LogType.Info);
-                                    var g = new GoogleTranslator(fileCache);
+                                    TranslatorBase g;
+                                    if (grabber.Translation.YandexAPIKeysFilePath != null)                                    
+                                        g = new YandexTranslator(fileCache,grabber.Translation.MaxDegreeOfParallelism, grabber.Translation.YandexAPIKeysFilePath);
+                                    else                                    
+                                        g = new GoogleTranslator(fileCache, grabber.Translation.MaxDegreeOfParallelism);                                    
                                     g.TranslateShows(shows, grabber.Translation.From, grabber.Translation.To, logger);
                                     Logger.WriteEntry("Finished translation of " + t.FullName, LogType.Info);
                                 }

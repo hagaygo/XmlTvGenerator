@@ -22,16 +22,21 @@
         </Channels>
       </Parameters>  
     </Grabber>-->
-    <!--<Grabber path="CyfraPlus.dll" channelPrefix="cyfra+">
-      <Translate From="Polish" To="English"/>      
+    <Grabber path="CyfraPlus.dll" channelPrefix="cyfra+">
+      <Translate From="Polish" To="English" MaxDegreeOfParallelism="8" YandexAPIKeysFilePath="yandexApiKeys.txt"/>      
       <Parameters>        
         <StartDate>-1</StartDate>
         <EndDate>3</EndDate>        
       </Parameters>  
-    </Grabber>-->
-    <Grabber path="CyfrowyPolsat.pl.dll" channelPrefix="CyfrowyPolsat_">
-      <!--<Translate From="Polish" To="English"/>-->            
     </Grabber>
+    <!--<Grabber path="CyfrowyPolsat.pl.dll" channelPrefix="CyfrowyPolsat_">
+      <Translate From="Polish" To="English" MaxDegreeOfParallelism="8" YandexAPIKeysFilePath="yandexApiKeys.txt"/>
+      <Parameters>                   
+        <Channels>          
+          <Channel>press_tv</Channel>		      
+        </Channels>
+      </Parameters>
+    </Grabber>-->
     <!--<Grabber path="sky.it.dll" channelPrefix="sky.it_">-->
       <!--<Translate From="Italian" To="English"/>-->      
       <!--<Parameters>                   

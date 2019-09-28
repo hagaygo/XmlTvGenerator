@@ -12,9 +12,12 @@ namespace XmlTvGenerator.Core.Translator
     {
         protected CacheManagerBase Cache { get; private set; }
 
-        public TranslatorBase(CacheManagerBase cache)
+        int _maxDegreeOfParallelism = 1;
+
+        public TranslatorBase(CacheManagerBase cache, int maxDegreeOfParallelism)
         {
             Cache = cache;
+            _maxDegreeOfParallelism = maxDegreeOfParallelism;
         }
 
 
@@ -28,25 +31,33 @@ namespace XmlTvGenerator.Core.Translator
             
             var lockObject = new object();
             var lastTime = DateTime.Now;
-            Parallel.ForEach(shows, new ParallelOptions() { MaxDegreeOfParallelism = 8 }, show =>
+            try
             {
-                show.Title = Tools.CleanupText(Translate(sourceLang, targetLang, show.Title));
-                if (!string.IsNullOrEmpty(show.Description))
-                    show.Description = Tools.CleanupText(Translate(sourceLang, targetLang, show.Description));
-                lock (lockObject)
+                Parallel.ForEach(shows, new ParallelOptions() { MaxDegreeOfParallelism = _maxDegreeOfParallelism }, show =>
                 {
-                    counter++;
-                }
-                if (DateTime.Now - lastTime > TimeSpan.FromSeconds(30))
-                {
-                    lastTime = DateTime.Now;
-                    var text = string.Format("Translator Finished {0}/{1} {2:0.00}%", counter, shows.Count, counter * 100.0 / shows.Count);
-                    Debug.WriteLine(text);
+                    show.Title = Tools.CleanupText(Translate(sourceLang, targetLang, show.Title));
+                    if (!string.IsNullOrEmpty(show.Description))
+                        show.Description = Tools.CleanupText(Translate(sourceLang, targetLang, show.Description));
                     lock (lockObject)
-                        logger.WriteEntry(text, LogType.Info);
+                    {
+                        counter++;
+                    }
+                    if (DateTime.Now - lastTime > TimeSpan.FromSeconds(10))
+                    {
+                        lastTime = DateTime.Now;
+                        var text = string.Format("Translator Finished {0}/{1} {2:0.00}%", counter, shows.Count, counter * 100.0 / shows.Count);
+                        Debug.WriteLine(text);
+                        lock (lockObject)
+                            logger.WriteEntry(text, LogType.Info);
+                    }
                 }
+                );
             }
-            );
+            catch
+            {
+                Cache.SaveCache();
+                throw;
+            }
             Cache.SaveCache();
             Debug.WriteLine("Finished Translating.");
         }

@@ -47,6 +47,10 @@ namespace XmlTvGenerator
                             g.Translation = new GrabberTranslationSettings();
                             g.Translation.From = (Language)Enum.Parse(typeof(Language), translationElement.Attribute("From").Value);
                             g.Translation.To = (Language)Enum.Parse(typeof(Language), translationElement.Attribute("To").Value);
+                            if (translationElement.Attribute("MaxDegreeOfParallelism") != null)
+                                g.Translation.MaxDegreeOfParallelism = Convert.ToInt32(translationElement.Attribute("MaxDegreeOfParallelism").Value);
+                            if (translationElement.Attribute("YandexAPIKeysFilePath") != null)
+                                g.Translation.YandexAPIKeysFilePath = translationElement.Attribute("YandexAPIKeysFilePath").Value;
                         }
                         var paramElement = grabber.Descendants("Parameters").FirstOrDefault();
                         if (paramElement != null)
@@ -98,5 +102,7 @@ namespace XmlTvGenerator
     {
         public Language From { get; set; }
         public Language To { get; set;  }
+        public string YandexAPIKeysFilePath { get; set; }
+        public int MaxDegreeOfParallelism { get; set; } = 1;
     }
 }
