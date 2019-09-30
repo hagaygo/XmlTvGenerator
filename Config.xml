@@ -25,7 +25,7 @@
     <Grabber path="CyfraPlus.dll" channelPrefix="cyfra+">
       <Translate From="Polish" To="English" MaxDegreeOfParallelism="8" YandexAPIKeysFilePath="yandexApiKeys.txt"/>      
       <Parameters>        
-        <StartDate>-1</StartDate>
+        <StartDate>0</StartDate>
         <EndDate>3</EndDate>        
       </Parameters>  
     </Grabber>

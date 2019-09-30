@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,20 +12,23 @@ using XmlTvGenerator.Core;
 namespace CyfraPlus
 {
     public class WebSiteGrabber : GrabberBase
-    {
-        const string urlFormat = "http://ncplus.pl/~/epgjson/{0}.ejson";
+    {        
+        const string urlFormat = "https://pl.canalplus.com/api/epg/schedule";
         const string DateFormat = "yyyy-MM-dd";
 
-
-
-        List<Show> Grab(GrabParametersBase p,ILogger logger)
+        List<Show> Grab(GrabParametersBase p, ILogger logger)
         {
             var pp = (CyfraPlus.GrabParameters)p;
             var shows = new List<Show>();
-            var wr = WebRequest.Create(string.Format(urlFormat, pp.Date.ToString(DateFormat)));
+            var wr = WebRequest.Create(urlFormat);
+            wr.Method = "POST";
+            wr.ContentType = "application/json";
+            using (var sw = new StreamWriter(wr.GetRequestStream()))
+            {
+                sw.Write("{\"start_date\":\"" + pp.Date.ToString(DateFormat) + "T00:00:00\",\"end_date\":\"" + pp.Date.AddDays(1).ToString(DateFormat) + "T00:00:00\"}");
+            }
             logger.WriteEntry(string.Format("Grabbing Cyfra+ date {0} ...", pp.Date.ToString(DateFormat)), LogType.Info);
-            var res = (HttpWebResponse)wr.GetResponse();            
-            const int ChannelDepth = 2;
+            var res = (HttpWebResponse)wr.GetResponse();
 
             using (var sr = new StreamReader(res.GetResponseStream()))
             {
@@ -42,37 +46,30 @@ namespace CyfraPlus
                         logger.WriteEntry(string.Format("Downloaded {0:#,##0} bytes so far", data.Length), LogType.Info);
                     }
                 }
-                
-                var r = new Newtonsoft.Json.JsonTextReader(new StringReader(data.ToString()));
 
-                while (r.Read())
+                var obj = JObject.Parse(new StringReader(data.ToString()).ReadToEnd());
+                var channels = (JArray)obj["data"];
+
+                foreach (var channel in channels)
                 {
-                    r.Read();
-                    var channelNumber = r.ReadAsInt32();
-                    var channelName = r.ReadAsString();
-                    r.Read();
-                    r.Read();
-                    while (r.Depth > ChannelDepth)
+                    var programs = channel["Programs"];
+                    var channelName = _channelsDict[channel.Value<int>("channel_id")];
+                    foreach (var program in programs)
                     {
                         var show = new Show();
-                        show.Channel = channelName.Trim();
-                        var programId = r.ReadAsInt32();
-                        show.Title = Tools.CleanupText(r.ReadAsString());
-
-                        show.StartTime = new DateTime(1970, 1, 1).Add(TimeSpan.FromSeconds(r.ReadAsInt32().Value));                        
-                        show.EndTime = show.StartTime.Add(TimeSpan.FromSeconds(Convert.ToDouble(r.ReadAsInt32())));
-                        var num = r.ReadAsInt32();
+                        show.Channel = channelName;
+                        show.Title = Tools.CleanupText(program["name"].ToString());
+                        show.StartTime = DateTime.Parse(program["start_date"].ToString()).ToUniversalTime();
+                        show.EndTime = DateTime.Parse(program["end_date"].ToString()).ToUniversalTime();
                         shows.Add(show);
-                        var depth = r.Depth;
-                        while (r.Depth == depth)
-                            r.Read();
-                        r.Read();
                     }
-                }
 
-            }                        
+                }
+            }
             return shows;
         }
+
+        Dictionary<int, string> _channelsDict;
 
         public override List<Show> Grab(string xmlParameters, ILogger logger)
         {
@@ -82,12 +79,37 @@ namespace CyfraPlus
             var startDateDiff = sdElement != null && sdElement.Value != null ? Convert.ToInt32(sdElement.Value) : -1;
             var edElement = doc.Descendants("EndDate").FirstOrDefault();
             var endDateDays = edElement != null && edElement.Value != null ? Convert.ToInt32(edElement.Value) : 3;
+
+            _channelsDict = GetChannelsDict(logger);
+
             for (int i = startDateDiff; i < endDateDays; i++)
             {
                 var p = new GrabParameters() { Date = DateTime.Now.Date.AddDays(i) };
                 shows.AddRange(Grab(p, logger));
             }
             return shows;
+        }
+
+        private Dictionary<int, string> GetChannelsDict(ILogger logger)
+        {
+            var wr = WebRequest.CreateHttp("https://pl.canalplus.com/api/epg/channels");
+            try
+            {
+                var res = (HttpWebResponse)wr.GetResponse();
+
+                var dict = new Dictionary<int, string>();
+                var obj = JObject.Parse(new StreamReader(res.GetResponseStream()).ReadToEnd())["data"];
+                foreach (var channel in obj)
+                {
+                    dict[channel.Value<int>("id")] = channel.Value<string>("name");
+                }
+                return dict;
+            }
+            catch (Exception ex)
+            {
+                logger.WriteEntry("failed to get cyfra channels " + ex.Message, LogType.Error);
+                throw;
+            }
         }
     }
 

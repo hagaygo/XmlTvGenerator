@@ -35,9 +35,20 @@ namespace XmlTvGenerator.Core.Translator
             {
                 Parallel.ForEach(shows, new ParallelOptions() { MaxDegreeOfParallelism = _maxDegreeOfParallelism }, show =>
                 {
-                    show.Title = Tools.CleanupText(Translate(sourceLang, targetLang, show.Title));
-                    if (!string.IsNullOrEmpty(show.Description))
-                        show.Description = Tools.CleanupText(Translate(sourceLang, targetLang, show.Description));
+                    try
+                    {
+                        show.Title = Tools.CleanupText(Translate(sourceLang, targetLang, show.Title));
+                        if (!string.IsNullOrEmpty(show.Description))
+                            show.Description = Tools.CleanupText(Translate(sourceLang, targetLang, show.Description));
+                    }
+                    catch
+                    {
+                        show.Title = "(Translation Failed" + show.Title;
+                        lock (lockObject)
+                        {
+                            logger.WriteEntry("Translation failed for " + show.Title, LogType.Warning);
+                        }
+                    }
                     lock (lockObject)
                     {
                         counter++;
@@ -48,7 +59,9 @@ namespace XmlTvGenerator.Core.Translator
                         var text = string.Format("Translator Finished {0}/{1} {2:0.00}%", counter, shows.Count, counter * 100.0 / shows.Count);
                         Debug.WriteLine(text);
                         lock (lockObject)
-                            logger.WriteEntry(text, LogType.Info);
+                        {
+                            logger.WriteEntry(text, LogType.Info);                            
+                        }
                     }
                 }
                 );
