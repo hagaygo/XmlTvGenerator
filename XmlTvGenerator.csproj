@@ -8,12 +8,15 @@
   <ItemGroup>
     <Compile Remove="3rd Party\**" />
     <Compile Remove="Grabbers\**" />
+    <Compile Remove="publish\**" />
     <Compile Remove="XmlTvGenerator.Core\**" />
     <EmbeddedResource Remove="3rd Party\**" />
     <EmbeddedResource Remove="Grabbers\**" />
+    <EmbeddedResource Remove="publish\**" />
     <EmbeddedResource Remove="XmlTvGenerator.Core\**" />
     <None Remove="3rd Party\**" />
     <None Remove="Grabbers\**" />
+    <None Remove="publish\**" />
     <None Remove="XmlTvGenerator.Core\**" />
   </ItemGroup>
 

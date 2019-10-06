@@ -10,12 +10,13 @@ using XmlTvGenerator.Core;
 namespace hot.net.il
 {
     public enum Channel
-    {           
+    {
         Channel20 = 766,
         Kan11 = 839,
         Keshet12 = 861,
         Reshet13 = 863,
         Channel24 = 578,
+        ShoppingChannel21 = 574,
         Makan33 = 841,
         I24English = 907,
         France24 = 468,
@@ -28,15 +29,15 @@ namespace hot.net.il
 
     public class WebSiteGrabber : GrabberBase
     {
-        int _pageSize = 100;
+        const int PageSize = 100;
 
         const string url = "http://www.hot.net.il/PageHandlers/LineUpAdvanceSearch.aspx?text=&channel={0}&genre=-1&ageRating=-1&publishYear=-1&productionCountry=-1&startDate={1}&endDate={2}&currentPage=1&pageSize={3}&isOrderByDate=true&lcid=1037&pageIndex=1";
         const string DateFormat = "dd/MM/yyyy";
 
 
-        string getUrl(Channel c, int startDateDiff, int endDateDays)
+        string getUrl(Channel c, int startDateDiff, int endDateDays, int pageSize)
         {
-            return string.Format(url, (int)c, DateTime.Now.Date.AddDays(startDateDiff).ToString(DateFormat), DateTime.Now.Date.AddDays(endDateDays).ToString(DateFormat), _pageSize);
+            return string.Format(url, (int)c, DateTime.Now.Date.AddDays(startDateDiff).ToString(DateFormat), DateTime.Now.Date.AddDays(endDateDays).ToString(DateFormat), pageSize);
         }
 
         public override List<Show> Grab(string xmlParameters, ILogger logger)
@@ -50,7 +51,7 @@ namespace hot.net.il
 
             foreach (Channel c in Enum.GetValues(typeof(Channel)))
             {
-                var wr = WebRequest.Create(getUrl(c, startDateDiff, endDateDays));
+                var wr = WebRequest.Create(getUrl(c, startDateDiff, endDateDays, PageSize));
                 wr.Timeout = 30000;
                 logger.WriteEntry(string.Format("Grabbing hot.net.il channel {0} ", c.ToString()), LogType.Info);
                 var res = (HttpWebResponse)wr.GetResponse();
@@ -60,9 +61,8 @@ namespace hot.net.il
 
                 if (html.DocumentNode.InnerHtml.StartsWith("<p id=\"noData\""))
                 {
-                    logger.WriteEntry(string.Format("not Data Regrabing hot.net.il channel {0} ", c.ToString()), LogType.Info);
-                    _pageSize = 10;
-                    wr = WebRequest.Create(getUrl(c, startDateDiff, endDateDays));
+                    logger.WriteEntry(string.Format("not Data Regrabing hot.net.il channel {0} ", c.ToString()), LogType.Info);                    
+                    wr = WebRequest.Create(getUrl(c, startDateDiff, endDateDays, 10));
                     wr.Timeout = 30000;
                     res = (HttpWebResponse)wr.GetResponse();
                     html = new HtmlAgilityPack.HtmlDocument();
