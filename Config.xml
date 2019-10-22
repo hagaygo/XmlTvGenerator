@@ -1,91 +1,54 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <Config>
   <Logger Type="File">    
     <Parameters>
-      <Filename>c:\temp\t.log</Filename>
+      <Filename>c:\temp\xmltv.log</Filename>
     </Parameters>
   </Logger>
   <HaltOnGrabberError>false</HaltOnGrabberError>
   <TranslatorCache Type="File" OutputFile="TranslationCache.txt"/>
   <Output>
-    <Path>c:\temp\t.xml</Path>
+    <Path>c:\temp\xmltv.xml</Path>
   </Output>  
   <Grabbers>
-    <!-- on grabbers with channels paramters , dont supply channel list to grab all available channels-->
-    <!--<Grabber path="Israel.Rashut2.Org.il.dll" channelPrefix="Rashut2">
-      <Parameters>        
-        <StartDate>-1</StartDate>
-        <EndDate>14</EndDate>
-        <Channels>
-          <Channel>Channel2</Channel>
-          <Channel>Channel10</Channel>
-        </Channels>
-      </Parameters>  
-    </Grabber>-->
-    <Grabber path="CyfraPlus.dll" channelPrefix="cyfra+">
-      <Translate From="Polish" To="English" MaxDegreeOfParallelism="8" YandexAPIKeysFilePath="yandexApiKeys.txt"/>      
+    <!--<Grabber path="CyfraPlus.dll" channelPrefix="cyfra+">
+	<Translate From="Polish" To="English" MaxDegreeOfParallelism="8" YandexAPIKeysFilePath="yandexApiKeys.txt"/>
       <Parameters>        
         <StartDate>0</StartDate>
-        <EndDate>3</EndDate>        
+        <EndDate>4</EndDate>        
       </Parameters>  
     </Grabber>
-    <!--<Grabber path="CyfrowyPolsat.pl.dll" channelPrefix="CyfrowyPolsat_">
-      <Translate From="Polish" To="English" MaxDegreeOfParallelism="8" YandexAPIKeysFilePath="yandexApiKeys.txt"/>
-      <Parameters>                   
-        <Channels>          
+    <Grabber path="CyfrowyPolsat.pl.dll" channelPrefix="CyfrowyPolsat_">
+	<Translate From="Polish" To="English" MaxDegreeOfParallelism="8" YandexAPIKeysFilePath="yandexApiKeys.txt"/>
+	<Parameters>                   
+        <Channels>
           <Channel>press_tv</Channel>		      
+          <Channel>euronews</Channel>		      
         </Channels>
       </Parameters>
-    </Grabber>-->
-    <!--<Grabber path="sky.it.dll" channelPrefix="sky.it_">-->
-      <!--<Translate From="Italian" To="English"/>-->      
-      <!--<Parameters>                   
+    </Grabber>
+    <Grabber path="sky.it.dll" channelPrefix="sky.it_">
+      <Parameters>                   
         <Channels>
           <Channel>bloomberg_</Channel>
           <Channel>cnbc</Channel>
           <Channel>france_24_english__</Channel>
           <Channel>cnn_intl</Channel>
-		      <Channel>russia_today</Channel>
-		      <Channel>supertennis_hd</Channel>
-		      <Channel>i24news</Channel>
-          <Channel>al_jazeera_international_</Channel>
+	   <Channel>russia_today</Channel>
+	   <Channel>supertennis_hd</Channel>
+	   <Channel>i24news</Channel>
+   	   <Channel>al_jazeera_international_</Channel>
           <Channel>rt_doc_hd</Channel>          
         </Channels>
       </Parameters>
     </Grabber>-->
-    <!--<Grabber path="BBC.World.News.dll">
-      <Parameters>                           
-      </Parameters>
-    </Grabber>-->
-    <!--<Grabber path="dmi.ae.dll" channelPrefix="DubaiSports_">
-      <Translate From="Arabic" To="English"/>
-    </Grabber>-->
-    <!--<Grabber path="beinsports.net.dll"  channelPrefix="BEIN_">
-      <Parameters>
-        <StartDate>0</StartDate>
-        <EndDate>7</EndDate>
-      </Parameters>
-    </Grabber>-->
-    <!--<Grabber path="rtd.rt.com.dll">      
-      <Parameters>        
-        <StartDate>0</StartDate>
-        <EndDate>2</EndDate>        
-      </Parameters>  
-    </Grabber>-->
     <!--<Grabber path="hot.net.il.dll" channelPrefix="hot.net.il_">
       <Parameters>
-        <StartDate>-1</StartDate>
-        <EndDate>7</EndDate>
-      </Parameters>
-    </Grabber>-->
-    <!--<Grabber path="reshet.tv.dll" channelPrefix="channel2org">
-      <Parameters>
         <StartDate>0</StartDate>
         <EndDate>7</EndDate>
       </Parameters>
     </Grabber>-->
-    <!--<Grabber path="jn1.dll"/>-->
-    <!--<Grabber path="AlJazeera.Sports.dll" channelPrefix="AJS_"/>-->  
+    <Grabber path="Sport5.co.il.dll" channelPrefix="sport5.co.il_"/>          
   </Grabbers>
 </Config>
 
