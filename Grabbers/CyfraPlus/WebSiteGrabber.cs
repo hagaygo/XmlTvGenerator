@@ -13,7 +13,7 @@ namespace CyfraPlus
 {
     public class WebSiteGrabber : GrabberBase
     {        
-        const string urlFormat = "https://pl.canalplus.com/api/epg/schedule";
+        const string urlFormat = "https://pl.canalplus.com/iapi/tv-schedule/Schedule";
         const string DateFormat = "yyyy-MM-dd";
 
         List<Show> Grab(GrabParametersBase p, ILogger logger)
@@ -92,7 +92,7 @@ namespace CyfraPlus
 
         private Dictionary<int, string> GetChannelsDict(ILogger logger)
         {
-            var wr = WebRequest.CreateHttp("https://pl.canalplus.com/api/epg/channels");
+            var wr = WebRequest.CreateHttp("https://pl.canalplus.com/iapi/tv-schedule/AllChannels");
             try
             {
                 var res = (HttpWebResponse)wr.GetResponse();
