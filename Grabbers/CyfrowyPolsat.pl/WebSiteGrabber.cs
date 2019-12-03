@@ -12,8 +12,8 @@ using XmlTvGenerator.Core;
 namespace CyfrowyPolsat.pl
 {
     public class WebSiteGrabber : GrabberBase
-    {
-        const string URL = "http://www.cyfrowypolsat.pl/program-tv/{0}";
+    {        
+        const string URL = "https://www.cyfrowypolsat.pl/redir/program-tv/program-tv-pionowy-single-channel.cp?chN={0}";        
 
         DateTime currentNow;
 
@@ -25,7 +25,7 @@ namespace CyfrowyPolsat.pl
             logger.WriteEntry("grabbing CyfrowyPolsat.pl channel : " + pp.Channel, LogType.Info);
             var wr = (HttpWebRequest)WebRequest.Create(string.Format(URL, pp.Channel.ToString().Replace("_", "-")));
             wr.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0";
-            wr.Timeout = 5000;
+            wr.Timeout = 10000;
             var res = (HttpWebResponse)wr.GetResponse();
             var doc = new HtmlAgilityPack.HtmlDocument();
             doc.Load(res.GetResponseStream());
@@ -58,17 +58,16 @@ namespace CyfrowyPolsat.pl
         {
             logger.WriteEntry("Started CyfrowyPolsat.pl grab", LogType.Info);
 
-            var selectedChannels = new List<Channel>();
+            var selectedChannels = new List<string>();
             var shows = new List<Show>();
             if (!string.IsNullOrEmpty(xmlParameters))
             {
                 var doc = XDocument.Parse(xmlParameters);
                 foreach (var c in doc.Descendants("Channel"))
-                    selectedChannels.Add((Channel)Enum.Parse(typeof(Channel), c.Value));
+                    selectedChannels.Add(c.Value);
             }
             if (selectedChannels.Count == 0) // no channel specified , lets take all available channels
-                foreach (Channel c in Enum.GetValues(typeof(Channel)))
-                    selectedChannels.Add(c);
+                selectedChannels.AddRange(GrabParameters.AvailableChannels);                
 
             foreach (var c in selectedChannels)
             {

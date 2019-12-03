@@ -7,35 +7,40 @@ using XmlTvGenerator.Core;
 
 namespace CyfrowyPolsat.pl
 {
-    public enum Channel
-    {
-        // case sensitive !!!
-        rt_documentary,
-        boomerang,
-        ci_polsat,
-        disney_junior,        
-        cbs_europa,
-        cbs_reality,
-        cbs_action,
-        travel_channel,
-        arte_hd,
-        tve,                
-        al_jazeera,
-        polsat_sport_extra_hd,
-        polsat_sport_hd,
-        tvp_sport,
-        jim_jam_polsat,
-        bbc_cbeebies,
-        nsport_hd,
-        canal_plus_family_hd,
-        canal_plus_sport_hd,
-        discovery_life,
-        euronews,
-        press_tv
-    }
-
     public class GrabParameters : GrabParametersBase
     {
-        public Channel Channel { get; set; }        
+        public static List<string> AvailableChannels = new List<string>
+    {
+        // case sensitive !!!
+        "rt-doc-hd",
+        "rt-hd",
+        "sky-news",
+        "boomerang",
+        "cnn",
+        "cnbc",        
+        "france-24-en-hd",
+        "ci-polsat",
+        "disney-junior",
+        "cbs-europa",
+        "cbs-reality",
+        "cbs-action",
+        "travel-channel",
+        "arte-hd",
+        "tve",
+        "al-jazeera-hd",
+        "polsat-sport-extra-hd",
+        "polsat-sport-hd",
+        "tvp-sport",
+        "jim-jam-polsat",
+        "bbc-cbeebies",
+        "nsport-hd",
+        "canal-plus-family-hd",
+        "canal-plus-sport-hd",
+        "discovery-life",
+        "euronews-hd",
+        "press-tv",
+        "bloomberg_(ang.)",
+    };
+        public string Channel { get; set; }
     }
 }

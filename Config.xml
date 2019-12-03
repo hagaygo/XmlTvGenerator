@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Config>
-  <Logger Type="File">    
+  <Logger Type="File">
     <Parameters>
       <Filename>c:\temp\xmltv.log</Filename>
     </Parameters>
@@ -9,25 +9,33 @@
   <TranslatorCache Type="File" OutputFile="TranslationCache.txt"/>
   <Output>
     <Path>c:\temp\xmltv.xml</Path>
-  </Output>  
+  </Output>
   <Grabbers>
-    <!--<Grabber path="CyfraPlus.dll" channelPrefix="cyfra+">
+    <!--  <Grabber path="CyfraPlus.dll" channelPrefix="cyfra+">
 	<Translate From="Polish" To="English" MaxDegreeOfParallelism="8" YandexAPIKeysFilePath="yandexApiKeys.txt"/>
       <Parameters>        
         <StartDate>0</StartDate>
         <EndDate>4</EndDate>        
       </Parameters>  
-    </Grabber>
+    </Grabber>-->
     <Grabber path="CyfrowyPolsat.pl.dll" channelPrefix="CyfrowyPolsat_">
-	<Translate From="Polish" To="English" MaxDegreeOfParallelism="8" YandexAPIKeysFilePath="yandexApiKeys.txt"/>
-	<Parameters>                   
+      <!--<Translate From="Polish" To="English" MaxDegreeOfParallelism="4" YandexAPIKeysFilePath="yandexApiKeys.txt"/>-->
+      <Parameters>
         <Channels>
-          <Channel>press_tv</Channel>		      
-          <Channel>euronews</Channel>		      
+          <Channel>press-tv</Channel>
+          <Channel>al-jazeera-hd</Channel>
+          <Channel>france-24-en-hd</Channel>
+          <Channel>sky-news</Channel>
+          <Channel>euronews-hd</Channel>
+          <Channel>cnbc</Channel>
+          <Channel>cnn</Channel>
+          <Channel>bloomberg_(ang.)</Channel>
+          <Channel>rt-doc-hd</Channel>
+          <Channel>rt-hd</Channel>
         </Channels>
       </Parameters>
     </Grabber>
-    <Grabber path="sky.it.dll" channelPrefix="sky.it_">
+    <!--<Grabber path="sky.it.dll" channelPrefix="sky.it_">
       <Parameters>                   
         <Channels>
           <Channel>bloomberg_</Channel>
@@ -41,14 +49,14 @@
           <Channel>rt_doc_hd</Channel>          
         </Channels>
       </Parameters>
-    </Grabber>-->
-    <!--<Grabber path="hot.net.il.dll" channelPrefix="hot.net.il_">
+    </Grabber>
+    <Grabber path="hot.net.il.dll" channelPrefix="hot.net.il_">
       <Parameters>
         <StartDate>0</StartDate>
         <EndDate>7</EndDate>
       </Parameters>
-    </Grabber>-->
-    <Grabber path="Sport5.co.il.dll" channelPrefix="sport5.co.il_"/>          
+    </Grabber>
+    <Grabber path="Sport5.co.il.dll" channelPrefix="sport5.co.il_"/>-->
   </Grabbers>
 </Config>
 
