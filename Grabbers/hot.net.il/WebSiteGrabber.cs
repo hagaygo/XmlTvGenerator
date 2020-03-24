@@ -68,20 +68,27 @@ namespace hot.net.il
                     html = new HtmlAgilityPack.HtmlDocument();
                     html.Load(res.GetResponseStream(), Encoding.UTF8);
                 }
-
+                
                 foreach (var tr in html.DocumentNode.Descendants("tr").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value == "redtr_off"))
                 {
                     var tds = tr.Descendants("td").ToList();
                     var show = new Show();
-                    show.Title = tds[2].InnerText;
-                    var dateText = tds[4].InnerText;
-                    if (dateText.Contains(","))
-                        dateText = dateText.Substring(dateText.IndexOf(",") + 1).Trim();
-                    show.StartTime = DateTime.SpecifyKind(Convert.ToDateTime(dateText),DateTimeKind.Unspecified);
-                    show.StartTime = TimeZoneInfo.ConvertTime(show.StartTime, TimeZoneInfo.Local, TimeZoneInfo.Utc);
-                    show.EndTime = show.StartTime.Add(Convert.ToDateTime(tds[5].InnerText).TimeOfDay);
-                    show.Channel = c.ToString();
-                    shows.Add(show);
+                    try
+                    {                        
+                        show.Title = tds[2].InnerText;
+                        var dateText = tds[4].InnerText;
+                        if (dateText.Contains(","))
+                            dateText = dateText.Substring(dateText.IndexOf(",") + 1).Trim();
+                        show.StartTime = DateTime.SpecifyKind(Convert.ToDateTime(dateText), DateTimeKind.Unspecified);
+                        show.StartTime = TimeZoneInfo.ConvertTime(show.StartTime, TimeZoneInfo.Local, TimeZoneInfo.Utc);
+                        show.EndTime = show.StartTime.Add(Convert.ToDateTime(tds[5].InnerText).TimeOfDay);
+                        show.Channel = c.ToString();
+                        shows.Add(show);
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        logger.WriteEntry(ex.Message, LogType.Error);
+                    }
                 }
             }
             return shows;
