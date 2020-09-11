@@ -61,7 +61,7 @@ namespace hot.net.il
 
                 if (html.DocumentNode.InnerHtml.StartsWith("<p id=\"noData\""))
                 {
-                    logger.WriteEntry(string.Format("not Data Regrabing hot.net.il channel {0} ", c.ToString()), LogType.Info);                    
+                    logger.WriteEntry(string.Format("no Data Regrabing hot.net.il channel {0} ", c.ToString()), LogType.Info);                    
                     wr = WebRequest.Create(getUrl(c, startDateDiff, endDateDays, 10));
                     wr.Timeout = 30000;
                     res = (HttpWebResponse)wr.GetResponse();
