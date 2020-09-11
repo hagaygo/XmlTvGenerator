@@ -49,6 +49,7 @@ namespace hot.net.il
         Nick=579,
         NickJunior=710,
         Junior=513,
+        TeenNick=792
     }
 
     public class WebSiteGrabber : GrabberBase
