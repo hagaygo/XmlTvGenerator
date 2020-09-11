@@ -18,8 +18,8 @@
         <EndDate>4</EndDate>        
       </Parameters>  
     </Grabber>-->
-    <Grabber path="CyfrowyPolsat.pl.dll" channelPrefix="CyfrowyPolsat_">
-      <!--<Translate From="Polish" To="English" MaxDegreeOfParallelism="4" YandexAPIKeysFilePath="yandexApiKeys.txt"/>-->
+    <!--<Grabber path="CyfrowyPolsat.pl.dll" channelPrefix="CyfrowyPolsat_">
+      <Translate From="Polish" To="English" MaxDegreeOfParallelism="4" YandexAPIKeysFilePath="yandexApiKeys.txt"/>
       <Parameters>
         <Channels>
           <Channel>press-tv</Channel>
@@ -34,7 +34,7 @@
           <Channel>rt-hd</Channel>
         </Channels>
       </Parameters>
-    </Grabber>
+    </Grabber>-->
     <!--<Grabber path="sky.it.dll" channelPrefix="sky.it_">
       <Parameters>                   
         <Channels>
@@ -49,14 +49,14 @@
           <Channel>rt_doc_hd</Channel>          
         </Channels>
       </Parameters>
-    </Grabber>
+    </Grabber>-->
     <Grabber path="hot.net.il.dll" channelPrefix="hot.net.il_">
       <Parameters>
         <StartDate>0</StartDate>
         <EndDate>7</EndDate>
       </Parameters>
     </Grabber>
-    <Grabber path="Sport5.co.il.dll" channelPrefix="sport5.co.il_"/>-->
+    <!--<Grabber path="Sport5.co.il.dll" channelPrefix="sport5.co.il_"/>-->
   </Grabbers>
 </Config>
 

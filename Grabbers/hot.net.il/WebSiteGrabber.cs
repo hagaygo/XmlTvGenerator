@@ -25,6 +25,30 @@ namespace hot.net.il
         Bloomberg = 443,
         DwNews = 771,
         Euronews = 335,
+        Hot3 = 477,
+        IsraelPlus=431,
+        HomePlus=567,
+        One1=685,
+        Sport1=580,
+        Sport2=581,
+        Sport3=826,
+        Sport4=828,
+        Sport5=582,
+        Sport5Plus=583,
+        Sport5Gold=428,
+        Sport5PlusLive=429,
+        EuroSport1=461,
+        EuroSport2=673,
+        One2 = 912,
+        Hop=591,
+        HopYaldut=592,
+        DisneyJunior=751,
+        Kidz=871,
+        Disney=566,
+        Zoom=738,
+        Nick=579,
+        NickJunior=710,
+        Junior=513,
     }
 
     public class WebSiteGrabber : GrabberBase
@@ -51,44 +75,51 @@ namespace hot.net.il
 
             foreach (Channel c in Enum.GetValues(typeof(Channel)))
             {
-                var wr = WebRequest.Create(getUrl(c, startDateDiff, endDateDays, PageSize));
-                wr.Timeout = 30000;
-                logger.WriteEntry(string.Format("Grabbing hot.net.il channel {0} ", c.ToString()), LogType.Info);
-                var res = (HttpWebResponse)wr.GetResponse();
+                var ps = PageSize;
 
-                var html = new HtmlAgilityPack.HtmlDocument();
-                html.Load(res.GetResponseStream(), Encoding.UTF8);
-
-                if (html.DocumentNode.InnerHtml.StartsWith("<p id=\"noData\""))
+                while (ps >= 0)
                 {
-                    logger.WriteEntry(string.Format("no Data Regrabing hot.net.il channel {0} ", c.ToString()), LogType.Info);                    
-                    wr = WebRequest.Create(getUrl(c, startDateDiff, endDateDays, 10));
+                    var wr = WebRequest.Create(getUrl(c, startDateDiff, endDateDays, ps));
                     wr.Timeout = 30000;
-                    res = (HttpWebResponse)wr.GetResponse();
-                    html = new HtmlAgilityPack.HtmlDocument();
+                    logger.WriteEntry(string.Format("Grabbing hot.net.il channel {0} ", c.ToString()), LogType.Info);
+                    var res = (HttpWebResponse)wr.GetResponse();
+
+                    var html = new HtmlAgilityPack.HtmlDocument();
                     html.Load(res.GetResponseStream(), Encoding.UTF8);
-                }
-                
-                foreach (var tr in html.DocumentNode.Descendants("tr").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value == "redtr_off"))
-                {
-                    var tds = tr.Descendants("td").ToList();
-                    var show = new Show();
-                    try
-                    {                        
-                        show.Title = tds[2].InnerText;
-                        var dateText = tds[4].InnerText;
-                        if (dateText.Contains(","))
-                            dateText = dateText.Substring(dateText.IndexOf(",") + 1).Trim();
-                        show.StartTime = DateTime.SpecifyKind(Convert.ToDateTime(dateText), DateTimeKind.Unspecified);
-                        show.StartTime = TimeZoneInfo.ConvertTime(show.StartTime, TimeZoneInfo.Local, TimeZoneInfo.Utc);
-                        show.EndTime = show.StartTime.Add(Convert.ToDateTime(tds[5].InnerText).TimeOfDay);
-                        show.Channel = c.ToString();
-                        shows.Add(show);
-                    }
-                    catch (ArgumentException ex)
+
+                    if (html.DocumentNode.InnerHtml.StartsWith("<p id=\"noData\""))
                     {
-                        logger.WriteEntry(ex.Message, LogType.Error);
+                        logger.WriteEntry(string.Format("no Data for page size = {1} , Regrabing hot.net.il channel {0} ", c.ToString(), ps), LogType.Info);
+                        if (ps <= 20)
+                            ps -= 10;
+                        else
+                            ps -= 20;                        
+                        continue;
                     }
+
+                    foreach (var tr in html.DocumentNode.Descendants("tr").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value == "redtr_off"))
+                    {
+                        var tds = tr.Descendants("td").ToList();
+                        var show = new Show();
+                        try
+                        {
+                            show.Title = tds[2].InnerText;
+                            var dateText = tds[4].InnerText;
+                            if (dateText.Contains(","))
+                                dateText = dateText.Substring(dateText.IndexOf(",") + 1).Trim();
+                            show.StartTime = DateTime.SpecifyKind(Convert.ToDateTime(dateText), DateTimeKind.Unspecified);
+                            show.StartTime = TimeZoneInfo.ConvertTime(show.StartTime, TimeZoneInfo.Local, TimeZoneInfo.Utc);
+                            show.EndTime = show.StartTime.Add(Convert.ToDateTime(tds[5].InnerText).TimeOfDay);
+                            show.Channel = c.ToString();
+                            shows.Add(show);
+                        }
+                        catch (ArgumentException ex)
+                        {
+                            logger.WriteEntry(ex.Message, LogType.Error);
+                        }
+                    }
+
+                    break;
                 }
             }
             return shows;
