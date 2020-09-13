@@ -11,6 +11,12 @@
     <Path>c:\temp\xmltv.xml</Path>
   </Output>
   <Grabbers>
+      <Grabber path="beinsports.net.dll" channelPrefix="beinsports.net_">	
+      <Parameters>        
+        <StartDate>0</StartDate>
+        <EndDate>2</EndDate>        
+      </Parameters>  
+    </Grabber>
     <!--  <Grabber path="CyfraPlus.dll" channelPrefix="cyfra+">
 	<Translate From="Polish" To="English" MaxDegreeOfParallelism="8" YandexAPIKeysFilePath="yandexApiKeys.txt"/>
       <Parameters>        
@@ -50,12 +56,12 @@
         </Channels>
       </Parameters>
     </Grabber>-->
-    <Grabber path="hot.net.il.dll" channelPrefix="hot.net.il_">
+    <!--<Grabber path="hot.net.il.dll" channelPrefix="hot.net.il_">
       <Parameters>
         <StartDate>0</StartDate>
         <EndDate>7</EndDate>
       </Parameters>
-    </Grabber>
+    </Grabber>-->
     <!--<Grabber path="Sport5.co.il.dll" channelPrefix="sport5.co.il_"/>-->
   </Grabbers>
 </Config>
