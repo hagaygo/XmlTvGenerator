@@ -33,7 +33,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reshet.tv", "Grabbers\Reshe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XmlTvGenerator.Core", "XmlTvGenerator.Core\XmlTvGenerator.Core.csproj", "{154005DE-0D7C-47CD-8AA4-C9451B74392E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sport5.co.il", "Grabbers\Sport5.co.il\Sport5.co.il.csproj", "{AFEC8583-4CF2-403C-9779-669E8935C70F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sport5.co.il", "Grabbers\Sport5.co.il\Sport5.co.il.csproj", "{AFEC8583-4CF2-403C-9779-669E8935C70F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "streamingtvguides.com", "Grabbers\streamingtvguides.com\streamingtvguides.com.csproj", "{8D194350-0A52-43EC-BEEF-61804342CA5C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,6 +95,10 @@ Global
 		{AFEC8583-4CF2-403C-9779-669E8935C70F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AFEC8583-4CF2-403C-9779-669E8935C70F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFEC8583-4CF2-403C-9779-669E8935C70F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D194350-0A52-43EC-BEEF-61804342CA5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D194350-0A52-43EC-BEEF-61804342CA5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D194350-0A52-43EC-BEEF-61804342CA5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D194350-0A52-43EC-BEEF-61804342CA5C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -111,6 +117,7 @@ Global
 		{E919AE88-E0E2-4578-B114-8B6C33EDD5EF} = {91759C7E-1E12-4A1D-BFA5-0D2179FE2068}
 		{154005DE-0D7C-47CD-8AA4-C9451B74392E} = {B47EF749-18F2-4FF0-A1A6-118E0CF326BE}
 		{AFEC8583-4CF2-403C-9779-669E8935C70F} = {91759C7E-1E12-4A1D-BFA5-0D2179FE2068}
+		{8D194350-0A52-43EC-BEEF-61804342CA5C} = {91759C7E-1E12-4A1D-BFA5-0D2179FE2068}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FD415635-BE73-4FE0-AE58-F8A8B260569B}
