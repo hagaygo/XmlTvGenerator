@@ -26,30 +26,35 @@ namespace hot.net.il
         DwNews = 771,
         Euronews = 335,
         Hot3 = 477,
-        IsraelPlus=431,
-        HomePlus=567,
-        One1=685,
-        Sport1=580,
-        Sport2=581,
-        Sport3=826,
-        Sport4=828,
-        Sport5=582,
-        Sport5Plus=583,
-        Sport5Gold=428,
-        Sport5PlusLive=429,
-        EuroSport1=461,
-        EuroSport2=673,
+        IsraelPlus = 431,
+        HomePlus = 567,
+        One1 = 685,
+        Sport1 = 580,
+        Sport2 = 581,
+        Sport3 = 826,
+        Sport4 = 828,
+        Sport5 = 582,
+        Sport5Plus = 583,
+        Sport5Gold = 428,
+        Sport5PlusLive = 429,
+        EuroSport1 = 461,
+        EuroSport2 = 673,
         One2 = 912,
-        Hop=591,
-        HopYaldut=592,
-        DisneyJunior=751,
-        Kidz=871,
-        Disney=566,
-        Zoom=738,
-        Nick=579,
-        NickJunior=710,
-        Junior=513,
-        TeenNick=792
+        Hop = 591,
+        HopYaldut = 592,
+        DisneyJunior = 751,
+        Kidz = 871,
+        Disney = 566,
+        Zoom = 738,
+        Nick = 579,
+        NickJunior = 710,
+        Junior = 513,
+        TeenNick = 792,
+        Sport5HD = 544,
+        SkyNews = 542,
+        FoxNews = 465,
+        FoxBusiness = 791,
+        Mtv = 522
     }
 
     public class WebSiteGrabber : GrabberBase
@@ -78,11 +83,11 @@ namespace hot.net.il
             {
                 var ps = PageSize;
 
-                while (ps >= 0)
+                while (ps > 0)
                 {
                     var wr = WebRequest.Create(getUrl(c, startDateDiff, endDateDays, ps));
                     wr.Timeout = 30000;
-                    logger.WriteEntry(string.Format("Grabbing hot.net.il channel {0} ", c.ToString()), LogType.Info);
+                    logger.WriteEntry(string.Format("Grabbing hot.net.il channel {0} , page size = {1}", c.ToString(), ps), LogType.Info);
                     var res = (HttpWebResponse)wr.GetResponse();
 
                     var html = new HtmlAgilityPack.HtmlDocument();
