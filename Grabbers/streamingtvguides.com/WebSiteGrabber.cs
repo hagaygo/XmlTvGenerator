@@ -35,9 +35,18 @@ namespace streamingtvguides.com
 
         public override List<Show> Grab(string xmlParameters, ILogger logger)
         {
+            var channels = Enum.GetValues(typeof(Channels)).OfType<Object>().Select(x => x.ToString()).ToList();
+
+            var doc = XDocument.Parse(xmlParameters);
+            var channelsElement = doc.Descendants("Channels").FirstOrDefault();
+            if (channelsElement != null)
+            {
+                channels = channelsElement.Elements().Where(x => x.Name == "Channel").Select(x => x.Value).ToList();
+            }            
+
             var shows = new List<Show>();            
 
-            foreach (var channel in Enum.GetValues(typeof(Channels)))
+            foreach (var channel in channels)
             {
                 try
                 {
