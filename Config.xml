@@ -11,8 +11,14 @@
     <Path>c:\temp\xmltv.xml</Path>
   </Output>
   <Grabbers>
-    <Grabber path="streamingtvguides.com.dll" channelPrefix="streamingtvguides.com_">      
+    <Grabber path="telegraph.co.uk.dll" channelPrefix="telegraph.co.uk_">
+      <Parameters>
+        <StartDate>0</StartDate>
+        <EndDate>2</EndDate>
+      </Parameters>
     </Grabber>
+    <!--<Grabber path="streamingtvguides.com.dll" channelPrefix="streamingtvguides.com_">      
+    </Grabber>-->
     <!--<Grabber path="beinsports.net.dll" channelPrefix="beinsports.net_">	
       <Parameters>        
         <StartDate>0</StartDate>

@@ -7,6 +7,18 @@ namespace XmlTvGenerator.Core
 {
     public abstract class GrabberBase
     {
+        public DateTime FromUnixTime(long unixTime)
+        {
+            var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            return epoch.AddSeconds(unixTime);
+        }
+
+        public long ToUnixTime(DateTime date)
+        {
+            var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            return Convert.ToInt64((date - epoch).TotalSeconds);
+        }
+
         public abstract List<Show> Grab(string xmlParameters, ILogger logger);
 
         protected void FixShowsEndTimeByStartTime(List<Show> shows)

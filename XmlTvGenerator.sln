@@ -35,7 +35,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XmlTvGenerator.Core", "XmlT
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sport5.co.il", "Grabbers\Sport5.co.il\Sport5.co.il.csproj", "{AFEC8583-4CF2-403C-9779-669E8935C70F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "streamingtvguides.com", "Grabbers\streamingtvguides.com\streamingtvguides.com.csproj", "{8D194350-0A52-43EC-BEEF-61804342CA5C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "streamingtvguides.com", "Grabbers\streamingtvguides.com\streamingtvguides.com.csproj", "{8D194350-0A52-43EC-BEEF-61804342CA5C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "telegraph.co.uk", "Grabbers\telegraph.co.uk\telegraph.co.uk.csproj", "{CEEA630E-C3CC-4DD5-8E59-74412A997078}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -99,6 +101,10 @@ Global
 		{8D194350-0A52-43EC-BEEF-61804342CA5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D194350-0A52-43EC-BEEF-61804342CA5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D194350-0A52-43EC-BEEF-61804342CA5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CEEA630E-C3CC-4DD5-8E59-74412A997078}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEEA630E-C3CC-4DD5-8E59-74412A997078}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEEA630E-C3CC-4DD5-8E59-74412A997078}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEEA630E-C3CC-4DD5-8E59-74412A997078}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -118,6 +124,7 @@ Global
 		{154005DE-0D7C-47CD-8AA4-C9451B74392E} = {B47EF749-18F2-4FF0-A1A6-118E0CF326BE}
 		{AFEC8583-4CF2-403C-9779-669E8935C70F} = {91759C7E-1E12-4A1D-BFA5-0D2179FE2068}
 		{8D194350-0A52-43EC-BEEF-61804342CA5C} = {91759C7E-1E12-4A1D-BFA5-0D2179FE2068}
+		{CEEA630E-C3CC-4DD5-8E59-74412A997078} = {91759C7E-1E12-4A1D-BFA5-0D2179FE2068}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FD415635-BE73-4FE0-AE58-F8A8B260569B}

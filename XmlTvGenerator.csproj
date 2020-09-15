@@ -37,6 +37,7 @@
     <ProjectReference Include="Grabbers\Sky.it\sky.it.csproj" />
     <ProjectReference Include="Grabbers\Sport5.co.il\Sport5.co.il.csproj" />
     <ProjectReference Include="Grabbers\streamingtvguides.com\streamingtvguides.com.csproj" />
+    <ProjectReference Include="Grabbers\telegraph.co.uk\telegraph.co.uk.csproj" />
     <ProjectReference Include="XmlTvGenerator.Core\XmlTvGenerator.Core.csproj" />
   </ItemGroup>
 
