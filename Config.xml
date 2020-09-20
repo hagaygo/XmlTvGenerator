@@ -83,7 +83,7 @@
         </Channels>
       </Parameters>
     </Grabber>-->
-    <Grabber path="hot.net.il.dll" channelPrefix="hot.net.il_">
+    <!--<Grabber path="hot.net.il.dll" channelPrefix="hot.net.il_">
       <Parameters>
         <StartDate>0</StartDate>
         <EndDate>2</EndDate>
@@ -92,6 +92,18 @@
           <Channel ID="531">National Geographic</Channel>
           <Channel ID="742">Discovery Science</Channel>
         </ExtraChannels>
+      </Parameters>
+    </Grabber>-->
+    <Grabber path="yes.co.il.dll" channelPrefix="yes.co.il_">
+      <Parameters>
+        <DaysForward>2</DaysForward>        
+        <Channels>
+          <Channel ID="CH09">Sport 3</Channel>
+          <Channel ID="PT23">Sport 2</Channel>
+          <Channel ID="PT53">Sport 1</Channel>
+          <Channel ID="CH11">Sport 4</Channel>
+          <Channel ID="CH54">Sport 5 Stars</Channel>
+        </Channels>
       </Parameters>
     </Grabber>
     <!--<Grabber path="Sport5.co.il.dll" channelPrefix="sport5.co.il_"/>-->
