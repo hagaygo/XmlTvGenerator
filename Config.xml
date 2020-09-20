@@ -17,7 +17,7 @@
         <EndDate>2</EndDate>
       </Parameters>
     </Grabber>-->
-    <Grabber path="streamingtvguides.com.dll" channelPrefix="streamingtvguides.com_">
+    <!--<Grabber path="streamingtvguides.com.dll" channelPrefix="streamingtvguides.com_">
       <Parameters>
         <Channels>
           <Channel>fs1</Channel>
@@ -37,7 +37,7 @@
           <Channel>cbssn</Channel>
         </Channels>
       </Parameters>
-    </Grabber>
+    </Grabber>-->
     <!--<Grabber path="beinsports.net.dll" channelPrefix="beinsports.net_">	
       <Parameters>        
         <StartDate>0</StartDate>
@@ -83,12 +83,17 @@
         </Channels>
       </Parameters>
     </Grabber>-->
-    <!--<Grabber path="hot.net.il.dll" channelPrefix="hot.net.il_">
+    <Grabber path="hot.net.il.dll" channelPrefix="hot.net.il_">
       <Parameters>
         <StartDate>0</StartDate>
-        <EndDate>7</EndDate>
+        <EndDate>2</EndDate>
+        <ExtraChannels>
+          <Channel ID="530">National Geographic Wild</Channel>
+          <Channel ID="531">National Geographic</Channel>
+          <Channel ID="742">Discovery Science</Channel>
+        </ExtraChannels>
       </Parameters>
-    </Grabber>-->
+    </Grabber>
     <!--<Grabber path="Sport5.co.il.dll" channelPrefix="sport5.co.il_"/>-->
   </Grabbers>
 </Config>

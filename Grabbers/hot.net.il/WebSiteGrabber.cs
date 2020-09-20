@@ -65,9 +65,9 @@ namespace hot.net.il
         const string DateFormat = "dd/MM/yyyy";
 
 
-        string getUrl(Channel c, int startDateDiff, int endDateDays, int pageSize)
+        string getUrl(int channelId, int startDateDiff, int endDateDays, int pageSize)
         {
-            return string.Format(url, (int)c, DateTime.Now.Date.AddDays(startDateDiff).ToString(DateFormat), DateTime.Now.Date.AddDays(endDateDays).ToString(DateFormat), pageSize);
+            return string.Format(url, channelId, DateTime.Now.Date.AddDays(startDateDiff).ToString(DateFormat), DateTime.Now.Date.AddDays(endDateDays).ToString(DateFormat), pageSize);
         }
 
         public override List<Show> Grab(string xmlParameters, ILogger logger)
@@ -77,17 +77,34 @@ namespace hot.net.il
             var sdElement = doc.Descendants("StartDate").FirstOrDefault();
             var startDateDiff = sdElement != null && sdElement.Value != null ? Convert.ToInt32(sdElement.Value) : -1;
             var edElement = doc.Descendants("EndDate").FirstOrDefault();
-            var endDateDays = edElement != null && edElement.Value != null ? Convert.ToInt32(edElement.Value) : 3;
+            var endDateDays = edElement != null && edElement.Value != null ? Convert.ToInt32(edElement.Value) : 3;            
+
+            var channelDict = new Dictionary<int, string>();
 
             foreach (Channel c in Enum.GetValues(typeof(Channel)))
             {
+                channelDict.Add((int)c, c.ToString());
+            }
+
+            var extraChannels = doc.Descendants("ExtraChannels").FirstOrDefault();
+            if (extraChannels != null)
+            {
+                foreach (var chan in extraChannels.Descendants("Channel"))
+                {
+                    channelDict.Add(Convert.ToInt32(chan.Attribute("ID").Value), chan.Value);
+                }                
+            }
+
+            foreach (var c in channelDict.Keys)
+            {
                 var ps = PageSize;
+                var channelName = channelDict[c];
 
                 while (ps > 0)
                 {
                     var wr = WebRequest.Create(getUrl(c, startDateDiff, endDateDays, ps));
                     wr.Timeout = 30000;
-                    logger.WriteEntry(string.Format("Grabbing hot.net.il channel {0} , page size = {1}", c.ToString(), ps), LogType.Info);
+                    logger.WriteEntry(string.Format("Grabbing hot.net.il channel {0} , page size = {1}", channelName, ps), LogType.Info);
                     var res = (HttpWebResponse)wr.GetResponse();
 
                     var html = new HtmlAgilityPack.HtmlDocument();
@@ -95,7 +112,7 @@ namespace hot.net.il
 
                     if (html.DocumentNode.InnerHtml.StartsWith("<p id=\"noData\""))
                     {
-                        logger.WriteEntry(string.Format("no Data for page size = {1} , Regrabing hot.net.il channel {0} ", c.ToString(), ps), LogType.Info);
+                        logger.WriteEntry(string.Format("no Data for page size = {1} , Regrabing hot.net.il channel {0} ", channelName, ps), LogType.Info);
                         if (ps <= 20)
                             ps -= 10;
                         else
@@ -116,7 +133,7 @@ namespace hot.net.il
                             show.StartTime = DateTime.SpecifyKind(Convert.ToDateTime(dateText), DateTimeKind.Unspecified);
                             show.StartTime = TimeZoneInfo.ConvertTime(show.StartTime, TimeZoneInfo.Local, TimeZoneInfo.Utc);
                             show.EndTime = show.StartTime.Add(Convert.ToDateTime(tds[5].InnerText).TimeOfDay);
-                            show.Channel = c.ToString();
+                            show.Channel = channelName;
                             shows.Add(show);
                         }
                         catch (ArgumentException ex)
