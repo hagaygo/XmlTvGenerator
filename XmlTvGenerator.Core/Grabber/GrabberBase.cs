@@ -21,6 +21,11 @@ namespace XmlTvGenerator.Core
 
         public abstract List<Show> Grab(string xmlParameters, ILogger logger);
 
+        protected List<Show> CleanupSameTimeStartEndShows(List<Show> shows)
+        {
+            return shows.Where(x => x.StartTime != x.EndTime).ToList();
+        }
+
         protected void FixShowsEndTimeByStartTime(List<Show> shows)
         {
             if (shows.Count > 1)

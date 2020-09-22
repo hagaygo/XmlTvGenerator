@@ -98,11 +98,12 @@
       <Parameters>
         <DaysForward>2</DaysForward>        
         <Channels>
-          <Channel ID="CH09">Sport 3</Channel>
+          <!--<Channel ID="CH09">Sport 3</Channel>
           <Channel ID="PT23">Sport 2</Channel>
           <Channel ID="PT53">Sport 1</Channel>
           <Channel ID="CH11">Sport 4</Channel>
-          <Channel ID="CH54">Sport 5 Stars</Channel>
+          <Channel ID="CH54">Sport 5 Stars</Channel>-->
+          <Channel ID="TVR5">Sport 5</Channel>
         </Channels>
       </Parameters>
     </Grabber>

@@ -126,7 +126,7 @@ namespace hot.net.il
                         var show = new Show();
                         try
                         {
-                            show.Title = tds[2].InnerText;
+                            show.Title = tds[2].InnerText.Trim();
                             var dateText = tds[4].InnerText;
                             if (dateText.Contains(","))
                                 dateText = dateText.Substring(dateText.IndexOf(",") + 1).Trim();

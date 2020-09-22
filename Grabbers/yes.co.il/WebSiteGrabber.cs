@@ -31,6 +31,7 @@ namespace yes.co.il
 
             foreach (var c in channelDict.Keys)
             {
+                var channelShows = new List<Show>();
                 const string url = "https://www.yes.co.il/content/YesChannelsHandler.ashx?action=GetDailyShowsByDayAndChannelCode&dayValue={0}&channelCode={1}";
                 var channelName = channelDict[c];
                 var currentDate = TimeZoneInfo.ConvertTime(DateTime.UtcNow, TimeZoneInfo.Utc, TZConvert.GetTimeZoneInfo("Asia/Jerusalem")).Date;
@@ -45,22 +46,39 @@ namespace yes.co.il
                     var html = new HtmlAgilityPack.HtmlDocument();
                     html.Load(res.GetResponseStream(), Encoding.UTF8);
 
+                    int dayCounter = 0;
                     foreach (var li in html.QuerySelectorAll("ul li"))
                     {
-                        var s = new Show();
-                        s.Channel = channelName;
-                        var text = li.QuerySelector("span.text").InnerText;
-                        var time = text.Substring(0, text.IndexOf(" "));
-                        s.StartTime = d + DateTime.Parse(time).TimeOfDay;
-                        s.StartTime = TimeZoneInfo.ConvertTime(s.StartTime, TZConvert.GetTimeZoneInfo("Asia/Jerusalem"), TimeZoneInfo.Utc);
-                        text = text.Substring(text.IndexOf(" - ") + 2).Trim();
-                        s.Title = text;
-                        shows.Add(s);
+                        try
+                        {
+                            var s = new Show();
+                            s.Channel = channelName;
+                            var text = li.QuerySelector("span.text").InnerText;
+                            var time = text.Substring(0, text.IndexOf(" "));
+                            s.StartTime = d + DateTime.Parse(time).TimeOfDay;
+                            if (dayCounter == 0 && s.StartTime.Hour > 18)
+                                s.StartTime = s.StartTime.AddDays(-1); // first show on current day but starts on previous one
+                            s.StartTime = TimeZoneInfo.ConvertTime(s.StartTime, TZConvert.GetTimeZoneInfo("Asia/Jerusalem"), TimeZoneInfo.Utc);
+                            
+                            text = text.Substring(text.IndexOf(" - ") + 2).Trim();
+                            if (!string.IsNullOrEmpty(text))
+                            {
+                                s.Title = text;
+                                channelShows.Add(s);
+                                dayCounter++;
+                            }                            
+                        }
+                        catch (Exception ex)
+                        {
+                            logger.WriteEntry(ex.Message + ex.StackTrace, LogType.Error);
+                        }
                     }
                 }
+                FixShowsEndTimeByStartTime(channelShows);                
+                shows.AddRange(channelShows);
             }
-            FixShowsEndTimeByStartTime(shows);
-            return shows;
+
+            return CleanupSameTimeStartEndShows(shows);            
         }
     }
 }
