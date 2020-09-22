@@ -11,6 +11,16 @@
     <Path>c:\temp\xmltv.xml</Path>
   </Output>
   <Grabbers>
+    <Grabber path="ontvtonight.com.dll" channelPrefix="ontvtonight.com_">
+      <Parameters>
+        <Channels>
+          <Channel url="69022354/wnbc-hdtv.html">NBC</Channel>
+          <Channel url="69022306/wabc-hdtv.html">ABC</Channel>
+          <Channel url="69021387/kyw-hdtv.html">CBS</Channel>
+          <Channel url="69022188/wnyw-hdtv.html">FOX</Channel>
+        </Channels>
+      </Parameters>
+    </Grabber>
     <!--<Grabber path="telegraph.co.uk.dll" channelPrefix="telegraph.co.uk_">
       <Parameters>
         <StartDate>0</StartDate>
@@ -94,19 +104,19 @@
         </ExtraChannels>
       </Parameters>
     </Grabber>-->
-    <Grabber path="yes.co.il.dll" channelPrefix="yes.co.il_">
+    <!--<Grabber path="yes.co.il.dll" channelPrefix="yes.co.il_">
       <Parameters>
         <DaysForward>2</DaysForward>        
         <Channels>
-          <!--<Channel ID="CH09">Sport 3</Channel>
+          <Channel ID="CH09">Sport 3</Channel>
           <Channel ID="PT23">Sport 2</Channel>
           <Channel ID="PT53">Sport 1</Channel>
           <Channel ID="CH11">Sport 4</Channel>
-          <Channel ID="CH54">Sport 5 Stars</Channel>-->
+          <Channel ID="CH54">Sport 5 Stars</Channel>
           <Channel ID="TVR5">Sport 5</Channel>
         </Channels>
       </Parameters>
-    </Grabber>
+    </Grabber>-->
     <!--<Grabber path="Sport5.co.il.dll" channelPrefix="sport5.co.il_"/>-->
   </Grabbers>
 </Config>

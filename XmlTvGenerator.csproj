@@ -32,6 +32,7 @@
     <ProjectReference Include="Grabbers\CyfrowyPolsat.pl\CyfrowyPolsat.pl.csproj" />
     <ProjectReference Include="Grabbers\hot.net.il\hot.net.il.csproj" />
     <ProjectReference Include="Grabbers\Israel.Rashut2.Org.il\Israel.Rashut2.Org.il.csproj" />
+    <ProjectReference Include="Grabbers\ontvtonight.com\ontvtonight.com.csproj" />
     <ProjectReference Include="Grabbers\Reshet.tv\Reshet.tv.csproj" />
     <ProjectReference Include="Grabbers\rtd.rt.com\rtd.rt.com.csproj" />
     <ProjectReference Include="Grabbers\Sky.it\sky.it.csproj" />

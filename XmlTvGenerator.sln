@@ -39,7 +39,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "streamingtvguides.com", "Gr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "telegraph.co.uk", "Grabbers\telegraph.co.uk\telegraph.co.uk.csproj", "{CEEA630E-C3CC-4DD5-8E59-74412A997078}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "yes.co.il", "Grabbers\yes.co.il\yes.co.il.csproj", "{BD18AA90-0EE3-405B-B02A-767FC049EA4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "yes.co.il", "Grabbers\yes.co.il\yes.co.il.csproj", "{BD18AA90-0EE3-405B-B02A-767FC049EA4F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ontvtonight.com", "Grabbers\ontvtonight.com\ontvtonight.com.csproj", "{433FC492-6553-40BC-9F7D-215F8D8E326E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -111,6 +113,10 @@ Global
 		{BD18AA90-0EE3-405B-B02A-767FC049EA4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD18AA90-0EE3-405B-B02A-767FC049EA4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD18AA90-0EE3-405B-B02A-767FC049EA4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{433FC492-6553-40BC-9F7D-215F8D8E326E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{433FC492-6553-40BC-9F7D-215F8D8E326E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{433FC492-6553-40BC-9F7D-215F8D8E326E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{433FC492-6553-40BC-9F7D-215F8D8E326E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -132,6 +138,7 @@ Global
 		{8D194350-0A52-43EC-BEEF-61804342CA5C} = {91759C7E-1E12-4A1D-BFA5-0D2179FE2068}
 		{CEEA630E-C3CC-4DD5-8E59-74412A997078} = {91759C7E-1E12-4A1D-BFA5-0D2179FE2068}
 		{BD18AA90-0EE3-405B-B02A-767FC049EA4F} = {91759C7E-1E12-4A1D-BFA5-0D2179FE2068}
+		{433FC492-6553-40BC-9F7D-215F8D8E326E} = {91759C7E-1E12-4A1D-BFA5-0D2179FE2068}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FD415635-BE73-4FE0-AE58-F8A8B260569B}
