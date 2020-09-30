@@ -11,7 +11,7 @@
     <Path>c:\temp\xmltv.xml</Path>
   </Output>
   <Grabbers>
-    <Grabber path="ontvtonight.com.dll" channelPrefix="ontvtonight.com_">
+    <!--<Grabber path="ontvtonight.com.dll" channelPrefix="ontvtonight.com_">
       <Parameters>
         <Channels>
           <Channel url="69022354/wnbc-hdtv.html">NBC</Channel>
@@ -20,7 +20,7 @@
           <Channel url="69022188/wnyw-hdtv.html">FOX</Channel>
         </Channels>
       </Parameters>
-    </Grabber>
+    </Grabber>-->
     <!--<Grabber path="telegraph.co.uk.dll" channelPrefix="telegraph.co.uk_">
       <Parameters>
         <StartDate>0</StartDate>
@@ -104,19 +104,28 @@
         </ExtraChannels>
       </Parameters>
     </Grabber>-->
-    <!--<Grabber path="yes.co.il.dll" channelPrefix="yes.co.il_">
+    <Grabber path="yes.co.il.dll" channelPrefix="yes.co.il_">
       <Parameters>
         <DaysForward>2</DaysForward>        
         <Channels>
-          <Channel ID="CH09">Sport 3</Channel>
-          <Channel ID="PT23">Sport 2</Channel>
-          <Channel ID="PT53">Sport 1</Channel>
+          <Channel ID="CH30" Description="yes">KAN11</Channel>
+          <Channel ID="CH32" Description="yes">KAN33</Channel>
+          <Channel ID="CH34" Description="yes">Keshet</Channel>
+          <Channel ID="CH36" Description="yes">Reshet</Channel>
+          <Channel ID="PT92" Description="yes">Moreshet</Channel>
+          <Channel ID="TV21" Description="yes">Shopping</Channel>
+          <Channel ID="TV67" Description="yes">24Music</Channel>
+          <Channel ID="TV57" Description="yes">KAN23</Channel>
+          <Channel ID="TV89" Description="yes">Knesset</Channel>
+          <Channel ID="CH09" Description="yes">Sport 3</Channel>
+          <Channel ID="PT23" Description="yes">Sport 2</Channel>
+          <!--<Channel ID="PT53">Sport 1</Channel>
           <Channel ID="CH11">Sport 4</Channel>
           <Channel ID="CH54">Sport 5 Stars</Channel>
-          <Channel ID="TVR5">Sport 5</Channel>
+          <Channel ID="TVR5">Sport 5</Channel>-->          
         </Channels>
       </Parameters>
-    </Grabber>-->
+    </Grabber>
     <!--<Grabber path="Sport5.co.il.dll" channelPrefix="sport5.co.il_"/>-->
   </Grabbers>
 </Config>

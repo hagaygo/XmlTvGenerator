@@ -12,8 +12,8 @@ namespace XmlTvGenerator
     {
         const string DateTimeFormat = "yyyyMMddHHmmss";
 
-        public void Save(List<Show> shows,Stream output)
-        {            
+        public void Save(List<Show> shows, Stream output)
+        {
             var xml = new XDocument();
             var tv = new XElement("tv");
             xml.Add(tv);
@@ -32,16 +32,12 @@ namespace XmlTvGenerator
                 programme.Add(new XAttribute("start", show.StartTime.ToString(DateTimeFormat)));
                 programme.Add(new XAttribute("stop", show.EndTime.ToString(DateTimeFormat)));
                 programme.Add(new XAttribute("channel", show.Channel));
-                if (!string.IsNullOrEmpty(show.Description))
-                {
+                if (!string.IsNullOrEmpty(show.Title))
                     programme.Add(new XElement("title") { Value = show.Title });
-                    programme.Add(new XElement("desc") { Value = show.Description });
-                }
                 else
-                    if (!string.IsNullOrEmpty(show.Title))
-                        programme.Add(new XElement("title") { Value = show.Title });
-                    else
-                        programme.Add(new XElement("title") { Value = "N/A" });
+                    programme.Add(new XElement("title") { Value = "N/A" });
+                if (show.Description != null)
+                    programme.Add(new XElement("desc") { Value = show.Description });
                 if (show.Episode.HasValue)
                 {
                     var epNum = new XElement("episode-num") { Value = show.Episode.Value.ToString() };
