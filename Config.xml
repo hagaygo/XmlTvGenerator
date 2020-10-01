@@ -108,9 +108,9 @@
       <Parameters>
         <DaysForward>2</DaysForward>        
         <Channels>
-          <Channel ID="CH30" Description="yes">KAN11</Channel>
-          <Channel ID="CH32" Description="yes">KAN33</Channel>
           <Channel ID="CH34" Description="yes">Keshet</Channel>
+          <!--<Channel ID="CH30" Description="yes">KAN11</Channel>
+          <Channel ID="CH32" Description="yes">KAN33</Channel>          
           <Channel ID="CH36" Description="yes">Reshet</Channel>
           <Channel ID="PT92" Description="yes">Moreshet</Channel>
           <Channel ID="TV21" Description="yes">Shopping</Channel>
@@ -119,7 +119,7 @@
           <Channel ID="TV89" Description="yes">Knesset</Channel>
           <Channel ID="CH09" Description="yes">Sport 3</Channel>
           <Channel ID="PT23" Description="yes">Sport 2</Channel>
-          <!--<Channel ID="PT53">Sport 1</Channel>
+          <Channel ID="PT53">Sport 1</Channel>
           <Channel ID="CH11">Sport 4</Channel>
           <Channel ID="CH54">Sport 5 Stars</Channel>
           <Channel ID="TVR5">Sport 5</Channel>-->          

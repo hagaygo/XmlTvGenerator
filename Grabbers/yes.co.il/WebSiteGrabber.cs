@@ -98,12 +98,17 @@ namespace yes.co.il
             if (needDescriptionFetch)
             {
                 var lst = shows.Where(x => x.Description.Length > 0).ToList();
+                var lck = new object();
                 Parallel.ForEach(lst, new ParallelOptions { MaxDegreeOfParallelism = 4 }, (s) =>
                 {
                     var schedule_item_id = s.Description;
+                    lock (lck)
+                    {
+                        logger.WriteEntry(string.Format("Grabbing yes.co.il channel : {0} item description  :{1}", s.Channel, schedule_item_id), LogType.Info);
+                    }
                     var wr2 = WebRequest.Create(string.Format("https://www.yes.co.il/content/YesChannelsHandler.ashx?action=GetProgramDataByScheduleItemID&ScheduleItemID={0}", schedule_item_id));
                     wr2.Timeout = 15000;
-                    logger.WriteEntry(string.Format("Grabbing yes.co.il channel : {0} item description  :{1}", s.Channel, schedule_item_id), LogType.Info);
+                    
                     var res2 = (HttpWebResponse)wr2.GetResponse();
                     using (var sr = new StreamReader(res2.GetResponseStream()))
                     {
@@ -112,6 +117,17 @@ namespace yes.co.il
                         {
                             var obj = Newtonsoft.Json.Linq.JObject.Parse(resultText);
                             s.Description = obj["PreviewText"].ToString();
+                            if (!string.IsNullOrEmpty(s.Description))
+                            {                                
+                                if (s.Description.EndsWith(" ש.ח."))
+                                {
+                                    s.Title = string.Format("{0} - ש.ח", s.Title);                                    
+                                }
+                                if (s.Description.EndsWith(" שידור חי") || s.Description.EndsWith(" שידור חי."))
+                                {
+                                    s.Title = string.Format("{0} - שידור חי", s.Title);
+                                }
+                            }
                         }
                     }
                 });
