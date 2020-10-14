@@ -93,23 +93,39 @@
         </Channels>
       </Parameters>
     </Grabber>-->
-    <!--<Grabber path="hot.net.il.dll" channelPrefix="hot.net.il_">
+    <Grabber path="hot.net.il.dll" channelPrefix="hot.net.il_">
       <Parameters>
         <StartDate>0</StartDate>
         <EndDate>2</EndDate>
-        <ExtraChannels>
+        <ExtraChannels IgnoreInternal="true">
+          <Channel ID="430" Description="yes">HOT 8</Channel>
+          <Channel ID="477" Description="yes">Hot3</Channel>
+          <Channel ID="898">FoodNetwork</Channel>
           <Channel ID="530">National Geographic Wild</Channel>
           <Channel ID="531">National Geographic</Channel>
+          <Channel ID="591">Hop</Channel>
+          <Channel ID="592">HopYaldut</Channel>
+          <Channel ID="751">DisneyJunior</Channel>
+          <Channel ID="871">Kidz</Channel>
+          <Channel ID="566">Disney</Channel>
+          <Channel ID="738">Zoom</Channel>
+          <Channel ID="579">Nick</Channel>
+          <Channel ID="710">NickJunior</Channel>
+          <Channel ID="513">Junior</Channel>
+          <Channel ID="792">TeenNick</Channel>
+          <Channel ID="907">I24English</Channel>          
           <Channel ID="742">Discovery Science</Channel>
+          <Channel ID="771">DwNews</Channel>
+          <Channel ID="522">Mtv</Channel>          
         </ExtraChannels>
       </Parameters>
-    </Grabber>-->
-    <Grabber path="yes.co.il.dll" channelPrefix="yes.co.il_">
+    </Grabber>
+    <!--<Grabber path="yes.co.il.dll" channelPrefix="yes.co.il_">
       <Parameters>
         <DaysForward>2</DaysForward>        
         <Channels>
           <Channel ID="CH34" Description="yes">Keshet</Channel>
-          <!--<Channel ID="CH30" Description="yes">KAN11</Channel>
+          <Channel ID="CH30" Description="yes">KAN11</Channel>
           <Channel ID="CH32" Description="yes">KAN33</Channel>          
           <Channel ID="CH36" Description="yes">Reshet</Channel>
           <Channel ID="PT92" Description="yes">Moreshet</Channel>
@@ -122,10 +138,10 @@
           <Channel ID="PT53">Sport 1</Channel>
           <Channel ID="CH11">Sport 4</Channel>
           <Channel ID="CH54">Sport 5 Stars</Channel>
-          <Channel ID="TVR5">Sport 5</Channel>-->          
+          <Channel ID="TVR5">Sport 5</Channel>
         </Channels>
       </Parameters>
-    </Grabber>
+    </Grabber>-->
     <!--<Grabber path="Sport5.co.il.dll" channelPrefix="sport5.co.il_"/>-->
   </Grabbers>
 </Config>

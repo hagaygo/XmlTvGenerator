@@ -57,6 +57,13 @@ namespace hot.net.il
         Mtv = 522
     }
 
+    class ChannelData
+    {
+        public string Code { get; set; }
+        public string Name { get; set; }
+        public bool IncludeDescription { get; set; }
+    }
+
     public class WebSiteGrabber : GrabberBase
     {
         const int PageSize = 100;
@@ -65,7 +72,7 @@ namespace hot.net.il
         const string DateFormat = "dd/MM/yyyy";
 
 
-        string getUrl(int channelId, int startDateDiff, int endDateDays, int pageSize)
+        string getUrl(string channelId, int startDateDiff, int endDateDays, int pageSize)
         {
             return string.Format(url, channelId, DateTime.Now.Date.AddDays(startDateDiff).ToString(DateFormat), DateTime.Now.Date.AddDays(endDateDays).ToString(DateFormat), pageSize);
         }
@@ -79,26 +86,31 @@ namespace hot.net.il
             var edElement = doc.Descendants("EndDate").FirstOrDefault();
             var endDateDays = edElement != null && edElement.Value != null ? Convert.ToInt32(edElement.Value) : 3;            
 
-            var channelDict = new Dictionary<int, string>();
+            var channelDict = new Dictionary<string, ChannelData>();
 
             foreach (Channel c in Enum.GetValues(typeof(Channel)))
             {
-                channelDict.Add((int)c, c.ToString());
+                channelDict.Add(((int)c).ToString(), new ChannelData { Code = ((int)c).ToString(), Name = c.ToString(), IncludeDescription = false });
             }
 
             var extraChannels = doc.Descendants("ExtraChannels").FirstOrDefault();
             if (extraChannels != null)
             {
+                if (string.Compare(extraChannels.Attribute("IgnoreInternal")?.Value,"true",true) == 0)
+                    channelDict.Clear();
                 foreach (var chan in extraChannels.Descendants("Channel"))
-                {
-                    channelDict.Add(Convert.ToInt32(chan.Attribute("ID").Value), chan.Value);
+                {                    
+                    channelDict.Add(chan.Attribute("ID").Value, new ChannelData { Code = chan.Attribute("ID").Value, Name = chan.Value, IncludeDescription = chan.Attribute("Description") != null ? chan.Attribute("Description").Value == "yes" : false });
                 }                
             }
+
+            var needDescriptionFetch = false;
 
             foreach (var c in channelDict.Keys)
             {
                 var ps = PageSize;
-                var channelName = channelDict[c];
+                var channelData = channelDict[c];
+                var channelName = channelData.Name;                
 
                 while (ps > 0)
                 {
@@ -118,11 +130,11 @@ namespace hot.net.il
                         else
                             ps -= 20;                        
                         continue;
-                    }
+                    }                    
 
                     foreach (var tr in html.DocumentNode.Descendants("tr").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value == "redtr_off"))
                     {
-                        var tds = tr.Descendants("td").ToList();
+                        var tds = tr.Descendants("td").ToList();                        
                         var show = new Show();
                         try
                         {
@@ -134,18 +146,64 @@ namespace hot.net.il
                             show.StartTime = TimeZoneInfo.ConvertTime(show.StartTime, TimeZoneInfo.Local, TimeZoneInfo.Utc);
                             show.EndTime = show.StartTime.Add(Convert.ToDateTime(tds[5].InnerText).TimeOfDay);
                             show.Channel = channelName;
+                            show.Description = string.Empty;
+                            if (channelData.IncludeDescription)
+                            {
+                                try
+                                {
+                                    var url = tr.GetAttributeValue("onclick", string.Empty);
+                                    if (url.Length > 0)
+                                    {
+                                        url = url.Substring(url.IndexOf("=") + 2);
+                                        url = url.Remove(url.Length - 1);
+                                        show.Description = url;
+                                        needDescriptionFetch = true;
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    logger.WriteEntry("description fetch failed for " + dateText + " message : " + ex.Message, LogType.Error);
+                                }
+                            }
                             shows.Add(show);
                         }
                         catch (ArgumentException ex)
                         {
                             logger.WriteEntry(ex.Message, LogType.Error);
                         }
-                    }
+                    }                    
 
                     break;
-                }
+                }                
             }
+
+            if (needDescriptionFetch)
+            {
+                var lst = shows.Where(x => x.Description.Length > 0).ToList();
+                var lck = new object();
+                Parallel.ForEach(lst, new ParallelOptions { MaxDegreeOfParallelism = 4 }, (s) =>
+                {
+                    var url = "https://www.hot.net.il" + s.Description;
+                    lock (lck)
+                    {
+                        logger.WriteEntry("fetching description for " + url, LogType.Info);
+                    }
+                    s.Description = GetDescription(url, logger);
+                });
+            }
+
             return shows;
+        }
+
+        private string GetDescription(string url, ILogger logger)
+        {
+            var wr = WebRequest.Create(url);            
+            var res = (HttpWebResponse)wr.GetResponse();
+            var html = new HtmlAgilityPack.HtmlDocument();
+            html.Load(res.GetResponseStream(), Encoding.UTF8);
+            var div = html.QuerySelector("div.widgetHPTitle");
+            var desc = System.Web.HttpUtility.HtmlDecode(div.NextSiblingElement().Descendants("td").First().InnerText).Trim();
+            return desc;
         }
     }
 }
