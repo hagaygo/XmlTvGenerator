@@ -71,6 +71,7 @@ namespace hot.net.il
         const string url = "http://www.hot.net.il/PageHandlers/LineUpAdvanceSearch.aspx?text=&channel={0}&genre=-1&ageRating=-1&publishYear=-1&productionCountry=-1&startDate={1}&endDate={2}&currentPage=1&pageSize={3}&isOrderByDate=true&lcid=1037&pageIndex=1";
         const string DateFormat = "dd/MM/yyyy";
 
+        protected override bool UseGenericDataDictionary => true;
 
         string getUrl(string channelId, int startDateDiff, int endDateDays, int pageSize)
         {
@@ -183,12 +184,27 @@ namespace hot.net.il
                 var lck = new object();
                 Parallel.ForEach(lst, new ParallelOptions { MaxDegreeOfParallelism = 4 }, (s) =>
                 {
-                    var url = "https://www.hot.net.il" + s.Description;
+                    var id = s.Description;
+                    var url = "https://www.hot.net.il" + id;
+                    var gotCache = false;
                     lock (lck)
                     {
+                        if (GenericDictionary.TryGetValue(s.Description, out var desc))
+                        {
+                            s.Description = desc;
+                            gotCache = true;
+                        }                   
+                        else
                         logger.WriteEntry("fetching description for " + url, LogType.Info);
                     }
-                    s.Description = GetDescription(url, logger);
+                    if (!gotCache)
+                    {
+                        s.Description = GetDescription(url, logger);
+                        lock (lck)
+                        {
+                            GenericDictionary[id] = s.Description;
+                        }
+                    }
                 });
             }
 

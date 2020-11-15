@@ -71,22 +71,24 @@ namespace XmlTvGenerator
                         foreach (var t in a.GetTypes())
                             if (t.IsSubclassOf(typeof(GrabberBase)))
                             {
-                                var gb = (GrabberBase)Activator.CreateInstance(t);
-                                var shows = gb.Grab(grabber.Parameters, Logger);
-                                if (!string.IsNullOrEmpty(grabber.ChannelPrefix))
-                                    shows.ForEach(x => x.Channel = grabber.ChannelPrefix + x.Channel);
-                                if (grabber.Translation != null)
+                                using (var gb = (GrabberBase)Activator.CreateInstance(t))
                                 {
-                                    Logger.WriteEntry("Starting translation of " + t.FullName, LogType.Info);
-                                    TranslatorBase g;
-                                    if (grabber.Translation.YandexAPIKeysFilePath != null)                                    
-                                        g = new YandexTranslator(fileCache,grabber.Translation.MaxDegreeOfParallelism, grabber.Translation.YandexAPIKeysFilePath);
-                                    else                                    
-                                        g = new GoogleTranslator(fileCache, grabber.Translation.MaxDegreeOfParallelism);                                    
-                                    g.TranslateShows(shows, grabber.Translation.From, grabber.Translation.To, logger);
-                                    Logger.WriteEntry("Finished translation of " + t.FullName, LogType.Info);
+                                    var shows = gb.Grab(grabber.Parameters, Logger);
+                                    if (!string.IsNullOrEmpty(grabber.ChannelPrefix))
+                                        shows.ForEach(x => x.Channel = grabber.ChannelPrefix + x.Channel);
+                                    if (grabber.Translation != null)
+                                    {
+                                        Logger.WriteEntry("Starting translation of " + t.FullName, LogType.Info);
+                                        TranslatorBase g;
+                                        if (grabber.Translation.YandexAPIKeysFilePath != null)
+                                            g = new YandexTranslator(fileCache, grabber.Translation.MaxDegreeOfParallelism, grabber.Translation.YandexAPIKeysFilePath);
+                                        else
+                                            g = new GoogleTranslator(fileCache, grabber.Translation.MaxDegreeOfParallelism);
+                                        g.TranslateShows(shows, grabber.Translation.From, grabber.Translation.To, logger);
+                                        Logger.WriteEntry("Finished translation of " + t.FullName, LogType.Info);
+                                    }
+                                    lst.AddRange(shows);
                                 }
-                                lst.AddRange(shows);
                             }
                     }
                     catch (Exception ex)

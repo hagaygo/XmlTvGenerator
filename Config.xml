@@ -100,7 +100,7 @@
         <ExtraChannels IgnoreInternal="true">
           <Channel ID="430" Description="yes">HOT 8</Channel>
           <Channel ID="477" Description="yes">Hot3</Channel>
-          <Channel ID="898">FoodNetwork</Channel>
+          <!--<Channel ID="898">FoodNetwork</Channel>
           <Channel ID="530">National Geographic Wild</Channel>
           <Channel ID="531">National Geographic</Channel>
           <Channel ID="591">Hop</Channel>
@@ -116,16 +116,16 @@
           <Channel ID="907">I24English</Channel>          
           <Channel ID="742">Discovery Science</Channel>
           <Channel ID="771">DwNews</Channel>
-          <Channel ID="522">Mtv</Channel>          
+          <Channel ID="522">Mtv</Channel>-->          
         </ExtraChannels>
       </Parameters>
     </Grabber>
-    <!--<Grabber path="yes.co.il.dll" channelPrefix="yes.co.il_">
+    <Grabber path="yes.co.il.dll" channelPrefix="yes.co.il_">
       <Parameters>
         <DaysForward>2</DaysForward>        
         <Channels>
           <Channel ID="CH34" Description="yes">Keshet</Channel>
-          <Channel ID="CH30" Description="yes">KAN11</Channel>
+          <!--<Channel ID="CH30" Description="yes">KAN11</Channel>
           <Channel ID="CH32" Description="yes">KAN33</Channel>          
           <Channel ID="CH36" Description="yes">Reshet</Channel>
           <Channel ID="PT92" Description="yes">Moreshet</Channel>
@@ -138,10 +138,10 @@
           <Channel ID="PT53">Sport 1</Channel>
           <Channel ID="CH11">Sport 4</Channel>
           <Channel ID="CH54">Sport 5 Stars</Channel>
-          <Channel ID="TVR5">Sport 5</Channel>
+          <Channel ID="TVR5">Sport 5</Channel>-->
         </Channels>
       </Parameters>
-    </Grabber>-->
+    </Grabber>
     <!--<Grabber path="Sport5.co.il.dll" channelPrefix="sport5.co.il_"/>-->
   </Grabbers>
 </Config>

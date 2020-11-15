@@ -20,8 +20,10 @@ namespace yes.co.il
             public bool IncludeDescription { get; set; }
         }
 
-        const int MaxRetryCount = 3;
-        const int ResponseTimeout = 2000;
+        const int MaxRetryCount = 5;
+        const int ResponseTimeout = 1000;
+
+        protected override bool UseGenericDataDictionary => true;
 
         public override List<Show> Grab(string xmlParameters, ILogger logger)
         {
@@ -54,12 +56,12 @@ namespace yes.co.il
                 {                    
                     var d = currentDate.AddDays(i);
                     var wr = (HttpWebRequest)WebRequest.Create(string.Format(url, i, c));
-                    wr.Timeout = ResponseTimeout;                                        
-                    logger.WriteEntry(string.Format("Grabbing yes.co.il channel : {0} , days forward  :{1} , try #" + retryCounter, channel.Name, i), LogType.Info);
+                    wr.Timeout = ResponseTimeout;
+                    logger.WriteEntry(string.Format("Grabbing yes.co.il channel : {0} , days forward  :{1}{2}", channel.Name, i, retryCounter > 1 ? " , try #" + retryCounter : string.Empty), LogType.Info);
                     try
                     {
                         var res = (HttpWebResponse)wr.GetResponse();
-
+                        retryCounter = 1; // reset it after sucessful get
                         var html = new HtmlAgilityPack.HtmlDocument();
                         html.Load(res.GetResponseStream(), Encoding.UTF8);
 
@@ -119,13 +121,19 @@ namespace yes.co.il
                 var lck = new object();
                 Parallel.ForEach(lst, new ParallelOptions { MaxDegreeOfParallelism = 4 }, (s) =>
                 {
-                    int retryCoutner = 1;
+                    int retryCounter = 1;
                     var schedule_item_id = s.Description;                    
                     while (true)
                     {
                         lock (lck)
-                        {
-                            logger.WriteEntry(string.Format("Grabbing yes.co.il channel : {0} item description  :{1} , try #" + retryCoutner, s.Channel, schedule_item_id), LogType.Info);
+                        {                            
+                            if (GenericDictionary.TryGetValue(schedule_item_id, out var desc))
+                            {
+                                s.Description = desc;
+                                SetupDescription(s);
+                                break;
+                            }
+                            logger.WriteEntry(string.Format("Grabbing yes.co.il channel : {0} item description  :{1}{2}", s.Channel, schedule_item_id, retryCounter > 1 ? " , try #" + retryCounter : string.Empty), LogType.Info);
                         }
                         var wr2 = WebRequest.Create(string.Format("https://www.yes.co.il/content/YesChannelsHandler.ashx?action=GetProgramDataByScheduleItemID&ScheduleItemID={0}", schedule_item_id));
                         wr2.Timeout = ResponseTimeout;
@@ -138,28 +146,23 @@ namespace yes.co.il
                                 var resultText = sr.ReadToEnd();
                                 if (resultText.Length > 2)
                                 {
-                                    var obj = Newtonsoft.Json.Linq.JObject.Parse(resultText);
+                                    var obj = Newtonsoft.Json.Linq.JObject.Parse(resultText);                                    
                                     s.Description = obj["PreviewText"].ToString();
-                                    if (!string.IsNullOrEmpty(s.Description))
+                                    lock (lck)
                                     {
-                                        if (s.Description.EndsWith(" ש.ח."))
-                                        {
-                                            s.Title = string.Format("{0} - ש.ח", s.Title);
-                                        }
-                                        if (s.Description.EndsWith(" שידור חי") || s.Description.EndsWith(" שידור חי."))
-                                        {
-                                            s.Title = string.Format("{0} - שידור חי", s.Title);
-                                        }
+                                        GenericDictionary[schedule_item_id] = s.Description;
                                     }
+                                    SetupDescription(s);
                                 }
                             }
                             break;
+
                         }
                         catch (Exception)
                         {
                             logger.WriteEntry("Timeout on description fetch", LogType.Warning);
-                            retryCoutner++;
-                            if (retryCoutner > MaxRetryCount)
+                            retryCounter++;                            
+                            if (retryCounter > MaxRetryCount)
                             {
                                 logger.WriteEntry("Error on description fetch", LogType.Error);
                                 break;
@@ -170,6 +173,21 @@ namespace yes.co.il
             }
 
             return CleanupSameTimeStartEndShows(shows);            
+        }
+
+        private static void SetupDescription(Show s)
+        {
+            if (!string.IsNullOrEmpty(s.Description))
+            {
+                if (s.Description.EndsWith(" ש.ח."))
+                {
+                    s.Title = string.Format("{0} - ש.ח", s.Title);
+                }
+                if (s.Description.EndsWith(" שידור חי") || s.Description.EndsWith(" שידור חי."))
+                {
+                    s.Title = string.Format("{0} - שידור חי", s.Title);
+                }
+            }
         }
     }
 }
