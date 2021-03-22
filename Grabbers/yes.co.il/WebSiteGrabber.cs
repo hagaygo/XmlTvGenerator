@@ -16,12 +16,8 @@ namespace yes.co.il
         class ChannelData
         {
             public string Code { get; set; }
-            public string Name { get; set; }
-            public bool IncludeDescription { get; set; }
-        }
-
-        const int MaxRetryCount = 5;
-        const int ResponseTimeout = 1000;
+            public string Name { get; set; }            
+        }        
 
         protected override bool UseGenericDataDictionary => true;
 
@@ -39,140 +35,99 @@ namespace yes.co.il
             {
                 foreach (var chan in extraChannels.Descendants("Channel"))
                 {
-                    channelDict.Add(chan.Attribute("ID").Value, new ChannelData { Code = chan.Attribute("ID").Value, Name = chan.Value, IncludeDescription = chan.Attribute("Description") != null ? chan.Attribute("Description").Value == "yes" : false });
+                    channelDict.Add(chan.Attribute("ID").Value, new ChannelData { Code = chan.Attribute("ID").Value, Name = chan.Value });
+                }
+            }
+            
+            //var channelsJSON = GetChannelsJSON();
+            //var channelList = Newtonsoft.Json.Linq.JObject.Parse(channelsJSON)["list"];
+
+            for (int i = 0; i <= daysForward; i++)
+            {
+                var d = DateTime.UtcNow.AddDays(i);
+                logger.WriteEntry($"Grabbing yes.co.il date " + d.ToString("yyyy-MM-dd") + "...", LogType.Info);
+                var scheduleJSON = GetScheduleJSON(d);
+                var scheduleList = Newtonsoft.Json.Linq.JObject.Parse(scheduleJSON)["list"];
+
+                foreach (var si in scheduleList)
+                {
+                    var channelId = si.Value<string>("channelID");
+                    if (channelDict.TryGetValue(channelId, out var chan))
+                    {
+                        var s = new Show();
+                        s.Channel = chan.Name;
+                        s.Title = si.Value<string>("scheduleItemName");
+                        s.Description = si.Value<string>("scheduleItemSynopsis");
+                        s.StartTime = si.Value<DateTime>("startDate");
+                        var startTime = si.Value<DateTime>("startTime").TimeOfDay;
+                        s.StartTime = s.StartTime.Add(startTime).AddHours(-2);
+                        s.StartTime = DateTime.SpecifyKind(s.StartTime, DateTimeKind.Unspecified);
+                        s.StartTime = TimeZoneInfo.ConvertTime(s.StartTime, TZConvert.GetTimeZoneInfo("Asia/Jerusalem"), TimeZoneInfo.Utc);                        
+                        s.EndTime = s.StartTime.Add(si.Value<DateTime>("broadcastItemDuration").TimeOfDay);
+                        SetupDescription(s);
+                        shows.Add(s);
+                    }
                 }
             }
 
-            var needDescriptionFetch = false;
+            return CleanupSameTimeStartEndShows(shows);
+        }
 
-            foreach (var c in channelDict.Keys)
+        private string GetJSON(string path, string extraParameters)
+        {
+            var host = "www.yes.co.il";
+            var ckc = new CookieContainer();
+            var url = $"https://{host}/content/tvguide";
+            var req = (HttpWebRequest)WebRequest.Create(url);
+            req.CookieContainer = ckc;
+            var res = (HttpWebResponse)req.GetResponse();
+            string p_auth = null;
+            using (var sr = new StreamReader(res.GetResponseStream()))
             {
-                int retryCounter = 1;
-                var channelShows = new List<Show>();
-                const string url = "https://www.yes.co.il/content/YesChannelsHandler.ashx?action=GetDailyShowsByDayAndChannelCode&dayValue={0}&channelCode={1}";
-                var channel = channelDict[c];
-                var currentDate = TimeZoneInfo.ConvertTime(DateTime.UtcNow, TimeZoneInfo.Utc, TZConvert.GetTimeZoneInfo("Asia/Jerusalem")).Date;                
-                for (int i = 0; i <= daysForward; i++)
-                {                    
-                    var d = currentDate.AddDays(i);
-                    var wr = (HttpWebRequest)WebRequest.Create(string.Format(url, i, c));
-                    wr.Timeout = ResponseTimeout;
-                    logger.WriteEntry(string.Format("Grabbing yes.co.il channel : {0} , days forward  :{1}{2}", channel.Name, i, retryCounter > 1 ? " , try #" + retryCounter : string.Empty), LogType.Info);
-                    try
-                    {
-                        var res = (HttpWebResponse)wr.GetResponse();
-                        retryCounter = 1; // reset it after sucessful get
-                        var html = new HtmlAgilityPack.HtmlDocument();
-                        html.Load(res.GetResponseStream(), Encoding.UTF8);
-
-                        int dayCounter = 0;
-                        foreach (var li in html.QuerySelectorAll("ul li"))
-                        {
-                            try
-                            {
-                                var s = new Show();
-                                s.Channel = channel.Name;
-                                var text = li.QuerySelector("span.text").InnerText;
-                                var time = text.Substring(0, text.IndexOf(" "));
-                                s.StartTime = d + DateTime.Parse(time).TimeOfDay;
-                                if (dayCounter == 0 && s.StartTime.Hour > 18)
-                                    s.StartTime = s.StartTime.AddDays(-1); // first show on current day but starts on previous one
-                                s.StartTime = TimeZoneInfo.ConvertTime(s.StartTime, TZConvert.GetTimeZoneInfo("Asia/Jerusalem"), TimeZoneInfo.Utc);
-                                s.Description = string.Empty;
-                                text = text.Substring(text.IndexOf(" - ") + 2).Trim();
-                                if (channel.IncludeDescription)
-                                {
-                                    var schedule_item_id = li.QuerySelector("a").Attributes["schedule_item_id"].Value;
-                                    s.Description = schedule_item_id;
-                                    needDescriptionFetch = true;
-                                }
-                                if (!string.IsNullOrEmpty(text))
-                                {
-                                    s.Title = text;
-                                    channelShows.Add(s);
-                                    dayCounter++;
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                logger.WriteEntry(ex.Message + ex.StackTrace, LogType.Error);
-                            }
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        logger.WriteEntry("Timeout on try #" + retryCounter , LogType.Warning);
-                        retryCounter++;
-                        if (retryCounter > MaxRetryCount)
-                        {
-                            logger.WriteEntry("Max retry reached", LogType.Error);
-                            break;                            
-                        }
-                        i--;
-                    }
-                }                
-                FixShowsEndTimeByStartTime(channelShows);                   
-                shows.AddRange(channelShows);
+                const string textToSearch = ";Liferay.authToken=";
+                var mainPageHtml = sr.ReadToEnd();
+                var idx = mainPageHtml.IndexOf(textToSearch);
+                var val = mainPageHtml.Substring(idx + textToSearch.Length + 1, 30);
+                val = val.Split(';')[0];
+                p_auth = val.Substring(0, val.Length - 1);
+            }
+            url = $"https://{host}/o/yes/servletlinearsched/{path}";
+            req = (HttpWebRequest)WebRequest.Create(url);
+            req.Method = "POST";
+            var postData = "p_auth=" + p_auth;
+            if (!string.IsNullOrEmpty(extraParameters))
+                postData += "&" + extraParameters;
+            var data = System.Text.Encoding.ASCII.GetBytes(postData);
+            req.ContentType = "application/x-www-form-urlencoded";
+            req.Headers.Add("Pragma", "no-cache");
+            req.ContentLength = data.Length;
+            using (var stream = req.GetRequestStream())
+            {
+                stream.Write(data, 0, data.Length);
             }
 
-            if (needDescriptionFetch)
+            req.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101 Firefox/86.0";
+            req.CookieContainer = ckc;            
+            req.CookieContainer.Add(new Cookie("LFR_SESSION_STATE_33706", new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString(), "/", $"{host}"));
+            
+            req.Headers.Add("X-Requested-With", "XMLHttpRequest");
+            req.Accept = "text/plain, */*; q=0.01";
+            res = (HttpWebResponse)req.GetResponse();            
+            using (var sr = new StreamReader(res.GetResponseStream()))
             {
-                var lst = shows.Where(x => x.Description.Length > 0).ToList();
-                var lck = new object();
-                Parallel.ForEach(lst, new ParallelOptions { MaxDegreeOfParallelism = 4 }, (s) =>
-                {
-                    int retryCounter = 1;
-                    var schedule_item_id = s.Description;                    
-                    while (true)
-                    {
-                        lock (lck)
-                        {                            
-                            if (GenericDictionary.TryGetValue(schedule_item_id, out var desc))
-                            {
-                                s.Description = desc;
-                                SetupDescription(s);
-                                break;
-                            }
-                            logger.WriteEntry(string.Format("Grabbing yes.co.il channel : {0} item description  :{1}{2}", s.Channel, schedule_item_id, retryCounter > 1 ? " , try #" + retryCounter : string.Empty), LogType.Info);
-                        }
-                        var wr2 = WebRequest.Create(string.Format("https://www.yes.co.il/content/YesChannelsHandler.ashx?action=GetProgramDataByScheduleItemID&ScheduleItemID={0}", schedule_item_id));
-                        wr2.Timeout = ResponseTimeout;
-
-                        try
-                        {
-                            var res2 = (HttpWebResponse)wr2.GetResponse();
-                            using (var sr = new StreamReader(res2.GetResponseStream()))
-                            {
-                                var resultText = sr.ReadToEnd();
-                                if (resultText.Length > 2)
-                                {
-                                    var obj = Newtonsoft.Json.Linq.JObject.Parse(resultText);                                    
-                                    s.Description = obj["PreviewText"].ToString();
-                                    lock (lck)
-                                    {
-                                        GenericDictionary[schedule_item_id] = s.Description;
-                                    }
-                                    SetupDescription(s);
-                                }
-                            }
-                            break;
-
-                        }
-                        catch (Exception)
-                        {
-                            logger.WriteEntry("Timeout on description fetch", LogType.Warning);
-                            retryCounter++;                            
-                            if (retryCounter > MaxRetryCount)
-                            {
-                                logger.WriteEntry("Error on description fetch", LogType.Error);
-                                break;
-                            }
-                        }
-                    }
-                });
+                var text = sr.ReadToEnd();
+                return text;
             }
+        }
 
-            return CleanupSameTimeStartEndShows(shows);            
+        private string GetScheduleJSON(DateTime startDate)
+        {
+            return GetJSON("getscheduale", "startdate=" + startDate.ToString("yyyyMMdd"));
+        }
+
+        private string GetChannelsJSON()
+        {
+            return GetJSON("getchannels", null);
         }
 
         private static void SetupDescription(Show s)
