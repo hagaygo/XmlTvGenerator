@@ -55,17 +55,25 @@ namespace yes.co.il
                     if (channelDict.TryGetValue(channelId, out var chan))
                     {
                         var s = new Show();
-                        s.Channel = chan.Name;
-                        s.Title = si.Value<string>("scheduleItemName");
-                        s.Description = si.Value<string>("scheduleItemSynopsis");
-                        s.StartTime = si.Value<DateTime>("startDate");
-                        var startTime = si.Value<DateTime>("startTime").TimeOfDay;
-                        s.StartTime = s.StartTime.Add(startTime).AddHours(-2);
-                        s.StartTime = DateTime.SpecifyKind(s.StartTime, DateTimeKind.Unspecified);
-                        s.StartTime = TimeZoneInfo.ConvertTime(s.StartTime, TZConvert.GetTimeZoneInfo("Asia/Jerusalem"), TimeZoneInfo.Utc);                        
-                        s.EndTime = s.StartTime.Add(si.Value<DateTime>("broadcastItemDuration").TimeOfDay);
-                        SetupDescription(s);
-                        shows.Add(s);
+                        try
+                        {
+                            
+                            s.Channel = chan.Name;
+                            s.Title = si.Value<string>("scheduleItemName");
+                            s.Description = si.Value<string>("scheduleItemSynopsis");
+                            s.StartTime = si.Value<DateTime>("startDate");
+                            var startTime = si.Value<DateTime>("startTime").TimeOfDay;
+                            s.StartTime = s.StartTime.Add(startTime).AddHours(-2);
+                            s.StartTime = DateTime.SpecifyKind(s.StartTime, DateTimeKind.Unspecified);
+                            s.StartTime = TimeZoneInfo.ConvertTime(s.StartTime, TZConvert.GetTimeZoneInfo("Asia/Jerusalem"), TimeZoneInfo.Utc);
+                            s.EndTime = s.StartTime.Add(si.Value<DateTime>("broadcastItemDuration").TimeOfDay);
+                            SetupDescription(s);
+                            shows.Add(s);
+                        }
+                        catch (Exception ex)
+                        {
+                            logger.WriteEntry($"Error on show  {s.Title} , channel {s.Channel} , {ex.Message}", LogType.Error);
+                        }
                     }
                 }
             }
