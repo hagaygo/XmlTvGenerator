@@ -56,16 +56,15 @@ namespace yes.co.il
                     {
                         var s = new Show();
                         try
-                        {
-                            
+                        {                            
                             s.Channel = chan.Name;
-                            s.Title = si.Value<string>("scheduleItemName");
+                            s.Title = si.Value<string>("scheduleItemName");                            
                             s.Description = si.Value<string>("scheduleItemSynopsis");
                             s.StartTime = si.Value<DateTime>("startDate");
+                            s.StartTime = DateTime.SpecifyKind(s.StartTime, DateTimeKind.Local).Date;
                             var startTime = si.Value<DateTime>("startTime").TimeOfDay;
-                            s.StartTime = s.StartTime.Add(startTime).AddHours(-2);
-                            s.StartTime = DateTime.SpecifyKind(s.StartTime, DateTimeKind.Unspecified);
-                            s.StartTime = TimeZoneInfo.ConvertTime(s.StartTime, TZConvert.GetTimeZoneInfo("Asia/Jerusalem"), TimeZoneInfo.Utc);
+                            s.StartTime = s.StartTime.Add(startTime);                            
+                            s.StartTime = TimeZoneInfo.ConvertTime(s.StartTime, TimeZoneInfo.Utc);
                             s.EndTime = s.StartTime.Add(si.Value<DateTime>("broadcastItemDuration").TimeOfDay);
                             SetupDescription(s);
                             shows.Add(s);
