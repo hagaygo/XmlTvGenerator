@@ -45,9 +45,19 @@ namespace yes.co.il
             for (int i = 0; i <= daysForward; i++)
             {
                 var d = DateTime.UtcNow.AddDays(i);
-                logger.WriteEntry($"Grabbing yes.co.il date " + d.ToString("yyyy-MM-dd") + "...", LogType.Info);
-                var scheduleJSON = GetScheduleJSON(d);
-                var scheduleList = Newtonsoft.Json.Linq.JObject.Parse(scheduleJSON)["list"];
+                logger.WriteEntry($"Grabbing yes.co.il date {d:yyyy-MM-dd} ...", LogType.Info);
+                Newtonsoft.Json.Linq.JToken scheduleList;
+                try
+                {
+                    var scheduleJSON = GetScheduleJSON(d, logger);
+                    scheduleList = Newtonsoft.Json.Linq.JObject.Parse(scheduleJSON)["list"];
+                }
+                catch (Exception ex)
+                {
+                    logger.WriteEntry($"Error parsing JSON data , {ex.Message} , retrying...", LogType.Error);
+                    var scheduleJSON = GetScheduleJSON(d, logger);
+                    scheduleList = Newtonsoft.Json.Linq.JObject.Parse(scheduleJSON)["list"];
+                }
 
                 foreach (var si in scheduleList)
                 {
@@ -80,7 +90,7 @@ namespace yes.co.il
             return CleanupSameTimeStartEndShows(shows);
         }
 
-        private string GetJSON(string path, string extraParameters)
+        private string GetJSON(string path, string extraParameters, ILogger logger)
         {
             var host = "www.yes.co.il";
             var ckc = new CookieContainer();
@@ -119,22 +129,35 @@ namespace yes.co.il
             
             req.Headers.Add("X-Requested-With", "XMLHttpRequest");
             req.Accept = "text/plain, */*; q=0.01";
-            res = (HttpWebResponse)req.GetResponse();            
+            res = (HttpWebResponse)req.GetResponse();
             using (var sr = new StreamReader(res.GetResponseStream()))
             {
-                var text = sr.ReadToEnd();
-                return text;
+                var startDownloadTime = DateTime.Now;
+                var sb = new StringBuilder();
+                int blockSize = 65536;
+                while (!sr.EndOfStream)
+                {
+                    var buf = new char[blockSize];
+                    var totalRead = sr.ReadBlock(buf, 0, blockSize);
+                    sb.Append(buf);
+                    if (DateTime.Now - startDownloadTime > TimeSpan.FromSeconds(1))
+                    {
+                        startDownloadTime = DateTime.Now;
+                        logger.WriteEntry(string.Format("Downloaded {0:#,##0} bytes so far", sb.Length), LogType.Info);
+                    }                    
+                }
+                return sb.ToString();
             }
         }
 
-        private string GetScheduleJSON(DateTime startDate)
+        private string GetScheduleJSON(DateTime startDate, ILogger logger)
         {
-            return GetJSON("getscheduale", "startdate=" + startDate.ToString("yyyyMMdd"));
+            return GetJSON("getscheduale", "startdate=" + startDate.ToString("yyyyMMdd"), logger);
         }
 
-        private string GetChannelsJSON()
+        private string GetChannelsJSON(ILogger logger)
         {
-            return GetJSON("getchannels", null);
+            return GetJSON("getchannels", null, logger);
         }
 
         private static void SetupDescription(Show s)
