@@ -42,13 +42,13 @@ namespace beinsports.net
                         var html = new HtmlAgilityPack.HtmlDocument();
                         using (var data = res.GetResponseStream())
                         {
-                            html.Load(data);
+                            html.Load(data);                            
                             var channelsDivs = html.QuerySelectorAll("div.container div div[id^=channels_]");
                             foreach (var channelDiv in channelsDivs)
                             {
                                 var img = channelDiv.QuerySelector("div.channel div.centered img");
                                 var src = img.Attributes["src"].Value;
-                                src = src.Substring(src.IndexOf("/") + 1);
+                                src = src.Substring(src.LastIndexOf("/") + 1);
                                 var channelName = src.Substring(0, src.IndexOf(".")) + region;
 
                                 foreach (var li in channelDiv.QuerySelectorAll("div.slider ul li"))
