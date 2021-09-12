@@ -20,11 +20,12 @@ namespace telegraph.co.uk
         {
             var startDate = ToUnixTime(d) * 1000;
             var toDate = ToUnixTime(d.AddDays(1)) * 1000;
-            var wr = WebRequest.Create(string.Format(urlFormat, startDate, toDate));
+            var wr = (HttpWebRequest)WebRequest.Create(string.Format(urlFormat, startDate, toDate));
             wr.Method = "GET";
             wr.ContentType = "application/json";
             logger.WriteEntry(string.Format("Grabbing telegraph.co.uk for date {0} data ...",d.ToString("yyyy-MM-dd")), LogType.Info);            
-
+            wr.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0";            
+            wr.AutomaticDecompression =DecompressionMethods.GZip | DecompressionMethods.Deflate;
             var res = (HttpWebResponse)wr.GetResponse();
 
             using (var sr = new StreamReader(res.GetResponseStream()))
