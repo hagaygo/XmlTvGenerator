@@ -1,11 +1,11 @@
-﻿using HtmlAgilityPack.CssSelectors.NetCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using TimeZoneConverter;
 using XmlTvGenerator.Core;
 
 namespace nos.pt
@@ -69,14 +69,16 @@ namespace nos.pt
 
                             var durationTokens = duration.Split('-', StringSplitOptions.RemoveEmptyEntries);
                             var start = DateTime.Parse(durationTokens[0]).AddDays(dayDelta);
-                            var end = DateTime.Parse(durationTokens[1]).AddDays(dayDelta);
-                            if (start > end)
-                                start = start.AddDays(-1);
+                            var end = DateTime.Parse(durationTokens[1]).AddDays(dayDelta);                            
                             var s = new Show();
                             s.Channel = channelDict[channelId].Name;
                             s.Title = program;
                             s.StartTime = start;
+                            s.StartTime = TimeZoneInfo.ConvertTime(s.StartTime, TZConvert.GetTimeZoneInfo("Europe/Lisbon"), TimeZoneInfo.Utc);
                             s.EndTime = end;
+                            s.EndTime = TimeZoneInfo.ConvertTime(s.EndTime, TZConvert.GetTimeZoneInfo("Europe/Lisbon"), TimeZoneInfo.Utc);
+                            if (s.StartTime > s.EndTime)
+                                s.StartTime = s.StartTime.AddDays(-1);
                             lst.Add(s);
                         }
                         dayDelta++;
