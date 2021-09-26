@@ -17,9 +17,7 @@ namespace yes.co.il
         {
             public string Code { get; set; }
             public string Name { get; set; }            
-        }        
-
-        protected override bool UseGenericDataDictionary => true;
+        }                
 
         public override List<Show> Grab(string xmlParameters, ILogger logger)
         {
