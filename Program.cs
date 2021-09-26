@@ -95,7 +95,7 @@ namespace XmlTvGenerator
                     {
                         Logger.WriteEntry("error on grabber " + grabber.Path + " " + ex.Message, LogType.Error);
                         if (config.HaltOnGrabberError)
-                            throw ex;
+                            throw;
                     }
                 }
 

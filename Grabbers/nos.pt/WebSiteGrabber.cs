@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HtmlAgilityPack.CssSelectors.NetCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -67,7 +68,7 @@ namespace nos.pt
                             var program = Tools.CleanupText(item.QuerySelector("span.program").InnerText);
                             var duration = Tools.CleanupText(item.QuerySelector("span.duration").InnerText);
 
-                            var durationTokens = duration.Split('-', StringSplitOptions.RemoveEmptyEntries);
+                            var durationTokens = duration.Split(new char[] { '-' }, StringSplitOptions.RemoveEmptyEntries);
                             var start = DateTime.Parse(durationTokens[0]).AddDays(dayDelta);
                             var end = DateTime.Parse(durationTokens[1]).AddDays(dayDelta);                            
                             var s = new Show();
