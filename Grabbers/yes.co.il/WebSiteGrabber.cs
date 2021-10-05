@@ -74,6 +74,9 @@ namespace yes.co.il
                             s.StartTime = s.StartTime.Add(startTime);                            
                             s.StartTime = TimeZoneInfo.ConvertTime(s.StartTime, TimeZoneInfo.Utc);
                             s.EndTime = s.StartTime.Add(si.Value<DateTime>("broadcastItemDuration").TimeOfDay);
+                            if (s.Title.StartsWith("צומת מילר"))
+                            {
+                            }
                             SetupDescription(s);
                             shows.Add(s);
                         }
@@ -162,7 +165,7 @@ namespace yes.co.il
         {
             if (!string.IsNullOrEmpty(s.Description))
             {
-                if (s.Description.EndsWith(" ש.ח."))
+                if (s.Description.EndsWith(" ש.ח.") || s.Description.EndsWith(" ש.ח"))
                 {
                     s.Title = string.Format("{0} - ש.ח", s.Title);
                 }
