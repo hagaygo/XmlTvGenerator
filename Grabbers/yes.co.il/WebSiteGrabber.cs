@@ -73,10 +73,7 @@ namespace yes.co.il
                             var startTime = si.Value<DateTime>("startTime").TimeOfDay;
                             s.StartTime = s.StartTime.Add(startTime);                            
                             s.StartTime = TimeZoneInfo.ConvertTime(s.StartTime, TimeZoneInfo.Utc);
-                            s.EndTime = s.StartTime.Add(si.Value<DateTime>("broadcastItemDuration").TimeOfDay);
-                            if (s.Title.StartsWith("צומת מילר"))
-                            {
-                            }
+                            s.EndTime = s.StartTime.Add(si.Value<DateTime>("broadcastItemDuration").TimeOfDay);                            
                             SetupDescription(s);
                             shows.Add(s);
                         }
