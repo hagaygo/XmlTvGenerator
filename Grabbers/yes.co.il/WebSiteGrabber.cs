@@ -48,13 +48,13 @@ namespace yes.co.il
                 try
                 {
                     var scheduleJSON = GetScheduleJSON(d, logger);
-                    scheduleList = Newtonsoft.Json.Linq.JObject.Parse(scheduleJSON)["list"];
+                    scheduleList = Newtonsoft.Json.Linq.JArray.Parse(scheduleJSON);
                 }
                 catch (Exception ex)
                 {
                     logger.WriteEntry($"Error parsing JSON data , {ex.Message} , retrying...", LogType.Error);
                     var scheduleJSON = GetScheduleJSON(d, logger);
-                    scheduleList = Newtonsoft.Json.Linq.JObject.Parse(scheduleJSON)["list"];
+                    scheduleList = Newtonsoft.Json.Linq.JArray.Parse(scheduleJSON);
                 }
 
                 foreach (var si in scheduleList)
