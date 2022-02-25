@@ -23,9 +23,9 @@ namespace telegraph.co.uk
             var wr = (HttpWebRequest)WebRequest.Create(string.Format(urlFormat, startDate, toDate));
             wr.Method = "GET";
             wr.ContentType = "application/json";
-            logger.WriteEntry(string.Format("Grabbing telegraph.co.uk for date {0} data ...",d.ToString("yyyy-MM-dd")), LogType.Info);            
-            wr.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0";            
-            wr.AutomaticDecompression =DecompressionMethods.GZip | DecompressionMethods.Deflate;
+            logger.WriteEntry(string.Format("Grabbing telegraph.co.uk for date {0} data ...", d.ToString("yyyy-MM-dd")), LogType.Info);
+            wr.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0";
+            wr.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
             var res = (HttpWebResponse)wr.GetResponse();
 
             using (var sr = new StreamReader(res.GetResponseStream()))
@@ -66,7 +66,7 @@ namespace telegraph.co.uk
                         if (program["episodeTitle"] != null)
                             show.Description = Tools.CleanupText(program["episodeTitle"].Value<string>());
                         if (program["episodeNumber"] != null)
-                            show.Episode = program["episodeNumber"].Value<int>();
+                            show.Episode = program["episodeNumber"].Value<int?>();
                         show.StartTime = FromUnixTime(program["start"].Value<long>() / 1000);
                         show.EndTime = FromUnixTime(program["end"].Value<long>() / 1000);
                         shows.Add(show);
@@ -76,7 +76,7 @@ namespace telegraph.co.uk
         }
 
         public override List<Show> Grab(string xmlParameters, ILogger logger)
-        {   
+        {
             var shows = new List<Show>();
             var doc = XDocument.Parse(xmlParameters);
             var sdElement = doc.Descendants("StartDate").FirstOrDefault();

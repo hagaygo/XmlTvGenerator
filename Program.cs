@@ -40,7 +40,7 @@ namespace XmlTvGenerator
             }
             catch (Exception e)
             {
-                Logger.WriteEntry(e.Message, LogType.Error);
+                Logger.WriteEntry($"{e.Message}\n{e.StackTrace}", LogType.Error);
             }
         }
 
@@ -52,7 +52,7 @@ namespace XmlTvGenerator
         }
 
         private static List<Show> GetShows(ILogger logger)
-        {            
+        {
             var config = Config.GetInstance();
             CacheManagerBase fileCache;
             if (config.TranslatorCacheSettings != null)
@@ -67,7 +67,7 @@ namespace XmlTvGenerator
                 {
                     try
                     {
-                        var a = Assembly.LoadFrom(grabber.Path);                        
+                        var a = Assembly.LoadFrom(grabber.Path);
                         foreach (var t in a.GetTypes())
                             if (t.IsSubclassOf(typeof(GrabberBase)))
                             {
@@ -93,7 +93,7 @@ namespace XmlTvGenerator
                     }
                     catch (Exception ex)
                     {
-                        Logger.WriteEntry("error on grabber " + grabber.Path + " " + ex.Message, LogType.Error);
+                        Logger.WriteEntry("error on grabber " + grabber.Path + " " + ex.Message + "\n" + ex.StackTrace, LogType.Error);
                         if (config.HaltOnGrabberError)
                             throw;
                     }
