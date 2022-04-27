@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Config>
-  <Logger Type="File">
-    <Parameters>
-      <Filename>c:\temp\xmltv.log</Filename>
-    </Parameters>
-  </Logger>
-  <HaltOnGrabberError>false</HaltOnGrabberError>
-  <TranslatorCache Type="File" OutputFile="TranslationCache.txt"/>
-  <Output>
-    <Path>c:\temp\xmltv.xml</Path>
-  </Output>
-  <Grabbers>
-    <!--<Grabber path="ontvtonight.com.dll" channelPrefix="ontvtonight.com_">
+	<Logger Type="File">
+		<Parameters>
+			<Filename>c:\temp\xmltv.log</Filename>
+		</Parameters>
+	</Logger>
+	<HaltOnGrabberError>false</HaltOnGrabberError>
+	<TranslatorCache Type="File" OutputFile="TranslationCache.txt"/>
+	<Output>
+		<Path>c:\temp\xmltv.xml</Path>
+	</Output>
+	<Grabbers>
+		<!--<Grabber path="ontvtonight.com.dll" channelPrefix="ontvtonight.com_">
       <Parameters>
         <Channels>
           <Channel url="69022354/wnbc-hdtv.html">NBC</Channel>
@@ -21,13 +21,13 @@
         </Channels>
       </Parameters>
     </Grabber>-->
-    <!--<Grabber path="telegraph.co.uk.dll" channelPrefix="telegraph.co.uk_">
+		<!--<Grabber path="telegraph.co.uk.dll" channelPrefix="telegraph.co.uk_">
       <Parameters>
         <StartDate>0</StartDate>
         <EndDate>2</EndDate>
       </Parameters>
     </Grabber>-->
-    <!--<Grabber path="streamingtvguides.com.dll" channelPrefix="streamingtvguides.com_">
+		<!--<Grabber path="streamingtvguides.com.dll" channelPrefix="streamingtvguides.com_">
       <Parameters>
         <Channels>
           <Channel>fs1</Channel>
@@ -48,20 +48,20 @@
         </Channels>
       </Parameters>
     </Grabber>-->
-    <!--<Grabber path="beinsports.net.dll" channelPrefix="beinsports.net_">	
+		<!--<Grabber path="beinsports.net.dll" channelPrefix="beinsports.net_">	
       <Parameters>        
         <StartDate>0</StartDate>
         <EndDate>2</EndDate>        
       </Parameters>  
     </Grabber>-->
-    <!--  <Grabber path="CyfraPlus.dll" channelPrefix="cyfra+">
+		<!--  <Grabber path="CyfraPlus.dll" channelPrefix="cyfra+">
 	<Translate From="Polish" To="English" MaxDegreeOfParallelism="8" YandexAPIKeysFilePath="yandexApiKeys.txt"/>
       <Parameters>        
         <StartDate>0</StartDate>
         <EndDate>4</EndDate>        
       </Parameters>  
     </Grabber>-->
-    <!--<Grabber path="CyfrowyPolsat.pl.dll" channelPrefix="CyfrowyPolsat_">
+		<!--<Grabber path="CyfrowyPolsat.pl.dll" channelPrefix="CyfrowyPolsat_">
       <Translate From="Polish" To="English" MaxDegreeOfParallelism="4" YandexAPIKeysFilePath="yandexApiKeys.txt"/>
       <Parameters>
         <Channels>
@@ -78,7 +78,7 @@
         </Channels>
       </Parameters>
     </Grabber>-->
-    <!--<Grabber path="sky.it.dll" channelPrefix="sky.it_">
+		<!--<Grabber path="sky.it.dll" channelPrefix="sky.it_">
       <Parameters>                   
         <Channels>
           <Channel>bloomberg_</Channel>
@@ -93,14 +93,14 @@
         </Channels>
       </Parameters>
     </Grabber>-->
-    <!--<Grabber path="hot.net.il.dll" channelPrefix="hot.net.il_">
+		<!--<Grabber path="hot.net.il.dll" channelPrefix="hot.net.il_">
       <Parameters>
         <StartDate>0</StartDate>
         <EndDate>2</EndDate>
         <ExtraChannels IgnoreInternal="true">
           <Channel ID="430" Description="yes">HOT 8</Channel>
           <Channel ID="477" Description="yes">Hot3</Channel>-->
-          <!--<Channel ID="898">FoodNetwork</Channel>
+		<!--<Channel ID="898">FoodNetwork</Channel>
           <Channel ID="530">National Geographic Wild</Channel>
           <Channel ID="531">National Geographic</Channel>
           <Channel ID="591">Hop</Channel>
@@ -116,8 +116,8 @@
           <Channel ID="907">I24English</Channel>          
           <Channel ID="742">Discovery Science</Channel>
           <Channel ID="771">DwNews</Channel>
-          <Channel ID="522">Mtv</Channel>-->          
-        <!--</ExtraChannels>
+          <Channel ID="522">Mtv</Channel>-->
+		<!--</ExtraChannels>
       </Parameters>
     </Grabber>
     <Grabber path="yes.co.il.dll" channelPrefix="yes.co.il_">
@@ -125,7 +125,7 @@
         <DaysForward>2</DaysForward>        
         <Channels>
           <Channel ID="CH34" Description="yes">Keshet</Channel>-->
-          <!--<Channel ID="CH30" Description="yes">KAN11</Channel>
+		<!--<Channel ID="CH30" Description="yes">KAN11</Channel>
           <Channel ID="CH32" Description="yes">KAN33</Channel>          
           <Channel ID="CH36" Description="yes">Reshet</Channel>
           <Channel ID="PT92" Description="yes">Moreshet</Channel>
@@ -139,11 +139,11 @@
           <Channel ID="CH11">Sport 4</Channel>
           <Channel ID="CH54">Sport 5 Stars</Channel>
           <Channel ID="TVR5">Sport 5</Channel>-->
-        <!--</Channels>
+		<!--</Channels>
       </Parameters>
     </Grabber>-->
-    <!--<Grabber path="Sport5.co.il.dll" channelPrefix="sport5.co.il_"/>-->
-    <Grabber path="nos.pt.dll" channelPrefix="nos.pt_">
+		<!--<Grabber path="Sport5.co.il.dll" channelPrefix="sport5.co.il_"/>-->
+		<!--<Grabber path="nos.pt.dll" channelPrefix="nos.pt_">
       <Parameters>        
         <Channels>
           <Channel ID="518">Eleven sport 1</Channel>          
@@ -154,7 +154,12 @@
           <Channel ID="516">Eleven sport 6</Channel>          
         </Channels>
       </Parameters>
-    </Grabber>
-  </Grabbers>
+    </Grabber>-->
+		<Grabber path="CellcomTV.il.dll" channelPrefix="CellcomTV.il_">
+			<Parameters>
+				<DaysForward>2</DaysForward>
+			</Parameters>
+		</Grabber>
+	</Grabbers>
 </Config>
 

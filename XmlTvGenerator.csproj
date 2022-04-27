@@ -28,6 +28,7 @@
     <ProjectReference Include="Grabbers\AlJazeera.Sports\AlJazeera.Sports.csproj" />
     <ProjectReference Include="Grabbers\BBC.World.News\BBC.World.News.csproj" />
     <ProjectReference Include="Grabbers\beinsports.net\beinsports.net.csproj" />
+    <ProjectReference Include="Grabbers\CellcomTV.il\CellcomTV.il.csproj" />
     <ProjectReference Include="Grabbers\CyfraPlus\CyfraPlus.csproj" />
     <ProjectReference Include="Grabbers\CyfrowyPolsat.pl\CyfrowyPolsat.pl.csproj" />
     <ProjectReference Include="Grabbers\hot.net.il\hot.net.il.csproj" />

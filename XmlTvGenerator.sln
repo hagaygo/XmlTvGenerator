@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29215.179
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32407.343
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XmlTvGenerator", "XmlTvGenerator.csproj", "{7F5ED080-76FA-4E34-A4B6-53D812480C20}"
 EndProject
@@ -43,7 +43,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "yes.co.il", "Grabbers\yes.c
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ontvtonight.com", "Grabbers\ontvtonight.com\ontvtonight.com.csproj", "{433FC492-6553-40BC-9F7D-215F8D8E326E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nos.pt", "Grabbers\nos.pt\nos.pt.csproj", "{0E4A0C78-154F-4779-A5FF-0067682517E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "nos.pt", "Grabbers\nos.pt\nos.pt.csproj", "{0E4A0C78-154F-4779-A5FF-0067682517E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CellcomTV.il", "Grabbers\CellcomTV.il\CellcomTV.il.csproj", "{2AE48ED3-C96F-4853-9ECB-E9C2FF03BD45}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -123,6 +125,10 @@ Global
 		{0E4A0C78-154F-4779-A5FF-0067682517E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E4A0C78-154F-4779-A5FF-0067682517E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E4A0C78-154F-4779-A5FF-0067682517E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AE48ED3-C96F-4853-9ECB-E9C2FF03BD45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AE48ED3-C96F-4853-9ECB-E9C2FF03BD45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AE48ED3-C96F-4853-9ECB-E9C2FF03BD45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AE48ED3-C96F-4853-9ECB-E9C2FF03BD45}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -146,6 +152,7 @@ Global
 		{BD18AA90-0EE3-405B-B02A-767FC049EA4F} = {91759C7E-1E12-4A1D-BFA5-0D2179FE2068}
 		{433FC492-6553-40BC-9F7D-215F8D8E326E} = {91759C7E-1E12-4A1D-BFA5-0D2179FE2068}
 		{0E4A0C78-154F-4779-A5FF-0067682517E2} = {91759C7E-1E12-4A1D-BFA5-0D2179FE2068}
+		{2AE48ED3-C96F-4853-9ECB-E9C2FF03BD45} = {91759C7E-1E12-4A1D-BFA5-0D2179FE2068}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FD415635-BE73-4FE0-AE58-F8A8B260569B}
