@@ -18,7 +18,7 @@ namespace CellcomTV.il
         const string ClientTag = "30082-Android";
         const string ApiVersion = "5.4.0.28193";
         const string PartnerId = "3197";
-        const int PageSize = 10000;
+        const int PageSize = 500;
         ILogger _logger;
 
         class ChannelData
@@ -41,46 +41,64 @@ namespace CellcomTV.il
 
             for (int i = 0; i <= daysForward; i++)
             {
+                int pageIndex = 1;
                 var d = DateTime.UtcNow.Date.AddDays(i);
-                logger.WriteEntry($"Grabbing CellcomTV date {d:yyyy-MM-dd} ...", LogType.Info);
-                var postData = new
+                while (true)
                 {
-                    apiVersion = ApiVersion,
-                    clientTag = ClientTag,
-                    filter = new
+                    logger.WriteEntry($"Grabbing CellcomTV date {d:yyyy-MM-dd} (Page {pageIndex}) ...", LogType.Info);
+                    var postData = new
                     {
-                        kSql = $"(and start_date>='{ToUnixTime(d)}' end_date<'{ToUnixTime(d.AddDays(1))}' asset_type='epg')",
-                        orderBy = "START_DATE_ASC",
-                        objectType = "KalturaSearchAssetFilter"
-                    },
-                    ks = ks,
-                    pager = new
-                    {
-                        pageIndex = 1,
-                        pageSize = PageSize,
-                    }
-                };                
-                var res = ((JObject)JsonConvert.DeserializeObject(GetJSON($"{URLBASE}asset/action/list", JsonConvert.SerializeObject(postData))))["result"];
-                foreach (var epg in res["objects"])
-                {
-                    if (channelDict.TryGetValue(epg.Value<int>("epgChannelId"), out var cd))
-                    {
-                        var s = new Show();
-                        try
+                        apiVersion = ApiVersion,
+                        clientTag = ClientTag,
+                        filter = new
                         {
-                            s.Channel = cd.Name;
-                            s.Title = epg.Value<string>("name");
-                            s.Description = epg.Value<string>("description");
-                            s.StartTime = FromUnixTime(epg.Value<long>("startDate"));
-                            s.EndTime = FromUnixTime(epg.Value<long>("endDate"));
-                            shows.Add(s);
-                        }
-                        catch (Exception ex)
+                            kSql = $"(and start_date>='{ToUnixTime(d)}' end_date<'{ToUnixTime(d.AddDays(1))}' asset_type='epg')",
+                            orderBy = "START_DATE_ASC",
+                            objectType = "KalturaSearchAssetFilter"
+                        },
+                        ks = ks,
+                        pager = new
                         {
-                            logger.WriteEntry($"Error on show  {s.Title} , channel {s.Channel} , {ex.Message}", LogType.Error);
+                            pageIndex = pageIndex,
+                            pageSize = PageSize,
                         }
+                    };
+                    var response = ((JObject)JsonConvert.DeserializeObject(GetJSON($"{URLBASE}asset/action/list", JsonConvert.SerializeObject(postData))));
+
+                    var res = response["result"];
+                    if (res["objects"] != null)
+                    {
+                        var epgEntires = ((JArray)res["objects"]).ToList();
+                        foreach (var epg in epgEntires)
+                        {
+                            if (channelDict.TryGetValue(epg.Value<int>("epgChannelId"), out var cd))
+                            {
+                                var s = new Show();
+                                try
+                                {
+                                    s.Channel = cd.Name;
+                                    s.Title = epg.Value<string>("name");
+                                    s.Description = epg.Value<string>("description");
+                                    s.StartTime = FromUnixTime(epg.Value<long>("startDate"));
+                                    s.EndTime = FromUnixTime(epg.Value<long>("endDate"));
+                                    shows.Add(s);
+                                }
+                                catch (Exception ex)
+                                {
+                                    logger.WriteEntry($"Error on show  {s.Title} , channel {s.Channel} , {ex.Message}", LogType.Error);
+                                }
+                            }
+
+                        }
+                        if (epgEntires.Count >= PageSize)
+                            pageIndex++;
+                        else
+                            break;
                     }
-                }                
+                    else
+                        break;                    
+                }
+
             }
 
             return CleanupSameTimeStartEndShows(shows);

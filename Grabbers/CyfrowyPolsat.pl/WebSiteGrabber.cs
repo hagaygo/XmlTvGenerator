@@ -12,8 +12,8 @@ using XmlTvGenerator.Core;
 namespace CyfrowyPolsat.pl
 {
     public class WebSiteGrabber : GrabberBase
-    {        
-        const string URL = "https://www.cyfrowypolsat.pl/redir/program-tv/program-tv-pionowy-single-channel.cp?chN={0}";        
+    {
+        const string URL = "https://www.cyfrowypolsat.pl/redir/program-tv/program-tv-pionowy-single-channel.cp?chN={0}";
 
         DateTime currentNow;
 
@@ -67,22 +67,16 @@ namespace CyfrowyPolsat.pl
                     selectedChannels.Add(c.Value);
             }
             if (selectedChannels.Count == 0) // no channel specified , lets take all available channels
-                selectedChannels.AddRange(GrabParameters.AvailableChannels);                
+                selectedChannels.AddRange(GrabParameters.AvailableChannels);
 
             foreach (var c in selectedChannels)
             {
                 var p = new GrabParameters();
                 p.Channel = c;
-                try
-                {
-                    var channelShows = Grab(p, logger);
-                    FixShowsEndTimeByStartTime(channelShows);
-                    shows.AddRange(channelShows);
-                }
-                catch (Exception ex)
-                {
-                    logger.WriteEntry("Error on grabber " + ex.Message, LogType.Error);
-                }                
+
+                var channelShows = Grab(p, logger);
+                FixShowsEndTimeByStartTime(channelShows);
+                shows.AddRange(channelShows);
             }
 
             logger.WriteEntry("Finshed CyfrowyPolsat.pl grab", LogType.Info);

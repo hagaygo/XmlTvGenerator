@@ -5,7 +5,7 @@
 			<Filename>c:\temp\xmltv.log</Filename>
 		</Parameters>
 	</Logger>
-	<HaltOnGrabberError>false</HaltOnGrabberError>
+	<HaltOnGrabberError>true</HaltOnGrabberError>
 	<TranslatorCache Type="File" OutputFile="TranslationCache.txt"/>
 	<Output>
 		<Path>c:\temp\xmltv.xml</Path>
