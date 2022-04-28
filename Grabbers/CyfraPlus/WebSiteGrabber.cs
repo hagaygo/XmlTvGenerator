@@ -107,7 +107,7 @@ namespace CyfraPlus
             }
             catch (Exception ex)
             {
-                logger.WriteEntry("failed to get cyfra channels " + ex.Message, LogType.Error);
+                logger.LogException(ex, "failed to get cyfra channels");
                 throw;
             }
         }

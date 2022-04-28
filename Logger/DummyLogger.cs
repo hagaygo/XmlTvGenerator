@@ -16,6 +16,11 @@ namespace XmlTvGenerator.Logger
             
         }
 
+        public void LogException(Exception ex, string errorPrefix = null)
+        {
+            
+        }
+
         public void WriteEntry(string text, LogType lt)
         {
             

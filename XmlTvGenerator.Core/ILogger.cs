@@ -16,5 +16,6 @@ namespace XmlTvGenerator.Core
     {
         void InitLog(string xmlSettings);
         void WriteEntry(string text, LogType lt);
+        void LogException(Exception ex, string errorPrefix = null);
     }
 }

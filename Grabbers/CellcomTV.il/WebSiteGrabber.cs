@@ -37,8 +37,7 @@ namespace CellcomTV.il
 
             var ks = GetLoginSecret();
 
-            var channelDict = GetChannels(ks).ToDictionary(x => x.Id);
-
+            var channelDict = GetChannels(ks).ToDictionary(x => x.Id);            
             for (int i = 0; i <= daysForward; i++)
             {
                 int pageIndex = 1;
@@ -75,7 +74,7 @@ namespace CellcomTV.il
                             {
                                 var s = new Show();
                                 try
-                                {
+                                {                                    
                                     s.Channel = cd.Name;
                                     s.Title = epg.Value<string>("name");
                                     s.Description = epg.Value<string>("description");
@@ -85,7 +84,7 @@ namespace CellcomTV.il
                                 }
                                 catch (Exception ex)
                                 {
-                                    logger.WriteEntry($"Error on show  {s.Title} , channel {s.Channel} , {ex.Message}", LogType.Error);
+                                    logger.LogException(ex,$"show  {s.Title} , channel {s.Channel}");
                                 }
                             }
 

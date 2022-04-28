@@ -31,5 +31,14 @@ namespace XmlTvGenerator.Logger
             f.Seek(0, SeekOrigin.End);
             sw = new StreamWriter(f);
         }
+
+        public void LogException(Exception ex, string errorPrefix = null)
+        {
+            while (ex.InnerException != null)
+                ex = ex.InnerException;
+            if (string.IsNullOrEmpty(errorPrefix))
+                errorPrefix += " ";
+            WriteEntry($"{errorPrefix}{ex.Message}\n{ex.StackTrace}", LogType.Error);
+        }
     }
 }

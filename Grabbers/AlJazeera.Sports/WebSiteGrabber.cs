@@ -44,7 +44,7 @@ namespace AlJazeera.Sports
             }
             catch (Exception ex)
             {
-                _logger.WriteEntry(ex.Message, LogType.Error);
+                _logger.LogException(ex);
             }
             _logger.WriteEntry(string.Format("Found {0} Shows", shows.Count), LogType.Info);
             return shows;

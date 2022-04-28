@@ -164,14 +164,14 @@ namespace hot.net.il
                                 }
                                 catch (Exception ex)
                                 {
-                                    logger.WriteEntry("description fetch failed for " + dateText + " message : " + ex.Message, LogType.Error);
+                                    logger.LogException(ex, "description fetch failed for " + dateText);
                                 }
                             }
                             shows.Add(show);
                         }
                         catch (ArgumentException ex)
                         {
-                            logger.WriteEntry(ex.Message, LogType.Error);
+                            logger.LogException(ex);
                         }
                     }                    
 

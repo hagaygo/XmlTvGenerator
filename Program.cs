@@ -40,7 +40,7 @@ namespace XmlTvGenerator
             }
             catch (Exception e)
             {
-                Logger.WriteEntry($"{e.Message}\n{e.StackTrace}", LogType.Error);
+                Logger.LogException(e);
             }
         }
 
@@ -93,7 +93,7 @@ namespace XmlTvGenerator
                     }
                     catch (Exception ex)
                     {
-                        Logger.WriteEntry("error on grabber " + grabber.Path + " " + ex.Message + "\n" + ex.StackTrace, LogType.Error);
+                        Logger.LogException(ex, "error on grabber " + grabber.Path + " ");
                         if (config.HaltOnGrabberError)
                             throw;
                     }

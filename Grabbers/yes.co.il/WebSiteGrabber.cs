@@ -52,7 +52,7 @@ namespace yes.co.il
                 }
                 catch (Exception ex)
                 {
-                    logger.WriteEntry($"Error parsing JSON data , {ex.Message} , retrying...", LogType.Error);
+                    logger.LogException(ex, "Error parsing JSON data , retrying...");
                     var scheduleJSON = GetScheduleJSON(d, logger);
                     scheduleList = Newtonsoft.Json.Linq.JArray.Parse(scheduleJSON);
                 }
@@ -79,7 +79,7 @@ namespace yes.co.il
                         }
                         catch (Exception ex)
                         {
-                            logger.WriteEntry($"Error on show  {s.Title} , channel {s.Channel} , {ex.Message}", LogType.Error);
+                            logger.LogException(ex, $"Error on show  {s.Title} , channel {s.Channel}");
                         }
                     }
                 }

@@ -88,7 +88,7 @@ namespace Israel.Rashut2.Org.il
                 }
                 catch (Exception ex) // error on the verge of daylight saving start
                 {
-                    _logger.WriteEntry(ex.Message, LogType.Error);
+                    _logger.LogException(ex);
                     continue; 
                 }
 

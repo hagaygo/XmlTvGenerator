@@ -82,7 +82,7 @@ namespace beinsports.net
                     }
                     catch (Exception ex)
                     {
-                        logger.WriteEntry(ex.Message + ex.StackTrace, LogType.Error);
+                        logger.LogException(ex);
                     }
                 }
             }

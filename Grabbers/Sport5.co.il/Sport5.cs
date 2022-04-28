@@ -32,7 +32,7 @@ namespace Sport5.co.il
             }
             catch (Exception ex)
             {
-                logger.WriteEntry(ex.Message, LogType.Error);
+                logger.LogException(ex);
             }
             logger.WriteEntry(string.Format("Found {0} Shows", shows.Count), LogType.Info);
             FixShowsEndTimeByStartTime(shows);
