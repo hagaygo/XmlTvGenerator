@@ -37,7 +37,7 @@ namespace CellcomTV.il
 
             var ks = GetLoginSecret();
 
-            var channelDict = GetChannels(ks).ToDictionary(x => x.Id);            
+            var channelDict = GetChannels(ks).ToDictionary(x => x.Id);
             for (int i = 0; i <= daysForward; i++)
             {
                 int pageIndex = 1;
@@ -74,17 +74,20 @@ namespace CellcomTV.il
                             {
                                 var s = new Show();
                                 try
-                                {                                    
+                                {
                                     s.Channel = cd.Name;
-                                    s.Title = epg.Value<string>("name");
-                                    s.Description = epg.Value<string>("description");
+                                    s.Title = epg.Value<string>("name")?.Trim();
+                                    s.Description = epg.Value<string>("description")?.Trim();
                                     s.StartTime = FromUnixTime(epg.Value<long>("startDate"));
+                                    var subTitle = epg["metas"]?["subTitle"]?["value"]?.ToString().Trim();
+                                    if (!string.IsNullOrEmpty(subTitle))
+                                        s.Title = $"{s.Title} - {subTitle}";
                                     s.EndTime = FromUnixTime(epg.Value<long>("endDate"));
                                     shows.Add(s);
                                 }
                                 catch (Exception ex)
                                 {
-                                    logger.LogException(ex,$"show  {s.Title} , channel {s.Channel}");
+                                    logger.LogException(ex, $"show  {s.Title} , channel {s.Channel}");
                                 }
                             }
 
@@ -95,7 +98,7 @@ namespace CellcomTV.il
                             break;
                     }
                     else
-                        break;                    
+                        break;
                 }
 
             }
@@ -113,7 +116,7 @@ namespace CellcomTV.il
                 filter = new
                 {
                     idEqual = 353875,
-                    kSql = $"(and customer_type_blacklist!='1'  deep_link_type!='netflix'   Is_adult!='1'  deep_link_type!='youtube' (and PPV_module!+'') deep_link_type!='amazon')",                    
+                    kSql = $"(and customer_type_blacklist!='1'  deep_link_type!='netflix'   Is_adult!='1'  deep_link_type!='youtube' (and PPV_module!+'') deep_link_type!='amazon')",
                     objectType = "KalturaChannelFilter"
                 },
                 ks = ks,
@@ -133,11 +136,11 @@ namespace CellcomTV.il
         }
 
         string GetJSON(string url, string postData)
-        {            
+        {
             var req = (HttpWebRequest)WebRequest.Create(url);
-            req.Method = "POST";            
+            req.Method = "POST";
             var data = Encoding.ASCII.GetBytes(postData);
-            req.ContentType = "application/json";            
+            req.ContentType = "application/json";
             req.ContentLength = data.Length;
             using (var stream = req.GetRequestStream())
             {
