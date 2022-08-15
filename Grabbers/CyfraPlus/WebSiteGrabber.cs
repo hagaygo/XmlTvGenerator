@@ -23,6 +23,7 @@ namespace CyfraPlus
             var wr = WebRequest.Create(urlFormat);
             wr.Method = "POST";
             wr.ContentType = "application/json";
+            wr.Headers.Add("Sec-Fetch-Mode", "cors");
             using (var sw = new StreamWriter(wr.GetRequestStream()))
             {
                 sw.Write("{\"start_date\":\"" + pp.Date.ToString(DateFormat) + "T00:00:00\",\"end_date\":\"" + pp.Date.AddDays(1).ToString(DateFormat) + "T00:00:00\"}");
@@ -82,10 +83,29 @@ namespace CyfraPlus
 
             _channelsDict = GetChannelsDict(logger);
 
+            var maxTries = 15;
+            var retryCount = 0;
+
             for (int i = startDateDiff; i < endDateDays; i++)
             {
-                var p = new GrabParameters() { Date = DateTime.Now.Date.AddDays(i) };
-                shows.AddRange(Grab(p, logger));
+                try
+                {
+                    var p = new GrabParameters() { Date = DateTime.Now.Date.AddDays(i) };
+                    shows.AddRange(Grab(p, logger));
+                    
+                }
+                catch (Exception ex)
+                {
+                    if (retryCount < maxTries)
+                    {
+                        retryCount++;
+                        logger.WriteEntry($"{ex.Message.ToLower()} , retry #{retryCount}", LogType.Warning);
+                        i--;
+                        continue;
+                    }
+                    else
+                        throw;
+                }
             }
             return shows;
         }
