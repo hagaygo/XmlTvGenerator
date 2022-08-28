@@ -155,9 +155,15 @@
         </Channels>
       </Parameters>
     </Grabber>-->
-		<Grabber path="CellcomTV.il.dll" channelPrefix="CellcomTV.il_">
+		<!--<Grabber path="CellcomTV.il.dll" channelPrefix="CellcomTV.il_">
 			<Parameters>
 				<DaysForward>2</DaysForward>
+			</Parameters>
+		</Grabber>-->
+		<Grabber path="starhubtvplus.com.dll" channelPrefix="starhubtvplus.com_">
+			<Parameters>
+				<StartDate>0</StartDate>
+				<EndDate>3</EndDate>
 			</Parameters>
 		</Grabber>
 	</Grabbers>
