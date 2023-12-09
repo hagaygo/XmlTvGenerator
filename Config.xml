@@ -166,12 +166,25 @@
 				<EndDate>3</EndDate>
 			</Parameters>
 		</Grabber>-->
-	    <Grabber path="tv-guide-listings.co.uk.dll" channelPrefix="tv-guide-listings.co.uk_">
+		<!--<Grabber path="tv-guide-listings.co.uk.dll" channelPrefix="tv-guide-listings.co.uk_">
 			<Parameters>
 				<DaysForward>1</DaysForward>
 				<Channels>
 					<Channel>tv-guide-premier-sports-1</Channel>
 					<Channel>tv-guide-premier-sports-2</Channel>
+				</Channels>
+			</Parameters>
+		</Grabber>-->
+		<Grabber path="meo.pt.dll" channelPrefix="meo.pt_">
+			<Parameters>
+				<DaysForward>2</DaysForward>
+				<Channels>
+					<Channel>ELEVEN1</Channel>
+					<Channel>ELEVEN2</Channel>
+					<Channel>ELEVEN3</Channel>
+					<Channel>ELEVEN4</Channel>
+					<Channel>ELEVEN5</Channel>
+					<Channel>ELEVEN6</Channel>
 				</Channels>
 			</Parameters>
 		</Grabber>

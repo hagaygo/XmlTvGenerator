@@ -49,7 +49,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CellcomTV.il", "Grabbers\Ce
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "starhubtvplus.com", "Grabbers\starhubtvplus.com\starhubtvplus.com.csproj", "{64F7007E-DD9D-411A-954E-C98B7E270E45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tv-guide-listings.co.uk", "Grabbers\tv-guide-listings.co.uk\tv-guide-listings.co.uk.csproj", "{D6DDE4E6-EA4B-44CD-8F25-12B7309BAC96}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tv-guide-listings.co.uk", "Grabbers\tv-guide-listings.co.uk\tv-guide-listings.co.uk.csproj", "{D6DDE4E6-EA4B-44CD-8F25-12B7309BAC96}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "meo.pt", "Grabbers\meo.pt\meo.pt.csproj", "{B129A86E-7335-4715-8619-0F3FBAA28700}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -141,6 +143,10 @@ Global
 		{D6DDE4E6-EA4B-44CD-8F25-12B7309BAC96}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6DDE4E6-EA4B-44CD-8F25-12B7309BAC96}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6DDE4E6-EA4B-44CD-8F25-12B7309BAC96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B129A86E-7335-4715-8619-0F3FBAA28700}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B129A86E-7335-4715-8619-0F3FBAA28700}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B129A86E-7335-4715-8619-0F3FBAA28700}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B129A86E-7335-4715-8619-0F3FBAA28700}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -167,6 +173,7 @@ Global
 		{2AE48ED3-C96F-4853-9ECB-E9C2FF03BD45} = {91759C7E-1E12-4A1D-BFA5-0D2179FE2068}
 		{64F7007E-DD9D-411A-954E-C98B7E270E45} = {91759C7E-1E12-4A1D-BFA5-0D2179FE2068}
 		{D6DDE4E6-EA4B-44CD-8F25-12B7309BAC96} = {91759C7E-1E12-4A1D-BFA5-0D2179FE2068}
+		{B129A86E-7335-4715-8619-0F3FBAA28700} = {91759C7E-1E12-4A1D-BFA5-0D2179FE2068}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FD415635-BE73-4FE0-AE58-F8A8B260569B}
