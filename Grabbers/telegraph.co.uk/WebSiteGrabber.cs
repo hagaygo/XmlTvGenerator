@@ -11,16 +11,19 @@ using XmlTvGenerator.Core;
 namespace telegraph.co.uk
 {
     class WebSiteGrabber : GrabberBase
-    {
-        //const string urlFormat = "https://pl.canalplus.com/iapi/tv-schedule/Schedule";
-        const string urlFormat = "https://tv-listings-react.platforms-prod-gcp.telegraph.co.uk/platform/f55acb3b-a288-5ff7-962b-0da29811d046/region/6fc91c8e-7b21-5232-9668-495c363ea788/schedule?from={0}&to={1}";
-        //const string DateFormat = "yyyy-MM-dd";        
-
+    {   
+        const string urlFormat = "https://tv-listings-frontend.platforms-prod-gcp.telegraph.co.uk/platform/f55acb3b-a288-5ff7-962b-0da29811d046/region/6fc91c8e-7b21-5232-9668-495c363ea788/schedule?from={0}&to={1}";
+                                  
         void DailyGrab(DateTime d, List<Show> shows, ILogger logger)
         {
             var startDate = ToUnixTime(d) * 1000;
             var toDate = ToUnixTime(d.AddDays(1)) * 1000;
             var wr = (HttpWebRequest)WebRequest.Create(string.Format(urlFormat, startDate, toDate));
+#if DEBUG
+            wr.Timeout = 10000;
+#else
+            wr.Timeout = 30000;
+#endif
             wr.Method = "GET";
             wr.ContentType = "application/json";
             logger.WriteEntry(string.Format("Grabbing telegraph.co.uk for date {0} data ...", d.ToString("yyyy-MM-dd")), LogType.Info);
