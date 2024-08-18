@@ -21,12 +21,12 @@
         </Channels>
       </Parameters>
     </Grabber>-->
-		<Grabber path="telegraph.co.uk.dll" channelPrefix="telegraph.co.uk_">
+		<!--<Grabber path="telegraph.co.uk.dll" channelPrefix="telegraph.co.uk_">
       <Parameters>
         <StartDate>0</StartDate>
         <EndDate>2</EndDate>
       </Parameters>
-    </Grabber>
+    </Grabber>-->
 		<!--<Grabber path="streamingtvguides.com.dll" channelPrefix="streamingtvguides.com_">
       <Parameters>
         <Channels>
@@ -54,8 +54,7 @@
         <EndDate>2</EndDate>        
       </Parameters>  
     </Grabber>-->
-		  <!--<Grabber path="CyfraPlus.dll" channelPrefix="cyfra+">
-	
+		  <!--<Grabber path="CyfraPlus.dll" channelPrefix="cyfra+">	
       <Parameters>        
         <StartDate>0</StartDate>
         <EndDate>1</EndDate>        
@@ -188,6 +187,15 @@
 				</Channels>
 			</Parameters>
 		</Grabber>-->
+		<Grabber path="entertainment.ie.dll" channelPrefix="entertainment.ie_">
+			<Parameters>
+				<DaysForward>2</DaysForward>
+				<Channels>
+					<Channel>premier-sports-1</Channel>
+					<Channel>premier-sports-2</Channel>					
+				</Channels>
+			</Parameters>
+		</Grabber>
 	</Grabbers>
 </Config>
 

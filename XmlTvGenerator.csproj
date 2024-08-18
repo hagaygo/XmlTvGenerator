@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.54" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.63" />
   </ItemGroup>  
 
   <ItemGroup>
@@ -31,6 +31,7 @@
     <ProjectReference Include="Grabbers\CellcomTV.il\CellcomTV.il.csproj" />
     <ProjectReference Include="Grabbers\CyfraPlus\CyfraPlus.csproj" />
     <ProjectReference Include="Grabbers\CyfrowyPolsat.pl\CyfrowyPolsat.pl.csproj" />
+    <ProjectReference Include="Grabbers\entertainment.ie\entertainment.ie.csproj" />
     <ProjectReference Include="Grabbers\hot.net.il\hot.net.il.csproj" />
     <ProjectReference Include="Grabbers\Israel.Rashut2.Org.il\Israel.Rashut2.Org.il.csproj" />
     <ProjectReference Include="Grabbers\meo.pt\meo.pt.csproj" />
