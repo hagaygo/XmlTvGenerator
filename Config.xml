@@ -187,12 +187,23 @@
 				</Channels>
 			</Parameters>
 		</Grabber>-->
-		<Grabber path="entertainment.ie.dll" channelPrefix="entertainment.ie_">
+		<!--<Grabber path="entertainment.ie.dll" channelPrefix="entertainment.ie_">
 			<Parameters>
 				<DaysForward>2</DaysForward>
 				<Channels>
 					<Channel>premier-sports-1</Channel>
 					<Channel>premier-sports-2</Channel>					
+				</Channels>
+			</Parameters>
+		</Grabber>-->
+		<Grabber path="livesoccertv.com.dll" channelPrefix="livesoccertv.com_">
+			<Parameters>				
+				<Channels>
+					<Channel>match-tv-football-1-russia</Channel>
+					<Channel>match-tv-football-2-russia</Channel>
+					<Channel>match-tv-football-3-russia</Channel>
+					<Channel>dazn1-germany</Channel>
+					<Channel>dazn2-germany</Channel>
 				</Channels>
 			</Parameters>
 		</Grabber>
