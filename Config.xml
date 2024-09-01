@@ -174,19 +174,19 @@
 				</Channels>
 			</Parameters>
 		</Grabber>-->
-		<!--<Grabber path="meo.pt.dll" channelPrefix="meo.pt_">
+		<Grabber path="meo.pt.dll" channelPrefix="meo.pt_">
 			<Parameters>
 				<DaysForward>2</DaysForward>
 				<Channels>
-					<Channel>ELEVEN1</Channel>
-					<Channel>ELEVEN2</Channel>
-					<Channel>ELEVEN3</Channel>
-					<Channel>ELEVEN4</Channel>
-					<Channel>ELEVEN5</Channel>
-					<Channel>ELEVEN6</Channel>
+					<Channel>DAZN1</Channel>
+					<Channel>DAZN2</Channel>
+					<Channel>DAZN3</Channel>
+					<Channel>DAZN4</Channel>
+					<Channel>DAZN5</Channel>
+					<Channel>DAZN6</Channel>
 				</Channels>
 			</Parameters>
-		</Grabber>-->
+		</Grabber>
 		<!--<Grabber path="entertainment.ie.dll" channelPrefix="entertainment.ie_">
 			<Parameters>
 				<DaysForward>2</DaysForward>
@@ -196,7 +196,7 @@
 				</Channels>
 			</Parameters>
 		</Grabber>-->
-		<Grabber path="livesoccertv.com.dll" channelPrefix="livesoccertv.com_">
+		<!--<Grabber path="livesoccertv.com.dll" channelPrefix="livesoccertv.com_">
 			<Parameters>				
 				<Channels>
 					<Channel>match-tv-football-1-russia</Channel>
@@ -206,7 +206,7 @@
 					<Channel>dazn2-germany</Channel>
 				</Channels>
 			</Parameters>
-		</Grabber>
+		</Grabber>-->
 	</Grabbers>
 </Config>
 

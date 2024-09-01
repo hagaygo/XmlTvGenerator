@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
 using XmlTvGenerator.Core;
@@ -25,7 +26,7 @@ namespace meo.pt
 
             var handler = new HttpClientHandler()
             {
-                
+
                 AllowAutoRedirect = false,
                 AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
             };
@@ -33,10 +34,10 @@ namespace meo.pt
             System.Net.ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
 
             using (var http = new HttpClient(handler))
-            {                
+            {
                 http.DefaultRequestHeaders.Add("Origin", "https://www.meo.pt");
                 http.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:120.0) Gecko/20100101 Firefox/120.0");
-                http.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate");                
+                http.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate");
                 for (int i = 0; i <= daysForward; i++)
                 {
                     var date = DateTime.UtcNow.Date.AddDays(i);
@@ -50,7 +51,7 @@ namespace meo.pt
                     };
                     var jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(postData);
                     var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-                    logger.WriteEntry($"Grabbing meo.pt date {date:yyyy-mm-dd}", LogType.Info);
+                    logger.WriteEntry($"Grabbing meo.pt date {date:yyyy-MM-dd}", LogType.Info);
                     var res = http.PostAsync(Url, content).Result;
                     var data = JObject.Parse(res.Content.ReadAsStringAsync().Result);
                     foreach (var chan in data["d"]["channels"])
@@ -61,8 +62,8 @@ namespace meo.pt
                             var s = new Show();
                             s.Channel = channelName;
                             s.Title = program.Value<string>("name");
-                            s.StartTime = date + TimeSpan.Parse(program.Value<string>("timeIni"));
-                            s.EndTime = date + TimeSpan.Parse(program.Value<string>("timeEnd"));
+                            s.StartTime = (date + TimeSpan.Parse(program.Value<string>("timeIni"))).AddHours(-1);
+                            s.EndTime = (date + TimeSpan.Parse(program.Value<string>("timeEnd"))).AddHours(-1);
                             if (s.StartTime > s.EndTime)
                                 s.StartTime = s.StartTime.AddDays(-1);
                             shows.Add(s);
