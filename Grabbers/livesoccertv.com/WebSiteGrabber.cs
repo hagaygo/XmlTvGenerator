@@ -36,12 +36,23 @@ namespace livesoccertv.com
                     var rows = html.DocumentNode.QuerySelectorAll("tr.matchrow");
                     foreach (var row in rows)
                     {
-                        var show = new Show();
-                        show.Channel = channel;
-                        show.Title = row.QuerySelector("td[id=match]").InnerText;
-                        show.Description = row.QuerySelector("td.compcell_right").InnerText;                        
-                        show.StartTime = FromUnixTime(row.QuerySelector("td.timecol span.ts").GetAttributeValue<long>("dv", 0) / 1000);
-                        channelShows.Add(show);
+                        try
+                        {
+                            var show = new Show();
+                            show.Channel = channel;
+                            show.Title = row.QuerySelector("td[id=match]").InnerText;
+                            show.Description = row.QuerySelector("td.compcell_right").InnerText;
+                            var el = row.QuerySelector("td.timecol span.ts");
+                            if (el != null)
+                            {
+                                show.StartTime = FromUnixTime(el.GetAttributeValue<long>("dv", 0) / 1000);
+                                channelShows.Add(show);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            logger.LogException(ex);
+                        }
                     }
                 }
                 FixShowsEndTimeByStartTime(channelShows);
