@@ -40,7 +40,8 @@ namespace meo.pt
                 http.DefaultRequestHeaders.Add("Accept-Encoding", "gzip, deflate");
                 for (int i = 0; i <= daysForward; i++)
                 {
-                    var date = DateTime.UtcNow.Date.AddDays(i);
+                    var date = DateTime.SpecifyKind(DateTime.UtcNow.Date.AddDays(i), DateTimeKind.Unspecified);
+                    date = TimeZoneInfo.ConvertTime(date, TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time"), TimeZoneInfo.Utc);
                     var postData = new
                     {
                         service = "channelsguide",
@@ -62,8 +63,9 @@ namespace meo.pt
                             var s = new Show();
                             s.Channel = channelName;
                             s.Title = program.Value<string>("name");
-                            s.StartTime = (date + TimeSpan.Parse(program.Value<string>("timeIni"))).AddHours(-1);
-                            s.EndTime = (date + TimeSpan.Parse(program.Value<string>("timeEnd"))).AddHours(-1);
+                            s.StartTime = (date + TimeSpan.Parse(program.Value<string>("timeIni")));
+                            s.EndTime = (date + TimeSpan.Parse(program.Value<string>("timeEnd")));
+
                             if (s.StartTime > s.EndTime)
                                 s.StartTime = s.StartTime.AddDays(-1);
                             shows.Add(s);
