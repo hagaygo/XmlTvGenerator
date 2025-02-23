@@ -9,7 +9,8 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="TimeZoneConverter" Version="6.1.0" />
+    <PackageReference Include="HtmlAgilityPack.CssSelectors.NetCore" Version="1.2.1" />
+    <PackageReference Include="TimeZoneConverter" Version="7.0.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\XmlTvGenerator.Core\XmlTvGenerator.Core.csproj" />

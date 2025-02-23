@@ -60,23 +60,16 @@
         <EndDate>1</EndDate>        
       </Parameters>  
     </Grabber>-->
-		<!--<Grabber path="CyfrowyPolsat.pl.dll" channelPrefix="CyfrowyPolsat_">
-      <Translate From="Polish" To="English" MaxDegreeOfParallelism="4" YandexAPIKeysFilePath="yandexApiKeys.txt"/>
+		<Grabber path="CyfrowyPolsat.pl.dll" channelPrefix="CyfrowyPolsat_">      
       <Parameters>
         <Channels>
-          <Channel>press-tv</Channel>
-          <Channel>al-jazeera-hd</Channel>
-          <Channel>france-24-en-hd</Channel>
-          <Channel>sky-news</Channel>
-          <Channel>euronews-hd</Channel>
-          <Channel>cnbc</Channel>
-          <Channel>cnn</Channel>
-          <Channel>bloomberg_(ang.)</Channel>
-          <Channel>rt-doc-hd</Channel>
-          <Channel>rt-hd</Channel>
-        </Channels>
+			<Channel>polsat-sport-1</Channel>
+			<Channel>polsat-sport-2</Channel>
+			<Channel>polsat-sport-premium-1</Channel>
+			<Channel>polsat-sport-premium-2</Channel>			
+		</Channels>
       </Parameters>
-    </Grabber>-->
+    </Grabber>
 		<!--<Grabber path="sky.it.dll" channelPrefix="sky.it_">
       <Parameters>                   
         <Channels>
@@ -174,7 +167,7 @@
 				</Channels>
 			</Parameters>
 		</Grabber>-->
-		<Grabber path="meo.pt.dll" channelPrefix="meo.pt_">
+		<!--<Grabber path="meo.pt.dll" channelPrefix="meo.pt_">
 			<Parameters>
 				<DaysForward>2</DaysForward>
 				<Channels>
@@ -186,7 +179,7 @@
 					<Channel>DAZN6</Channel>
 				</Channels>
 			</Parameters>
-		</Grabber>
+		</Grabber>-->
 		<!--<Grabber path="entertainment.ie.dll" channelPrefix="entertainment.ie_">
 			<Parameters>
 				<DaysForward>2</DaysForward>

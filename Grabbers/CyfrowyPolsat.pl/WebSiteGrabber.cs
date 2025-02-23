@@ -8,6 +8,7 @@ using System.Web;
 using System.Xml.Linq;
 using TimeZoneConverter;
 using XmlTvGenerator.Core;
+using HtmlAgilityPack.CssSelectors.NetCore;
 
 namespace CyfrowyPolsat.pl
 {
@@ -19,18 +20,21 @@ namespace CyfrowyPolsat.pl
 
         public List<Show> Grab(GrabParametersBase p, ILogger logger)
         {
-            currentNow = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.Local, TZConvert.GetTimeZoneInfo("Central European Standard Time"));
+            var now = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Unspecified);
+            currentNow = TimeZoneInfo.ConvertTime(now, TimeZoneInfo.Local, TZConvert.GetTimeZoneInfo("Central European Standard Time"));
 
             var pp = (GrabParameters)p;
-            logger.WriteEntry("grabbing CyfrowyPolsat.pl channel : " + pp.Channel, LogType.Info);
+            logger.WriteEntry($"Grabbing CyfrowyPolsat.pl channel {pp.Channel}", LogType.Info);
             var wr = (HttpWebRequest)WebRequest.Create(string.Format(URL, pp.Channel.ToString().Replace("_", "-")));
-            wr.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0";
+            wr.Headers.Add("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
+            wr.Headers.Add("Accept-Language", "en-GB,he;q=0.8,en-US;q=0.5,en;q=0.3");
+            wr.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:135.0) Gecko/20100101 Firefox/135.0";
             wr.Timeout = 10000;
             var res = (HttpWebResponse)wr.GetResponse();
             var doc = new HtmlAgilityPack.HtmlDocument();
             doc.Load(res.GetResponseStream());
             var lst = new List<Show>();
-            var div = doc.DocumentNode.Descendants("div").FirstOrDefault(x => x.Attributes.Contains("class") && x.Attributes["class"].Value == "main col");
+            var div = doc.QuerySelector("div.main.col");
             var times = div.Descendants("span").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value == "time").ToList();
             var names = div.Descendants("a").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value == "name").ToList();
             var metas = div.Descendants("div").Where(x => x.Attributes.Contains("class") && x.Attributes["class"].Value == "meta").ToList();
@@ -72,8 +76,7 @@ namespace CyfrowyPolsat.pl
             foreach (var c in selectedChannels)
             {
                 var p = new GrabParameters();
-                p.Channel = c;
-
+                p.Channel = c;                
                 var channelShows = Grab(p, logger);
                 FixShowsEndTimeByStartTime(channelShows);
                 shows.AddRange(channelShows);
