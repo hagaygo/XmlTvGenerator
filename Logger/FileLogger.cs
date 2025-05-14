@@ -36,7 +36,7 @@ namespace XmlTvGenerator.Logger
         {
             while (ex.InnerException != null)
                 ex = ex.InnerException;
-            if (string.IsNullOrEmpty(errorPrefix))
+            if (!string.IsNullOrEmpty(errorPrefix))
                 errorPrefix += " ";
             WriteEntry($"{errorPrefix}{ex.Message}\n{ex.StackTrace}", LogType.Error);
         }
