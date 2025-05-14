@@ -60,7 +60,7 @@
         <EndDate>1</EndDate>        
       </Parameters>  
     </Grabber>-->
-		<Grabber path="CyfrowyPolsat.pl.dll" channelPrefix="CyfrowyPolsat_">      
+		<!--<Grabber path="CyfrowyPolsat.pl.dll" channelPrefix="CyfrowyPolsat_">      
       <Parameters>
         <Channels>
 			<Channel>polsat-sport-1</Channel>
@@ -69,7 +69,7 @@
 			<Channel>polsat-sport-premium-2</Channel>			
 		</Channels>
       </Parameters>
-    </Grabber>
+    </Grabber>-->
 		<!--<Grabber path="sky.it.dll" channelPrefix="sky.it_">
       <Parameters>                   
         <Channels>
@@ -189,17 +189,16 @@
 				</Channels>
 			</Parameters>
 		</Grabber>-->
-		<!--<Grabber path="livesoccertv.com.dll" channelPrefix="livesoccertv.com_">
+		<Grabber path="livesoccertv.com.dll" channelPrefix="livesoccertv.com_">
 			<Parameters>				
 				<Channels>
-					<Channel>match-tv-football-1-russia</Channel>
 					<Channel>match-tv-football-2-russia</Channel>
+					<Channel>nova-sport-czech-republic</Channel>
+					<Channel>match-tv-football-1-russia</Channel>					
 					<Channel>match-tv-football-3-russia</Channel>
-					<Channel>dazn1-germany</Channel>
-					<Channel>dazn2-germany</Channel>
 				</Channels>
 			</Parameters>
-		</Grabber>-->
+		</Grabber>
 	</Grabbers>
 </Config>
 

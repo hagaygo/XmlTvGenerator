@@ -80,7 +80,7 @@ namespace streamingtvguides.com
                 }
                 catch (Exception ex)
                 {
-                    logger.LogException(ex);
+                    logger.LogException(ex, "streamingtvguides.com");
                 }
             }
             

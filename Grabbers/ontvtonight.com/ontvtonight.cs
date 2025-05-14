@@ -82,7 +82,7 @@ namespace ontvtonight.com
                 }
                 catch (Exception ex)
                 {
-                    logger.LogException(ex);
+                    logger.LogException(ex, "ontvtonight.com");
                 }
             }
 

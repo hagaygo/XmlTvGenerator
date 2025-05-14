@@ -13,8 +13,29 @@ namespace livesoccertv.com
 {
     public class WebSiteGrabber : GrabberBase
     {
+        string[] userAgents = { 
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:138.0) Gecko/20100101 Firefox/138.0",
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:134.0) Gecko/20100101 Firefox/134.0",
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:129.0) Gecko/20100101 Firefox/129.0"
+        };
+
+        int _userAgentCounter = 0;
+
+        string GetNextUserAgent()
+        {
+            if (_userAgentCounter >= userAgents.Length)
+            {
+                _userAgentCounter = 0;
+            }
+            return userAgents[_userAgentCounter++];
+        }
+
         public override List<Show> Grab(string xmlParameters, ILogger logger)
         {
+            const string ErrorPrefix = "livesoccertv.com";
+
+            logger.WriteEntry("Started livesoccertv.com grab", LogType.Info);
+
             var shows = new List<Show>();
 
             const string BaseUrl = "https://www.livesoccertv.com/channels/";
@@ -28,7 +49,7 @@ namespace livesoccertv.com
                     logger.WriteEntry($"Grabbing Channel {channel}", LogType.Info);
                     var url = $"{BaseUrl}{channel}/";
                     var wr = (HttpWebRequest)WebRequest.Create(url);
-                    wr.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:129.0) Gecko/20100101 Firefox/129.0";
+                    wr.UserAgent = GetNextUserAgent();
                     wr.Timeout = 10000;
                     var channelShows = new List<Show>();
                     using (var res = wr.GetResponse())
@@ -43,8 +64,8 @@ namespace livesoccertv.com
                             {
                                 var show = new Show();
                                 show.Channel = channel;
-                                show.Title = row.QuerySelector("td[id=match]").InnerText;
-                                show.Description = row.QuerySelector("td.compcell_right").InnerText;
+                                show.Title = row.QuerySelector("td[id=match]").InnerText?.Trim();
+                                show.Description = row.QuerySelector("td.compcell_right").InnerText?.Trim();
                                 var el = row.QuerySelector("td.timecol span.ts");
                                 if (el != null)
                                 {
@@ -54,7 +75,7 @@ namespace livesoccertv.com
                             }
                             catch (Exception ex)
                             {
-                                logger.LogException(ex);
+                                logger.LogException(ex, ErrorPrefix);
                             }
                         }
                     }
@@ -64,9 +85,10 @@ namespace livesoccertv.com
                 }
                 catch (Exception ex)
                 {
-                    logger.LogException(ex);
+                    logger.LogException(ex, ErrorPrefix);
                 }
             }
+            logger.WriteEntry("Finished livesoccertv.com grab", LogType.Info);
             return shows;
         }
     }
