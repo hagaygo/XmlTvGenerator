@@ -1,6 +1,7 @@
 ﻿using HtmlAgilityPack.CssSelectors.NetCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -47,6 +48,7 @@ namespace ontvtonight.com
                         var currentDate = currentNow.Date.AddDays(i);
                         var dt = currentDate.ToString("yyyy-MM-dd");
                         var wr = (HttpWebRequest)WebRequest.Create(string.Format(URL, channelDict[channel], dt));
+                        wr.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;                        
                         wr.AllowAutoRedirect = false;
                         logger.WriteEntry(string.Format("Grabbing ontvtonight channel : {0} , date : {1} ...", channel, dt), LogType.Info);
                         var res = (HttpWebResponse)wr.GetResponse();
