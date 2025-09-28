@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 using XmlTvGenerator.Core;
 
@@ -14,9 +15,9 @@ namespace livesoccertv.com
     public class WebSiteGrabber : GrabberBase
     {
         string[] userAgents = { 
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:138.0) Gecko/20100101 Firefox/138.0",
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:134.0) Gecko/20100101 Firefox/134.0",
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:129.0) Gecko/20100101 Firefox/129.0"
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:138.0) Gecko/20100101 Firefox/141.0",
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:134.0) Gecko/20100101 Firefox/142.0",
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:143.0) Gecko/20100101 Firefox/143.0"
         };
 
         int _userAgentCounter = 0;
@@ -46,11 +47,14 @@ namespace livesoccertv.com
             {
                 try
                 {
-                    logger.WriteEntry($"Grabbing Channel {channel}", LogType.Info);
+                    const int WaitMiliSeconds = 2000;
+
+                    logger.WriteEntry($"Grabbing Channel {channel} with wait of {WaitMiliSeconds} Miliseconds", LogType.Info);
+                    Task.Delay(WaitMiliSeconds).Wait();
                     var url = $"{BaseUrl}{channel}/";
                     var wr = (HttpWebRequest)WebRequest.Create(url);
                     wr.UserAgent = GetNextUserAgent();
-                    wr.Timeout = 10000;
+                    wr.Timeout = 6000;
                     var channelShows = new List<Show>();
                     using (var res = wr.GetResponse())
                     using (var sr = new StreamReader(res.GetResponseStream()))
