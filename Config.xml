@@ -152,12 +152,21 @@
 				<DaysForward>2</DaysForward>
 			</Parameters>
 		</Grabber>-->
-		<!--<Grabber path="starhubtvplus.com.dll" channelPrefix="starhubtvplus.com_">
+		<Grabber path="starhubtvplus.com.dll" channelPrefix="starhubtvplus.com_">
 			<Parameters>
 				<StartDate>0</StartDate>
 				<EndDate>3</EndDate>
+				<Channels>
+					<Channel>Hub Premier 1</Channel>
+					<Channel>Hub Premier 2 (HD)</Channel>
+					<Channel>Hub Premier 3</Channel>
+					<Channel>Hub Premier 4</Channel>
+					<Channel>Hub Premier 5</Channel>
+					<Channel>Hub Premier 6</Channel>
+					<Channel>Hub Premier 8</Channel>
+				</Channels>
 			</Parameters>
-		</Grabber>-->
+		</Grabber>
 		<!--<Grabber path="tv-guide-listings.co.uk.dll" channelPrefix="tv-guide-listings.co.uk_">
 			<Parameters>
 				<DaysForward>1</DaysForward>
@@ -189,7 +198,7 @@
 				</Channels>
 			</Parameters>
 		</Grabber>-->
-		<Grabber path="livesoccertv.com.dll" channelPrefix="livesoccertv.com_">
+		<!--<Grabber path="livesoccertv.com.dll" channelPrefix="livesoccertv.com_">
 			<Parameters>				
 				<Channels>
 					<Channel>match-tv-football-2-russia</Channel>
@@ -198,7 +207,7 @@
 					<Channel>match-tv-football-3-russia</Channel>
 				</Channels>
 			</Parameters>
-		</Grabber>
+		</Grabber>-->
 	</Grabbers>
 </Config>
 

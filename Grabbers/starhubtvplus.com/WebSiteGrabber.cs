@@ -10,58 +10,61 @@ using XmlTvGenerator.Core;
 
 namespace starhubtvplus.com
 {
-    public class WebSiteGrabber : GrabberBase
+    public class ChannelData
     {
-        const string urlFormat = "https://api.starhubtvplus.com/epg?operationName=webFilteredEpg&variables={{\"dateFrom\":\"{0}\",\"dateTo\":\"{1}\"}}&query=query webFilteredEpg($category: String, $dateFrom: DateWithoutTime, $dateTo: DateWithoutTime!) {{\r\n  nagraEpg(category: $category) {{\r\n    items {{\r\n      channelId: tvChannel\r\n      id\r\n      image\r\n      isIptvMulticast\r\n      isOttUnicast\r\n      title: description\r\n      programs: programsByDate(dateFrom: $dateFrom, dateTo: $dateTo) {{\r\n        channel {{\r\n          isIptvMulticast\r\n          isOttUnicast\r\n          __typename\r\n        }}\r\n        endTime\r\n        id\r\n        startOverSupport\r\n        startTime\r\n        title\r\n        __typename\r\n      }}\r\n      __typename\r\n    }}\r\n    __typename\r\n  }}\r\n}}\r\n";
+        public string Id { get; set; }
+        public string Title { get; set; }
+        public int Number { get; set; }
+    }
+
+    public class WebSiteGrabber : GrabberBase
+    {        
         const string DateFormat = "yyyy-MM-dd";
+
+        string GetJson(string url)
+        {
+            var wr = WebRequest.Create(url);
+            using (var res = (HttpWebResponse)wr.GetResponse())
+            {
+                using (var sr = new StreamReader(res.GetResponseStream()))
+                    return sr.ReadToEnd();
+            }
+        }
 
         List<Show> Grab(GrabParametersBase p, ILogger logger)
         {
             var pp = (GrabParameters)p;
+            var startTime = ToUnixTime(pp.Date);
+            var endTime = ToUnixTime(pp.Date.AddDays(1));
+
+            logger.WriteEntry($"Starthub Grabbing date {pp.Date.ToString(DateFormat)}...", LogType.Info);
+
+            var epgJson = GetJson($"https://waf-starhub-metadata-api-p001.ifs.vubiquity.com/v3.1/epg/schedules?locale=en_US&locale_default=en_US&device=1&in_channel_id={pp.ChannelGuids}&gt_end={startTime}&lt_start={endTime}&limit=500&page=1");
+            var epgObj = JObject.Parse(epgJson);
+
             var shows = new List<Show>();
-            var wr = WebRequest.Create(String.Format(urlFormat, pp.Date.Date.ToString(DateFormat), pp.Date.Date.AddDays(1).ToString(DateFormat)));
-            wr.Method = "GET";
-            wr.ContentType = "application/json";
-            wr.Headers.Add("x-application-key", "5ee2ef931de1c4001b2e7fa3_5ee2ec25a0e845001c1783dc");
-            wr.Headers.Add("x-application-session", "0SSK4001B2E7FA34001B2E7F8E1890DC266E");
-            logger.WriteEntry(string.Format("Grabbing starhubtvplus.com date {0} ...", pp.Date.ToString(DateFormat)), LogType.Info);
-            var res = (HttpWebResponse)wr.GetResponse();
 
-            using (var sr = new StreamReader(res.GetResponseStream()))
+            foreach (var r in epgObj["resources"])
             {
-                var startDownloadTime = DateTime.Now;
-                var data = new StringBuilder();
-                int blockSize = 16384;
-                while (!sr.EndOfStream)
+                if (r.Value<string>("metatype") == "Schedule")
                 {
-                    var buf = new char[blockSize];
-                    var totalRead = sr.ReadBlock(buf, 0, blockSize);
-                    data.Append(buf);
-                    if (DateTime.Now - startDownloadTime > TimeSpan.FromSeconds(1))
+                    var s = new Show();
+                    var channelId = r.Value<string>("channel_id");
+                    s.Channel = pp.ChannelDict[channelId].Title;
+                    s.Title = r.Value<string>("title");
+                    s.Description = r.Value<string>("description");
+                    var serie_title = r.Value<string>("serie_title");
+                    if (!string.IsNullOrEmpty(serie_title))
                     {
-                        startDownloadTime = DateTime.Now;
-                        logger.WriteEntry(string.Format("Downloaded {0:#,##0} bytes so far", data.Length), LogType.Info);
+                        s.Description = $"{s.Title}\n{s.Description}";
+                        s.Title = serie_title;
                     }
-                }
-
-                var obj = JObject.Parse(new StringReader(data.ToString()).ReadToEnd());
-                var channels = obj["data"]["nagraEpg"]["items"];
-
-                foreach (var channel in channels)
-                {
-                    var programs = channel["programs"];
-                    var channelName = channel.Value<string>("channelId");
-                    foreach (var program in programs)
-                    {
-                        var show = new Show();
-                        show.Channel = channelName;
-                        show.Title = Tools.CleanupText(program["title"].ToString());
-                        show.StartTime = FromUnixTime(program.Value<long>("startTime") / 1000);
-                        show.EndTime = FromUnixTime(program.Value<long>("endTime") / 1000);
-                        shows.Add(show);
-                    }
+                    s.StartTime = FromUnixTime(r.Value<int>("start"));
+                    s.EndTime = FromUnixTime(r.Value<int>("end"));
+                    shows.Add(s);
                 }
             }
+
             return shows;
         }
 
@@ -73,32 +76,35 @@ namespace starhubtvplus.com
             var startDateDiff = sdElement != null && sdElement.Value != null ? Convert.ToInt32(sdElement.Value) : -1;
             var edElement = doc.Descendants("EndDate").FirstOrDefault();
             var endDateDays = edElement != null && edElement.Value != null ? Convert.ToInt32(edElement.Value) : 3;
+            var selectedChannels = doc.Descendants("Channels").Elements().Select(x => x.Value).ToList();
 
-            //_channelsDict = GetChannelsDict(logger);
+            logger.WriteEntry("Getting Starthub channels data...", LogType.Info);
+            var channelsJson = GetJson("https://waf-starhub-metadata-api-p001.ifs.vubiquity.com/v3.1/epg/channels?locale=en_US&locale_default=en_US&device=1&limit=250&page=1");
+            var channelsList = new List<ChannelData>();
+            var channelsObj = JObject.Parse(channelsJson);
+            foreach (var r in channelsObj["resources"])
+            {
+                if (r.Value<string>("metatype") == "Channel")
+                {
+                    channelsList.Add(new ChannelData
+                    {
+                        Id = r.Value<string>("id"),
+                        Title = r.Value<string>("title"),
+                        Number = r.Value<int>("number")
+                    });
+                }
+            }
 
-            var maxTries = 15;
-            var retryCount = 0;
+            var grabChannelsIds = selectedChannels.Select(x => channelsList.First(y => string.Compare(y.Title, x, true) == 0).Id).ToList();
+
+            logger.WriteEntry($"Finished channel data (found {grabChannelsIds.Count} channels)", LogType.Info);
+
+            var channelGuids = string.Join(",", grabChannelsIds);
 
             for (int i = startDateDiff; i < endDateDays; i++)
             {
-                try
-                {
-                    var p = new GrabParameters() { Date = DateTime.Now.Date.AddDays(i) };
-                    shows.AddRange(Grab(p, logger));
-
-                }
-                catch (Exception ex)
-                {
-                    if (retryCount < maxTries)
-                    {
-                        retryCount++;
-                        logger.WriteEntry($"{ex.Message.ToLower()} , retry #{retryCount}", LogType.Warning);
-                        i--;
-                        continue;
-                    }
-                    else
-                        throw;
-                }
+                var p = new GrabParameters() { Date = DateTime.Now.Date.AddDays(i), ChannelGuids = channelGuids, ChannelDict = channelsList.ToDictionary(x => x.Id) };
+                shows.AddRange(Grab(p, logger));
             }
             return shows;
         }
@@ -107,5 +113,7 @@ namespace starhubtvplus.com
     public class GrabParameters : GrabParametersBase
     {
         public DateTime Date { get; set; }
+        public string ChannelGuids { get; set; }
+        public Dictionary<string, ChannelData> ChannelDict { get; internal set; }
     }
 }
