@@ -46,6 +46,7 @@
     <ProjectReference Include="Grabbers\streamingtvguides.com\streamingtvguides.com.csproj" />
     <ProjectReference Include="Grabbers\telegraph.co.uk\telegraph.co.uk.csproj" />
     <ProjectReference Include="Grabbers\tv-guide-listings.co.uk\tv-guide-listings.co.uk.csproj" />
+    <ProjectReference Include="Grabbers\XMlTVGrabber\XMlTVGrabber.csproj" />
     <ProjectReference Include="Grabbers\yes.co.il\yes.co.il.csproj" />
     <ProjectReference Include="XmlTvGenerator.Core\XmlTvGenerator.Core.csproj" />
   </ItemGroup>

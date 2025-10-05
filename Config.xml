@@ -152,7 +152,7 @@
 				<DaysForward>2</DaysForward>
 			</Parameters>
 		</Grabber>-->
-		<Grabber path="starhubtvplus.com.dll" channelPrefix="starhubtvplus.com_">
+		<!--<Grabber path="starhubtvplus.com.dll" channelPrefix="starhubtvplus.com_">
 			<Parameters>
 				<StartDate>0</StartDate>
 				<EndDate>3</EndDate>
@@ -166,7 +166,7 @@
 					<Channel>Hub Premier 8</Channel>
 				</Channels>
 			</Parameters>
-		</Grabber>
+		</Grabber>-->
 		<!--<Grabber path="tv-guide-listings.co.uk.dll" channelPrefix="tv-guide-listings.co.uk_">
 			<Parameters>
 				<DaysForward>1</DaysForward>
@@ -208,6 +208,28 @@
 				</Channels>
 			</Parameters>
 		</Grabber>-->
+		<Grabber path="XMlTVGrabber.dll" channelPrefix="openepg_">
+			<Parameters>
+				<Sources>
+					<url>https://www.open-epg.com/files/newzealand1.xml</url>
+					<url>https://www.open-epg.com/files/germany3.xml</url>
+				</Sources>
+				<Channels>
+					<Channel>Sky Sport 1.nz</Channel>
+					<Channel>Sky Sport 2.nz</Channel>
+					<Channel>Sky Sport 3.nz</Channel>
+					<Channel>Sky Sport 4.nz</Channel>
+					<Channel>Sky Sport 5.nz</Channel>
+					<Channel>Sky Sport 6.nz</Channel>
+					<Channel>Sky Sport 7.nz</Channel>
+					<Channel>Sky Sport 9.nz</Channel>
+					<Channel>Sky Sport Premier League.nz</Channel>
+					<Channel>Sky Sport Select.nz</Channel>
+					<Channel>Sky Sport Bundesliga.de</Channel>
+					<Channel>Sky Sport Premier League.de</Channel>
+				</Channels>
+			</Parameters>
+		</Grabber>		
 	</Grabbers>
 </Config>
 
