@@ -211,23 +211,53 @@
 		<Grabber path="XMlTVGrabber.dll" channelPrefix="openepg_">
 			<Parameters>
 				<Sources>
-					<url>https://www.open-epg.com/files/newzealand1.xml</url>
-					<url>https://www.open-epg.com/files/germany3.xml</url>
+					<Source>
+						<Url>https://www.open-epg.com/files/newzealand1.xml</Url>					
+					<Channels>
+						<Channel>Sky Sport 1.nz</Channel>
+						<Channel>Sky Sport 2.nz</Channel>
+						<Channel>Sky Sport 3.nz</Channel>
+						<Channel>Sky Sport 4.nz</Channel>
+						<Channel>Sky Sport 5.nz</Channel>
+						<Channel>Sky Sport 6.nz</Channel>
+						<Channel>Sky Sport 7.nz</Channel>
+						<Channel>Sky Sport 9.nz</Channel>
+						<Channel>Sky Sport Premier League.nz</Channel>
+						<Channel>Sky Sport Select.nz</Channel>
+					</Channels>
+					</Source>
+					<Source>
+						<Url>https://www.open-epg.com/files/germany3.xml</Url>
+						<Channels>
+							<Channel>Sky Sport Bundesliga.de</Channel>
+							<Channel>Sky Sport Premier League.de</Channel>
+						</Channels>
+					</Source>
+					<Source UseSubTitleAsTitle="true">
+						<Url>https://www.open-epg.com/files/germany5.xml</Url>
+						<Channels>
+							<Channel>DAZN 1.de</Channel>
+							<Channel>DAZN 2.de</Channel>
+						</Channels>
+					</Source>
+					<Source UseSubTitleAsTitle="true">
+						<Url>https://www.open-epg.com/files/hongkong5.xml</Url>
+						<Channels>
+							<Channel>Now Sports Premier League 1.hk</Channel>
+							<Channel>Now Sports 2.hk</Channel>
+							<Channel>Now Sports 3.hk</Channel>
+							<Channel>Now Sports 4K 1.hk</Channel>
+						</Channels>
+					</Source>
+					<Source>
+						<Url>https://www.open-epg.com/files/france1.xml</Url>
+						<Channels>
+							<Channel>Canal+ Sport 360.fr</Channel>
+							<Channel>Canal+ Sport.fr</Channel>
+							<Channel>Canal+ Foot.fr</Channel>
+						</Channels>
+					</Source>
 				</Sources>
-				<Channels>
-					<Channel>Sky Sport 1.nz</Channel>
-					<Channel>Sky Sport 2.nz</Channel>
-					<Channel>Sky Sport 3.nz</Channel>
-					<Channel>Sky Sport 4.nz</Channel>
-					<Channel>Sky Sport 5.nz</Channel>
-					<Channel>Sky Sport 6.nz</Channel>
-					<Channel>Sky Sport 7.nz</Channel>
-					<Channel>Sky Sport 9.nz</Channel>
-					<Channel>Sky Sport Premier League.nz</Channel>
-					<Channel>Sky Sport Select.nz</Channel>
-					<Channel>Sky Sport Bundesliga.de</Channel>
-					<Channel>Sky Sport Premier League.de</Channel>
-				</Channels>
 			</Parameters>
 		</Grabber>		
 	</Grabbers>

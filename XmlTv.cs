@@ -36,6 +36,8 @@ namespace XmlTvGenerator
                     programme.Add(new XElement("title") { Value = show.Title });
                 else
                     programme.Add(new XElement("title") { Value = "N/A" });
+                if (show.SubTitle != null)
+                    programme.Add(new XElement("sub-title") { Value = show.SubTitle });
                 if (show.Description != null)
                     programme.Add(new XElement("desc") { Value = show.Description });
                 if (show.Episode.HasValue)
