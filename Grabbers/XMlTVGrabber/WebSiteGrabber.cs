@@ -12,6 +12,11 @@ namespace XMlTVGrabber
 {
     public class WebSiteGrabber : GrabberBase
     {
+        void LogException(ILogger log, Exception ex)
+        {
+            log.LogException(ex,"XMLTV Grabber error ");
+        }
+
         public override List<Show> Grab(string xmlParameters, ILogger logger)
         {            
             string format = "yyyyMMddHHmmss zzz";
@@ -22,55 +27,62 @@ namespace XMlTVGrabber
             var sources = doc.Descendants("Sources").Elements();
             foreach (var source in sources)
             {
-                var selectedChannels = source.Descendants("Channels").Elements().Select(x => x.Value).ToList();
-                var channelHash = selectedChannels.ToDictionary(x => x);
-                bool useSubTitleAsTitle = source.Attribute("UseSubTitleAsTitle")?.Value == "true";
-                var url = source.Descendants("Url").First().Value;
-
-                var wr = (HttpWebRequest)WebRequest.Create(url);
-                logger.WriteEntry($"XMLTV grabber fetching {url} for {selectedChannels.Count} channels", LogType.Info);
-                using (var res = (HttpWebResponse)wr.GetResponse())
-                using (var sr = new StreamReader(res.GetResponseStream()))
+                try
                 {
-                    var sourceShows = new List<Show>();
-                    var xmltv = sr.ReadToEnd();
-                    logger.WriteEntry($"XMLTV grabber {url} Downloaded, parsing XMLTV...", LogType.Info);
-                    var xmlDoc = XDocument.Parse(xmltv);
-                    foreach (var el in xmlDoc.Descendants("programme"))
+                    var selectedChannels = source.Descendants("Channels").Elements().Select(x => x.Value).ToList();
+                    var channelHash = selectedChannels.ToDictionary(x => x);
+                    bool useSubTitleAsTitle = source.Attribute("UseSubTitleAsTitle")?.Value == "true";
+                    var url = source.Descendants("Url").First().Value;
+
+                    var wr = (HttpWebRequest)WebRequest.Create(url);
+                    logger.WriteEntry($"XMLTV grabber fetching {url} for {selectedChannels.Count} channels", LogType.Info);
+                    using (var res = (HttpWebResponse)wr.GetResponse())
+                    using (var sr = new StreamReader(res.GetResponseStream()))
                     {
-                        if (channelHash.ContainsKey(el.Attribute("channel").Value))
+                        var sourceShows = new List<Show>();
+                        var xmltv = sr.ReadToEnd();
+                        logger.WriteEntry($"XMLTV grabber {url} Downloaded, parsing XMLTV...", LogType.Info);
+                        var xmlDoc = XDocument.Parse(xmltv);
+                        foreach (var el in xmlDoc.Descendants("programme"))
                         {
-                            try
+                            if (channelHash.ContainsKey(el.Attribute("channel").Value))
                             {
-                                var s = new Show();
-                                s.Channel = el.Attribute("channel").Value;
-                                s.Title = el.Descendants("title").First().Value;
-                                s.SubTitle = el.Descendants("sub-title").FirstOrDefault()?.Value;
-                                s.Description = el.Descendants("desc").FirstOrDefault()?.Value;
-                                if (useSubTitleAsTitle && !string.IsNullOrEmpty(s.SubTitle))
+                                try
                                 {
-                                    var title = s.Title;
-                                    s.Title = s.SubTitle;
-                                    s.SubTitle = title;                                    
+                                    var s = new Show();
+                                    s.Channel = el.Attribute("channel").Value;
+                                    s.Title = el.Descendants("title").First().Value;
+                                    s.SubTitle = el.Descendants("sub-title").FirstOrDefault()?.Value;
+                                    s.Description = el.Descendants("desc").FirstOrDefault()?.Value;
+                                    if (useSubTitleAsTitle && !string.IsNullOrEmpty(s.SubTitle))
+                                    {
+                                        var title = s.Title;
+                                        s.Title = s.SubTitle;
+                                        s.SubTitle = title;
+                                    }
+                                    if (string.IsNullOrEmpty(s.Description))
+                                    {
+                                        s.Description = s.SubTitle;
+                                        s.SubTitle = null;
+                                    }
+                                    s.StartTime = DateTime.ParseExact(el.Attribute("start").Value, format, CultureInfo.InvariantCulture).ToUniversalTime();
+                                    s.EndTime = DateTime.ParseExact(el.Attribute("stop").Value, format, CultureInfo.InvariantCulture).ToUniversalTime();
+                                    sourceShows.Add(s);
                                 }
-                                if (string.IsNullOrEmpty(s.Description))
+                                catch (Exception ex)
                                 {
-                                    s.Description = s.SubTitle;
-                                    s.SubTitle = null;
+                                    LogException(logger, ex);
                                 }
-                                s.StartTime = DateTime.ParseExact(el.Attribute("start").Value, format, CultureInfo.InvariantCulture).ToUniversalTime();
-                                s.EndTime = DateTime.ParseExact(el.Attribute("stop").Value, format, CultureInfo.InvariantCulture).ToUniversalTime();
-                                sourceShows.Add(s);
-                            }
-                            catch (Exception ex)
-                            {
-                                logger.WriteEntry($"XMLTV Grabber error {ex.Message}", LogType.Error);
                             }
                         }
+                        logger.WriteEntry($"XMLTV grabber {url} Found {sourceShows.Count} EPG Entries", LogType.Info);
+                        shows.AddRange(sourceShows);
                     }
-                    logger.WriteEntry($"XMLTV grabber {url} Found {sourceShows.Count} EPG Entries", LogType.Info);
-                    shows.AddRange(sourceShows);
-                }                
+                }
+                catch (Exception ex)
+                {
+                    LogException(logger, ex);
+                }
             }            
 
             return shows;
