@@ -12,16 +12,19 @@ using XmlTvGenerator.Core;
 namespace CyfraPlus
 {
     public class WebSiteGrabber : GrabberBase
-    {   
+    {           
+
         public override List<Show> Grab(string xmlParameters, ILogger logger)
         {
+            logger.WriteEntry("Cyfra+ grabber started...", LogType.Info);
             var shows = new List<Show>();            
             FillGlobalShowsData(shows);
+            logger.WriteEntry("Cyfra+ grabber finished.", LogType.Info);
             return shows;
         }
 
         private void FillGlobalShowsData(List<Show> shows)
-        {
+        {            
             var wr = WebRequest.CreateHttp("https://secure-webtv-static.canal-plus.com/metadata/cppol/all/v2.2/globalchannels.json"); // holds only current day data few hours forward
             using (var res = (HttpWebResponse)wr.GetResponse())
             {
