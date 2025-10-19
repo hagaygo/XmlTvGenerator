@@ -95,7 +95,20 @@ namespace starhubtvplus.com
                 }
             }
 
-            var grabChannelsIds = selectedChannels.Select(x => channelsList.First(y => string.Compare(y.Title, x, true) == 0).Id).ToList();
+
+            var grabChannelsIds = new List<string>();
+            foreach (var c in selectedChannels)
+            {
+                var chan = channelsList.FirstOrDefault(y => y.Title.IndexOf(c, StringComparison.OrdinalIgnoreCase) >= 0);
+                if (chan != null)
+                {
+                    grabChannelsIds.Add(chan.Id);
+                    if (chan.Title != c)
+                        chan.Title = c;
+                }
+                else
+                    logger.WriteEntry($"Starthub channel epg not found for {c}", LogType.Error);
+            }                
 
             logger.WriteEntry($"Finished channel data (found {grabChannelsIds.Count} channels)", LogType.Info);
 

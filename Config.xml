@@ -152,13 +152,13 @@
 				<DaysForward>2</DaysForward>
 			</Parameters>
 		</Grabber>-->
-		<!--<Grabber path="starhubtvplus.com.dll" channelPrefix="starhubtvplus.com_">
+		<Grabber path="starhubtvplus.com.dll" channelPrefix="starhubtvplus.com_">
 			<Parameters>
 				<StartDate>0</StartDate>
 				<EndDate>3</EndDate>
-				<Channels>
+				<Channels> <!-- channel name here works by prefix/start of text - sometimes it get changed / added HD at the end-->
 					<Channel>Hub Premier 1</Channel>
-					<Channel>Hub Premier 2 (HD)</Channel>
+					<Channel>Hub Premier 2</Channel>
 					<Channel>Hub Premier 3</Channel>
 					<Channel>Hub Premier 4</Channel>
 					<Channel>Hub Premier 5</Channel>
@@ -166,7 +166,7 @@
 					<Channel>Hub Premier 8</Channel>
 				</Channels>
 			</Parameters>
-		</Grabber>-->
+		</Grabber>
 		<!--<Grabber path="tv-guide-listings.co.uk.dll" channelPrefix="tv-guide-listings.co.uk_">
 			<Parameters>
 				<DaysForward>1</DaysForward>
@@ -208,7 +208,7 @@
 				</Channels>
 			</Parameters>
 		</Grabber>-->
-		<Grabber path="XMlTVGrabber.dll" channelPrefix="openepg_">
+		<!--<Grabber path="XMlTVGrabber.dll" channelPrefix="openepg_">
 			<Parameters>
 				<Sources>
 					<Source>
@@ -259,7 +259,7 @@
 					</Source>
 				</Sources>
 			</Parameters>
-		</Grabber>		
+		</Grabber>-->		
 	</Grabbers>
 </Config>
 
