@@ -48,13 +48,14 @@
         </Channels>
       </Parameters>
     </Grabber>-->
-		<!--<Grabber path="beinsports.net.dll" channelPrefix="beinsports.net_">	
-      <Parameters>        
-        <StartDate>0</StartDate>
-        <EndDate>2</EndDate>        
-      </Parameters>  
-    </Grabber>-->
-		  <!--<Grabber path="CyfraPlus.dll" channelPrefix="cyfra+">	
+		<Grabber path="beinsports.net.dll" channelPrefix="beinsports.net_">
+			<Parameters>
+				<StartDate>0</StartDate>
+				<EndDate>2</EndDate>
+				<Region>en-au</Region>
+			</Parameters>
+		</Grabber>
+		<!--<Grabber path="CyfraPlus.dll" channelPrefix="cyfra+">	
       <Parameters>        
         <StartDate>0</StartDate>
         <EndDate>1</EndDate>        
@@ -85,16 +86,18 @@
         </Channels>
       </Parameters>
     </Grabber>-->
-		<Grabber path="hot.net.il.dll" channelPrefix="hot.net.il_">
+		<!--<Grabber path="hot.net.il.dll" channelPrefix="hot.net.il_">
       <Parameters>
 		  <Channels>
-			  <Channel Id="286" Name="HOT 8"/> <!-- find it on web site-->
+			  <Channel Id="286" Name="HOT 8"/> -->
+		<!-- find it on web site-->
+		<!--
 		  </Channels>
           <StartDate>0</StartDate>
           <EndDate>2</EndDate>        
       </Parameters>
-    </Grabber>
-    <!--<Grabber path="yes.co.il.dll" channelPrefix="yes.co.il_">
+    </Grabber>-->
+		<!--<Grabber path="yes.co.il.dll" channelPrefix="yes.co.il_">
       <Parameters>
         <DaysForward>2</DaysForward>        
         <Channels>
@@ -138,7 +141,9 @@
 			<Parameters>
 				<StartDate>0</StartDate>
 				<EndDate>3</EndDate>
-				<Channels> --><!-- channel name here works by prefix/start of text - sometimes it get changed / added HD at the end--><!--
+				<Channels> -->
+		<!-- channel name here works by prefix/start of text - sometimes it get changed / added HD at the end-->
+		<!--
 					<Channel>Hub Premier 1</Channel>
 					<Channel>Hub Premier 2</Channel>
 					<Channel>Hub Premier 3</Channel>
@@ -241,7 +246,7 @@
 					</Source>
 				</Sources>
 			</Parameters>
-		</Grabber>-->		
+		</Grabber>-->
 	</Grabbers>
 </Config>
 
