@@ -69,8 +69,8 @@ namespace hot.net.il
                         show.Channel = channelData.Name;
                         show.Title = item["programTitle"].Value<string>();
                         show.Description = item["synopsis"].Value<string>();
-                        show.StartTime = DateTime.SpecifyKind(item["programStartTime"].Value<DateTime>(), DateTimeKind.Local);
-                        show.EndTime = DateTime.SpecifyKind(item["programEndTime"].Value<DateTime>(), DateTimeKind.Local);
+                        show.StartTime = DateTime.SpecifyKind(item["programStartTime"].Value<DateTime>(), DateTimeKind.Local).ToUniversalTime();
+                        show.EndTime = DateTime.SpecifyKind(item["programEndTime"].Value<DateTime>(), DateTimeKind.Local).ToUniversalTime();
                         shows.Add(show);
                     }
                 }
