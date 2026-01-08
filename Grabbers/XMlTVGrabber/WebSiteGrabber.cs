@@ -51,7 +51,9 @@ namespace XMlTVGrabber
                                 {
                                     var s = new Show();
                                     s.Channel = el.Attribute("channel").Value;
-                                    s.Title = el.Descendants("title").First().Value;
+                                    s.Title = el.Descendants("title").FirstOrDefault()?.Value;
+                                    if (s.Title == null)
+                                        s.Title = "N/A"; 
                                     s.SubTitle = el.Descendants("sub-title").FirstOrDefault()?.Value;
                                     s.Description = el.Descendants("desc").FirstOrDefault()?.Value;
                                     if (useSubTitleAsTitle && !string.IsNullOrEmpty(s.SubTitle))
