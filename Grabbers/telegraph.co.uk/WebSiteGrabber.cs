@@ -88,7 +88,14 @@ namespace telegraph.co.uk
             var endDateDays = edElement != null && edElement.Value != null ? Convert.ToInt32(edElement.Value) : 3;
             for (int i = startDateDiff; i <= endDateDays; i++)
             {
-                DailyGrab(DateTime.UtcNow.Date.AddDays(i), shows, logger);
+                try
+                {
+                    DailyGrab(DateTime.UtcNow.Date.AddDays(i), shows, logger);
+                }
+                catch (Exception ex)
+                {
+                    logger.WriteEntry($"Error for {DateTime.UtcNow.Date.AddDays(i).ToString()} , {ex.Message}", LogType.Error);
+                }
             }
             return shows;
         }
