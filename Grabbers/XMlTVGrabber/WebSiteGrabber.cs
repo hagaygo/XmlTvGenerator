@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using XmlTvGenerator.Core;
 
@@ -15,6 +16,11 @@ namespace XMlTVGrabber
         void LogException(ILogger log, Exception ex)
         {
             log.LogException(ex,"XMLTV Grabber error ");
+        }
+
+        string FixBadXML(string xml)
+        {   
+            return Regex.Replace(xml, "&(?!(amp|apos|quot|lt|gt|#x? [0-9a-fA-F]+);)", "&amp;");
         }
 
         public override List<Show> Grab(string xmlParameters, ILogger logger)
@@ -42,7 +48,7 @@ namespace XMlTVGrabber
                         var sourceShows = new List<Show>();
                         var xmltv = sr.ReadToEnd();
                         logger.WriteEntry($"XMLTV grabber {url} Downloaded, parsing XMLTV...", LogType.Info);
-                        var xmlDoc = XDocument.Parse(xmltv);
+                        var xmlDoc = XDocument.Parse(FixBadXML(xmltv));
                         foreach (var el in xmlDoc.Descendants("programme"))
                         {
                             if (channelHash.ContainsKey(el.Attribute("channel").Value))
