@@ -49,6 +49,7 @@ namespace hot.net.il
             wr.ContentType = "application/json";
             wr.Method = "POST";
             wr.Headers.Add("Origin", "https://www.hot.net.il");
+            wr.Timeout = 1200000;
             using (var sw = new StreamWriter(wr.GetRequestStream()))
                 sw.Write("{ \"ProgramsStartDateTime\": \"" + startDateText + "\", \"ProgramsEndDateTime\": \"" + endDateText + " \" }");
             logger.WriteEntry($"Grabbing Hot.net.il", LogType.Info);
